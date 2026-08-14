@@ -9,6 +9,7 @@ import { useTrip } from "@/lib/trip/use-trip";
 import { SourceBadge } from "./SourceBadge";
 import { DistanceBadge } from "./DistanceBadge";
 import { ReferencePointPicker } from "./ReferencePointPicker";
+import { SavedToggle } from "./SavedToggle";
 import { Badge } from "@/components/ui/Badge";
 
 export function PlaceDetail({ place, allPlaces }: { place: Place; allPlaces: Place[] }) {
@@ -26,6 +27,7 @@ export function PlaceDetail({ place, allPlaces }: { place: Place; allPlaces: Pla
         <Badge tone="navy">{formatCategoryLabel(place.category)}</Badge>
         <SourceBadge status={place.verificationStatus} />
         <DistanceBadge coordinates={place.coordinates} />
+        <SavedToggle placeId={place.id} placeName={place.name} />
       </div>
 
       <h1 className="mt-4 font-display text-4xl text-navy-900 sm:text-5xl">{place.name}</h1>

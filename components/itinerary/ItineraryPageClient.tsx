@@ -9,7 +9,10 @@ import { wrapItineraryAsTrip } from "@/lib/trip/wrap-itinerary";
 import { ruleBasedAIProvider } from "@/lib/providers/rule-based-ai-provider";
 import { EditableItineraryDayCard } from "./EditableItineraryDayCard";
 import { TripEditChat } from "./TripEditChat";
+import { BudgetSummary } from "./BudgetSummary";
+import { ShareTripButton } from "./ShareTripButton";
 import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
 
 interface ItineraryPageClientProps {
   serverItinerary: Itinerary;
@@ -38,6 +41,10 @@ export function ItineraryPageClient({
   const itinerary = trip?.itinerary ?? serverItinerary;
   const summary = ruleBasedAIProvider.explainItinerary?.(itinerary);
 
+  const allSlots = itinerary.days.flatMap((d) => d.slots);
+  const destinationCount = new Set(allSlots.map((s) => s.placeId)).size;
+  const mustVisitCount = allSlots.filter((s) => s.locked).length;
+
   function handleStartOver() {
     clearTrip();
   }
@@ -49,10 +56,29 @@ export function ItineraryPageClient({
       </Link>
       <h1 className="mt-3 font-display text-4xl text-navy-900">Your Lucknow trip</h1>
       {summary && <p className="mt-4 text-ink-soft">{summary}</p>}
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        <Badge tone="navy">
+          {itinerary.days.length} day{itinerary.days.length > 1 ? "s" : ""}
+        </Badge>
+        <Badge tone="sandstone">{destinationCount} destinations</Badge>
+        {mustVisitCount > 0 && <Badge tone="leaf">🔒 {mustVisitCount} must-visit</Badge>}
+        <Badge tone="sandstone" className="capitalize">
+          {itinerary.preferences.pace} pace
+        </Badge>
+      </div>
       <p className="mt-2 text-sm text-ink-soft/70">{itinerary.disclaimer}</p>
 
       <div className="mt-8">
         <TripEditChat allPlaces={places} />
+      </div>
+
+      <div className="mt-8">
+        <BudgetSummary
+          days={itinerary.days.length}
+          group={itinerary.preferences.group}
+          budgetAmount={itinerary.preferences.budget?.amount ?? null}
+        />
       </div>
 
       <div className="mt-8 flex flex-col gap-6">
@@ -67,13 +93,16 @@ export function ItineraryPageClient({
         ))}
       </div>
 
-      <div className="mt-10 flex gap-4">
-        <Button href="/map" variant="outline">
-          View on map
-        </Button>
-        <Button href="/plan" variant="ghost" onClick={handleStartOver}>
-          Start over
-        </Button>
+      <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
+        <div className="flex gap-4">
+          <Button href="/map" variant="outline">
+            View on map
+          </Button>
+          <Button href="/plan" variant="ghost" onClick={handleStartOver}>
+            Start over
+          </Button>
+        </div>
+        <ShareTripButton itinerary={itinerary} placesById={placesById} />
       </div>
     </div>
   );
