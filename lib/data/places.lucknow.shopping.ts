@@ -1,3 +1,85 @@
 import type { Place } from "@/types/place";
 
-export const shoppingPlaces: Place[] = [];
+export const shoppingPlaces: Place[] = [
+  {
+    id: "chowk-chikankari-market",
+    destinationId: "lucknow",
+    name: "Chowk Chikankari Market",
+    category: "shopping",
+    subcategory: "chikankari-market",
+    description:
+      "A roughly 500-metre historic market stretch between Gol Darwaza and Akbari Darwaza, and the principal Chikankari embroidery market in Lucknow.",
+    whyVisit:
+      "Buy Chikankari directly from the historic hub where the craft is concentrated, alongside Awadhi street food.",
+    historicalContext:
+      "Chikankari received Geographical Indication (GI) status in December 2008, officially recognising Lucknow as its hub. Nearly 5,000 small businesses operate in this market.",
+    bestTime: "Late morning (11am–2pm) for a quieter visit; most shops close Sundays",
+    estimatedVisitMinutes: 90,
+    suitableTimesOfDay: ["morning", "afternoon", "evening"],
+    coordinates: { lat: 26.8677148, lng: 80.9042142 },
+    images: [],
+    priceRange: "unknown",
+    knownFor: [
+      "Chikankari embroidery — look for slight hand-stitch irregularity and visible shadow-work on the reverse to distinguish it from machine embroidery",
+    ],
+    tags: ["shopping"],
+    nearbyIds: ["bara-imambara", "tunday-kababi", "chowk-food-street"],
+    source: "wikipedia",
+    sourceUrl: "https://en.wikipedia.org/wiki/Chikankari",
+    retrievedAt: "2026-08-14",
+    verificationStatus: "CURATED",
+    dataType: "CURATED",
+  },
+  {
+    id: "aminabad-market",
+    destinationId: "lucknow",
+    name: "Aminabad Market",
+    category: "shopping",
+    subcategory: "bazaar",
+    description:
+      "One of Lucknow's oldest market centres, established in the 1840s, known for bargain shopping in clothes, Chikan embroidery, spices and wedding decor.",
+    whyVisit: "Everyday, bargain-friendly shopping in a market with real local character.",
+    historicalContext:
+      "Established under Nawab Imdad Husain Khan Aminuddaulah. Aminuddaulah Park within the market was the site of a 1928 freedom-movement flag-hoisting, and later hosted speeches by Gandhi and Nehru.",
+    bestTime: "Weekday late morning or early afternoon for fewer crowds; Oct–Mar for cooler weather",
+    estimatedVisitMinutes: 75,
+    suitableTimesOfDay: ["afternoon", "evening"],
+    coordinates: { lat: 26.8465111, lng: 80.9466833 },
+    images: [],
+    priceRange: "unknown",
+    knownFor: ["Everyday bargain shopping — clothes, Chikan embroidery, spices and hosiery"],
+    tags: ["shopping"],
+    nearbyIds: ["hazratganj-market", "royal-cafe-hazratganj"],
+    source: "wikipedia",
+    sourceUrl: "https://en.wikipedia.org/wiki/Aminabad,_Lucknow",
+    retrievedAt: "2026-08-14",
+    verificationStatus: "VERIFIED_STATIC",
+    dataType: "VERIFIED_STATIC",
+  },
+  {
+    id: "hazratganj-market",
+    destinationId: "lucknow",
+    name: "Hazratganj",
+    category: "shopping",
+    subcategory: "leisure-street",
+    description:
+      "Lucknow's central Victorian-style shopping and leisure street, rebuilt after the 1857 uprising, mixing retail, cafés and cinemas.",
+    whyVisit: "An evening walk through Lucknow's main shopping and café street.",
+    historicalContext:
+      "Founded as \"Ganj\" market in 1827 by Nawab Nasir-ud-Din Haidar Shah, later renamed after Nawab Amjad Ali Shah (\"Hazrat\") in 1842. Rebuilt in a style reportedly influenced by London's Queen Street.",
+    bestTime: "Evening, when the street's café and shopping culture is liveliest",
+    estimatedVisitMinutes: 90,
+    suitableTimesOfDay: ["evening"],
+    coordinates: { lat: 26.855551, lng: 80.94298 },
+    images: [],
+    priceRange: "unknown",
+    knownFor: ["Chikan-embroidered garments, historic cinemas, and long-running cafés"],
+    tags: ["shopping"],
+    nearbyIds: ["royal-cafe-hazratganj", "aminabad-market"],
+    source: "wikipedia",
+    sourceUrl: "https://en.wikipedia.org/wiki/Hazratganj",
+    retrievedAt: "2026-08-14",
+    verificationStatus: "VERIFIED_STATIC",
+    dataType: "VERIFIED_STATIC",
+  },
+];

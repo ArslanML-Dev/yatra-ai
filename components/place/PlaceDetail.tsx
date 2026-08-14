@@ -1,12 +1,14 @@
 import Image from "next/image";
 import type { Place } from "@/types/place";
 import { formatCategoryLabel, formatMinutes } from "@/lib/utils/format";
+import { getSource } from "@/lib/data/sources";
 import { SourceBadge } from "./SourceBadge";
 import { Badge } from "@/components/ui/Badge";
 
 export function PlaceDetail({ place }: { place: Place }) {
   const image = place.images[0];
   const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${place.coordinates.lat},${place.coordinates.lng}`;
+  const sourceLabel = getSource(place.source)?.label;
 
   return (
     <article className="mx-auto max-w-4xl px-6 py-16">
@@ -116,7 +118,7 @@ export function PlaceDetail({ place }: { place: Place }) {
               rel="noopener noreferrer"
               className="text-xs text-ink-soft/70 underline"
             >
-              View source
+              View source{sourceLabel ? `: ${sourceLabel}` : ""}
             </a>
           )}
         </aside>
