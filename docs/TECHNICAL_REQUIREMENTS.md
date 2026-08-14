@@ -67,3 +67,6 @@ the dev server, including a 404 for an unknown place id.
 ## Deployment
 
 Vercel. No environment variables required for this build to run in production.
+Live at **https://yatra-ai-five.vercel.app** — every route (home, explore, category
+listings, place detail, map, planner, itinerary, transport) verified 200 in production,
+including Wikimedia remote-image optimization.
