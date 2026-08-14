@@ -1,0 +1,2556 @@
+============================================================
+YATRA AI — LEVEL 1 MASTER DEVELOPMENT DIRECTIVE
+============================================================
+
+PROJECT:
+Yatra AI
+
+CURRENT STAGE:
+SIH 2026 — Level 1 Screening
+
+CURRENT DEMONSTRATION CITY:
+LUCKNOW, UTTAR PRADESH, INDIA
+
+LEVEL 1 SCREENING DATE:
+18 AUGUST 2026
+
+DEVELOPMENT TARGET:
+COMPLETE THE LEVEL 1 PROTOTYPE BY 16 AUGUST 2026
+
+AVAILABLE DEVELOPMENT TIME:
+3 DAYS
+MAXIMUM 5 HOURS PER DAY
+MAXIMUM ~15 HOURS TOTAL DEVELOPMENT WINDOW
+
+IMPORTANT:
+The 3-day / 15-hour constraint applies ONLY to development of
+the Level 1 prototype.
+
+It does NOT mean that the user's travel itinerary is limited
+to 3 days.
+
+A tourist using Yatra AI must be able to choose ANY reasonable
+trip duration such as:
+
+1 day
+2 days
+3 days
+4 days
+5 days
+6 days
+7 days
+10 days
+or another user-defined duration.
+
+DO NOT confuse:
+
+DEVELOPMENT DURATION
+
+with
+
+TRIP DURATION.
+
+============================================================
+0. PRIMARY OBJECTIVE
+============================================================
+
+Build a polished, functional and technically credible Level 1
+prototype of Yatra AI focused deeply on ONE city:
+
+LUCKNOW.
+
+The purpose of Level 1 is NOT to demonstrate every feature that
+the eventual national Yatra AI platform could contain.
+
+The purpose is to demonstrate that the CORE PRODUCT IDEA WORKS.
+
+The Level 1 prototype must make a panel member think:
+
+"This is not just a tourism information website."
+
+"This actually helps a tourist understand and plan a trip."
+
+"This could realistically expand from Lucknow to cities across India."
+
+The prototype must therefore prioritize:
+
+1. Exceptional UI/UX
+2. Authentic Lucknow content
+3. Verified/structured tourism data
+4. Interactive maps
+5. AI-assisted trip planning
+6. Flexible trip duration
+7. Day-wise and time-wise itinerary generation
+8. Local food discovery
+9. Local shopping discovery
+10. Attractions
+11. Parks and leisure
+12. Old Lucknow + Modern Lucknow
+13. Transport context
+14. Practical tourist guidance
+15. Strong architecture for future expansion
+
+DO NOT attempt to build a full MakeMyTrip competitor in 15 hours.
+
+DO NOT build fake booking functionality.
+
+DO NOT build dozens of half-working features.
+
+BUILD ONE EXCELLENT, COHERENT LUCKNOW EXPERIENCE.
+
+============================================================
+1. PRODUCT IDENTITY
+============================================================
+
+Yatra AI is NOT:
+
+- a generic tourism website
+- a static city guide
+- a collection of tourist cards
+- a booking clone
+- a chatbot placed over a website
+- a slideshow of monuments
+
+Yatra AI IS:
+
+A purpose-first, budget-aware, context-aware,
+AI-assisted travel companion that helps a visitor
+understand and experience a destination.
+
+For Level 1:
+
+Yatra AI demonstrates this concept through Lucknow.
+
+Future versions will expand to:
+
+- Delhi
+- Agra
+- Jaipur
+- Varanasi
+- Mumbai
+- Hyderabad
+- Bengaluru
+- Kolkata
+- other Indian cities
+- eventually broader India-wide destination planning
+
+DO NOT architect the application so that Lucknow is permanently
+hard-coded into the entire system.
+
+Instead:
+
+LUCKNOW = CURRENT CONTENT SCOPE
+
+DESTINATION SYSTEM = FUTURE ARCHITECTURE.
+
+============================================================
+2. LEVEL 1 PRODUCT THESIS
+============================================================
+
+The strongest Level 1 demonstration should answer:
+
+"If I am an outsider visiting Lucknow, can Yatra AI help me
+experience the city properly without requiring me to figure
+everything out myself?"
+
+The answer must be YES.
+
+A tourist should be able to understand:
+
+WHERE TO GO
+WHAT TO SEE
+WHAT TO EAT
+WHERE TO SHOP
+WHAT TO EXPERIENCE
+HOW TO MOVE
+WHAT TO DO IN THE MORNING
+WHAT TO DO IN THE AFTERNOON
+WHAT TO DO IN THE EVENING
+WHERE TO STAY / WHAT AREA TO STAY IN
+WHAT IS NEARBY
+HOW MUCH THE PLAN MAY COST
+HOW MANY DAYS THEY SHOULD SPEND
+HOW TO ADAPT THE PLAN
+
+============================================================
+3. CORE LEVEL 1 USER FLOW
+============================================================
+
+The primary demonstration flow should be:
+
+LANDING PAGE
+↓
+EXPLORE LUCKNOW
+↓
+UNDERSTAND THE CITY
+↓
+SELECT TRAVEL PREFERENCES
+↓
+SELECT TRIP DURATION
+↓
+SELECT BUDGET / OPTIONAL
+↓
+SELECT INTERESTS / PURPOSE
+↓
+AI GENERATES PERSONALIZED PLAN
+↓
+DAY-WISE ITINERARY
+↓
+MAP VIEW
+↓
+EXPLORE SPECIFIC PLACES
+↓
+FOOD / SHOPPING / PARKS / CULTURE / MODERN LUCKNOW
+↓
+PRACTICAL TRAVEL GUIDANCE
+
+The user must NOT be forced through every step.
+
+A user should also be able to simply ask:
+
+"I am visiting Lucknow for 4 days with my family.
+I want famous places, authentic food, shopping,
+parks and a relaxed itinerary."
+
+Yatra AI should understand this and generate structured output.
+
+============================================================
+4. HOMEPAGE — CINEMATIC LUCKNOW INTRODUCTION
+============================================================
+
+The homepage is extremely important for Level 1.
+
+It must create immediate visual impact.
+
+Opening concept:
+
+"Smile, you are in Lucknow."
+
+Supporting positioning:
+
+"Experience Lucknow. We'll organize the journey."
+
+The homepage should communicate:
+
+- Lucknow's heritage
+- Awadhi culture
+- food
+- architecture
+- greenery
+- modern city life
+- hospitality
+- local character
+
+Do NOT overload the hero with information.
+
+The homepage should contain:
+
+1. Cinematic visual/video section
+2. Strong headline
+3. Short explanation of Yatra AI
+4. Primary CTA:
+   "Plan My Lucknow Trip"
+5. Secondary CTA:
+   "Explore Lucknow"
+6. Short curated overview of the city
+7. Selected visual highlights
+8. AI trip planner entry point
+
+============================================================
+5. HOMEPAGE CINEMATIC VIDEO
+============================================================
+
+A short cinematic Lucknow montage may be used.
+
+Potential scenes:
+
+- Bara Imambara
+- Rumi Darwaza
+- Chhota Imambara
+- old Lucknow streets
+- food
+- chikankari
+- Gomti Riverfront
+- parks
+- modern Lucknow
+- Ekana
+- Lulu Mall / Phoenix Palassio
+- city movement
+- evening atmosphere
+
+IMPORTANT:
+
+Do NOT use copyrighted YouTube footage merely because it is
+available on YouTube.
+
+If using external footage:
+
+VERIFY:
+
+- license
+- commercial/prototype usage rights
+- attribution requirements
+- redistribution/embedding restrictions
+
+Prefer:
+
+- appropriately licensed footage
+- official/public-domain sources
+- generated visuals
+- properly licensed stock footage
+- legally embeddable media
+
+If a suitable legal video cannot be verified within the
+development window:
+
+USE A HIGH-QUALITY IMAGE/MOTION CAROUSEL OR LOCALLY AVAILABLE
+LICENSED ASSETS.
+
+Do not waste hours searching for video.
+
+The cinematic feeling matters more than the specific video.
+
+============================================================
+6. HOMEPAGE — LUCKNOW OVERVIEW
+============================================================
+
+Provide a concise introduction to Lucknow.
+
+Core themes:
+
+- capital of Uttar Pradesh
+- Awadhi cultural identity
+- historical architecture
+- tehzeeb
+- cuisine
+- Chikankari
+- old Lucknow
+- modern Lucknow
+- parks and green spaces
+- Gomti River
+- contemporary entertainment
+- transportation connectivity
+
+Avoid excessive political/government messaging.
+
+Government/development information may be mentioned only when
+factually relevant and verified.
+
+DO NOT make political leadership a core product feature.
+
+The product should remain tourism-focused.
+
+============================================================
+7. LUCKNOW CONTENT ARCHITECTURE
+============================================================
+
+DO NOT display every place simultaneously.
+
+That creates clutter.
+
+Lucknow must be organized into clear categories.
+
+PRIMARY CATEGORIES:
+
+1. Heritage & History
+2. Food & Cuisine
+3. Shopping & Chikankari
+4. Parks & Green Spaces
+5. Gomti / Riverfront / Evening
+6. Modern Lucknow
+7. Sports & Entertainment
+8. Markets & Local Life
+9. Practical Travel
+10. AI Trip Planner
+
+Within each category:
+
+show a small number of high-quality curated places first.
+
+Provide:
+
+"View More"
+
+where appropriate.
+
+============================================================
+8. HERITAGE & HISTORY
+============================================================
+
+Include verified and relevant landmarks such as:
+
+- Bara Imambara
+- Bhulbhulaiya
+- Rumi Darwaza
+- Chhota Imambara
+- British Residency
+- Dilkusha Kothi where appropriate
+- other important verified Lucknow heritage locations
+
+For each place provide:
+
+- name
+- image
+- short description
+- why it matters
+- historical context
+- approximate visit duration
+- best time to visit where reliable
+- category
+- exact map location
+- map directions
+- source
+- verification status
+
+Do not create enormous historical essays.
+
+The information should be tourist-friendly.
+
+Example structure:
+
+WHY VISIT
+HISTORY
+WHAT TO SEE
+TIME REQUIRED
+BEST TIME
+LOCATION
+MAP
+NEARBY EXPERIENCES
+
+============================================================
+9. FOOD — AUTHENTIC LUCKNOW EXPERIENCE
+============================================================
+
+Food is one of the strongest reasons to visit Lucknow.
+
+Do NOT simply say:
+
+"Try kebabs."
+
+Instead recommend specific recognized establishments
+and specific dishes.
+
+Examples to investigate and verify:
+
+Tunday Kababi
+Raheem's
+Royal Café
+Sharma Ji Ki Chai
+Dastarkhwan
+Chowk food area
+Aminabad food area
+other strongly recognized local establishments
+
+Specific examples supplied by the product owner:
+
+- Tunday Kababi → Galouti Kebab
+- Raheem's → Nihari / Kulcha
+- Royal Café, Hazratganj → Basket Chaat
+- Sharma Ji Ki Chai → morning tea experience
+- Dastarkhwan → recognized Lucknowi/Awadhi food
+- Chowk → Makkhan Malai / traditional food experiences
+- Sheermal + Galouti Kebab combinations
+
+These are NOT automatically accepted as factual claims.
+
+VERIFY:
+
+- current establishment name
+- exact location
+- dish association
+- operating status
+- opening hours if displayed
+- historical claims
+- reputation claims
+- map coordinates
+
+Do not state "oldest" or "most famous" unless the source
+supports the claim.
+
+Use wording such as:
+
+"Known for..."
+"Associated with..."
+"Popular for..."
+"Historically recognized for..."
+
+when stronger claims cannot be independently verified.
+
+============================================================
+10. FOOD DISCOVERY UX
+============================================================
+
+Food should be organized rather than dumped.
+
+Example:
+
+MORNING
+- Sharma Ji Ki Chai
+- authentic breakfast / khasta options
+
+LUNCH
+- Awadhi cuisine
+- Nihari/Kulcha
+- Dastarkhwan
+
+EVENING
+- Galouti Kebab
+- Basket Chaat
+- Chowk food
+
+SEASONAL
+- Makkhan Malai / Nimish
+
+LOCAL SPECIALITIES
+- Galouti Kebab
+- Nihari
+- Kulcha
+- Sheermal
+- Basket Chaat
+- Makkhan Malai
+- Lucknowi Biryani
+- Khasta/Kachori
+- Chai
+
+The AI planner should use these experiences intelligently.
+
+============================================================
+11. OLD LUCKNOW VS MODERN LUCKNOW
+============================================================
+
+This is a major differentiator.
+
+Present Lucknow as TWO CONNECTED EXPERIENCES.
+
+OLD / PURANA LUCKNOW:
+
+- Chowk
+- Aminabad
+- Bara Imambara
+- Rumi Darwaza
+- Chhota Imambara
+- traditional food
+- old markets
+- Chikankari
+- historic architecture
+- traditional local life
+
+MODERN LUCKNOW:
+
+- Gomti Nagar
+- Lulu Mall
+- Phoenix Palassio
+- Ekana Stadium
+- Gomti Riverfront
+- Marine Drive / riverfront area where verified
+- modern restaurants
+- contemporary leisure
+- parks
+- shopping
+- entertainment
+
+Create a visual section:
+
+"Two sides of Lucknow"
+
+rather than creating two separate websites.
+
+============================================================
+12. SHOPPING & CHIKANKARI
+============================================================
+
+Do NOT merely say:
+
+"Buy Chikankari in Lucknow."
+
+Recommend specific established shops/markets where possible.
+
+Research and verify recognized Chikankari establishments.
+
+For each:
+
+- exact name
+- location
+- reputation/context
+- product type
+- approximate price category if reliable
+- map
+- directions
+- authenticity considerations
+
+Potentially investigate established names such as:
+
+- SEWA-related Chikankari outlets
+- Janpath Market
+- Chowk Chikankari market
+- Aminabad
+- other established verified shops
+
+Do NOT invent "oldest shop" claims.
+
+If a business is recommended because of historical reputation,
+verify the claim first.
+
+Explain to tourists how to identify authentic Chikankari and
+avoid misleading claims.
+
+============================================================
+13. PARKS & GREEN SPACES
+============================================================
+
+Include major green/open-space experiences.
+
+Investigate and verify:
+
+- Janeshwar Mishra Park
+- Lohia Park
+- Dr. Ram Manohar Lohia Park
+- Ambedkar Memorial Park
+- Gomti Riverfront
+- other worthwhile verified parks
+
+Janeshwar Mishra Park is particularly important as a major
+Lucknow leisure destination.
+
+Do not blindly claim:
+
+"largest park in India"
+
+unless authoritative evidence verifies the exact claim.
+
+Instead use verified descriptions such as:
+
+"one of the largest urban parks in India"
+
+only if a reliable source supports it.
+
+============================================================
+14. EVENING EXPERIENCES
+============================================================
+
+Lucknow should not feel like a list of monuments.
+
+Create an "Evening Lucknow" concept.
+
+Possible experiences:
+
+- Gomti Riverfront
+- Marine Drive / Lucknow riverfront area where the exact
+  destination and current local naming are verified
+- Janeshwar Mishra Park
+- Lohia Park
+- Ambedkar Memorial Park
+- Hazratganj evening
+- selected food experiences
+- modern entertainment areas
+
+The AI itinerary should understand that parks and open spaces
+are often better suited for evening/walking experiences.
+
+Do not create unrealistic schedules.
+
+============================================================
+15. MODERN LUCKNOW
+============================================================
+
+Include:
+
+- Lulu Mall
+- Phoenix Palassio
+- Ekana Stadium
+- Gomti Nagar
+- contemporary entertainment
+- modern shopping
+- restaurants
+- leisure
+
+For malls:
+
+provide:
+
+- location
+- category
+- why tourists may visit
+- nearby attractions
+- map
+- practical context
+
+Do not pretend malls are heritage attractions.
+
+They belong under:
+
+SHOPPING & MODERN LEISURE.
+
+============================================================
+16. EKANA STADIUM
+============================================================
+
+Include Ekana Stadium as a modern sports landmark.
+
+Provide:
+
+- name
+- location
+- what it is known for
+- tourist relevance
+- nearby experiences
+- map
+
+Do not claim event availability unless verified.
+
+If current events are unavailable:
+
+show the venue as a modern Lucknow landmark rather than
+fabricating an event schedule.
+
+============================================================
+17. TRANSPORTATION ENTRY POINTS
+============================================================
+
+Include:
+
+CHAUDHARY CHARAN SINGH INTERNATIONAL AIRPORT
+
+and
+
+CHARBAGH RAILWAY STATION.
+
+The purpose is practical tourism orientation.
+
+For the airport:
+
+provide:
+
+- official name
+- location
+- role as Lucknow's major air gateway
+- map
+- connection to city
+
+For Charbagh:
+
+provide:
+
+- brief historical/architectural context
+- location
+- importance as a major railway gateway
+- map
+- relationship to major tourist areas
+
+Keep historical information concise and verified.
+
+============================================================
+18. PRACTICAL LOCAL TRANSPORT GUIDANCE
+============================================================
+
+This is an important differentiator.
+
+Do not merely display locations.
+
+Explain how a tourist can realistically move.
+
+Examples:
+
+AMINABAD / OLD LUCKNOW:
+
+Potentially recommend:
+
+- walking for short sections
+- e-rickshaw/auto
+- app-based cab where available
+- reaching a specific drop point and walking
+
+Avoid implying that every location should be reached by
+private car.
+
+For congested areas:
+
+"Consider being dropped near the destination and walking
+the final section."
+
+For more open/modern areas:
+
+- cab
+- personal vehicle
+- parking where verified
+
+Do NOT fabricate parking availability.
+
+Do not claim real-time traffic unless a live provider supports it.
+
+============================================================
+19. MAPS — REQUIRED FOR LEVEL 1
+============================================================
+
+Interactive maps are strongly recommended and should be treated
+as a P0/P1 feature depending on implementation complexity.
+
+The map must provide real spatial context.
+
+For every important place:
+
+- exact coordinates from a reliable map/data provider
+- marker
+- name
+- category
+- directions
+- optional distance
+- optional nearby places
+
+NEVER manually invent coordinates.
+
+Preferred strategy:
+
+Use a legitimate map provider / geocoding API.
+
+Potential providers may include:
+
+- Google Maps Platform
+- Mapbox
+- OpenStreetMap-based services
+
+First inspect which provider is realistically available.
+
+Do not spend the entire development window fighting an API.
+
+If API credentials are unavailable:
+
+use a clean provider abstraction and verified static coordinates
+for curated demo locations, with clear source metadata.
+
+The map architecture must allow switching providers later.
+
+============================================================
+20. DATA SOURCES
+============================================================
+
+Yatra AI must be DATA-BACKED.
+
+The prototype should not feel like an AI hallucinating a travel guide.
+
+Potential sources:
+
+- official tourism sources
+- official government sources
+- official attraction websites
+- official business websites
+- OpenStreetMap
+- legitimate map APIs
+- legitimate public datasets
+- reputable structured sources
+
+For businesses:
+
+verify current existence and location.
+
+For factual claims:
+
+store source information.
+
+Every important data record should ideally contain:
+
+source
+source_url
+retrieved_at
+verification_status
+data_type
+
+Possible data types:
+
+LIVE
+VERIFIED_STATIC
+CURATED
+DEMO
+
+============================================================
+21. DATABASE
+============================================================
+
+Use a structured database rather than scattering tourism
+content across frontend files.
+
+At minimum consider:
+
+destinations
+places
+place_categories
+food_places
+shopping_places
+parks
+heritage_sites
+transport_points
+businesses
+trip_templates
+sources
+itineraries
+itinerary_items
+
+Place schema should support future cities.
+
+Example conceptual model:
+
+Destination
+  ↓
+Category
+  ↓
+Place
+  ↓
+Source
+  ↓
+Coordinates
+  ↓
+Metadata
+
+Do NOT create a database schema that assumes Lucknow is the
+only possible destination.
+
+============================================================
+22. SYSTEMATIC FILE STRUCTURE
+============================================================
+
+The project must be organized professionally.
+
+Separate:
+
+FRONTEND
+BACKEND
+DATA
+DATABASE
+SERVICES
+AI
+MAPS
+PROVIDERS
+COMPONENTS
+DOCUMENTATION
+CONFIGURATION
+TESTS
+
+Use clear subcategories.
+
+Do not dump all files into one folder.
+
+Example conceptual structure:
+
+/app
+/components
+/features
+/lib
+/services
+/providers
+/ai
+/data
+/database
+/types
+/docs
+/tests
+/public
+
+Adapt this to the actual framework.
+
+Do not blindly impose the example if the existing stack has
+a better established convention.
+
+============================================================
+23. AI TRIP PLANNER
+============================================================
+
+This is one of the most important Level 1 features.
+
+The user should be able to enter natural language.
+
+Example:
+
+"I am visiting Lucknow for 4 days with my parents.
+We like historical places, authentic food and peaceful parks.
+We have a medium budget and don't want a rushed trip."
+
+AI extracts:
+
+- city
+- trip duration
+- travel group
+- interests
+- budget
+- pace
+- preferences
+- constraints
+
+Then produces:
+
+DAY 1
+DAY 2
+DAY 3
+DAY 4
+
+with:
+
+morning
+afternoon
+evening
+night
+
+The number of days MUST be dynamic.
+
+If the user enters:
+
+1 day → generate 1 day.
+
+2 days → generate 2 days.
+
+3 days → generate 3 days.
+
+5 days → generate 5 days.
+
+7 days → generate 7 days.
+
+Do NOT hard-code a 3-day itinerary.
+
+============================================================
+24. AI ITINERARY INTELLIGENCE
+============================================================
+
+The itinerary should consider geographic clustering.
+
+Do NOT produce:
+
+Morning → Old Lucknow
+Afternoon → Gomti Nagar
+Evening → Aminabad
+Night → distant location
+
+if the route is inefficient.
+
+Instead cluster nearby places.
+
+Example concept:
+
+OLD LUCKNOW DAY
+
+Bara Imambara
+→ Rumi Darwaza
+→ Chhota Imambara
+→ Chowk
+→ food
+
+MODERN LUCKNOW DAY
+
+Gomti Nagar
+→ shopping/leisure
+→ park/riverfront
+→ evening experience
+
+The exact grouping must be based on actual geography.
+
+============================================================
+25. AI SHOULD USE STRUCTURED DATA
+============================================================
+
+The AI must NOT invent:
+
+- coordinates
+- opening hours
+- prices
+- restaurant existence
+- travel times
+- reviews
+- events
+- transport schedules
+
+The AI should receive trusted structured place data
+and generate recommendations from that data.
+
+Architecture:
+
+USER INPUT
+↓
+INTENT EXTRACTION
+↓
+STRUCTURED PREFERENCES
+↓
+TRUSTED LUCKNOW DATA
+↓
+RECOMMENDATION ENGINE
+↓
+ITINERARY ENGINE
+↓
+AI EXPLANATION
+↓
+USER-FACING PLAN
+
+============================================================
+26. FLEXIBLE TRIP DURATION
+============================================================
+
+Trip duration is USER CONTROLLED.
+
+Provide an interface such as:
+
+How long are you staying?
+
+[ 1 ] [ 2 ] [ 3 ] [ 4 ] [ 5 ] [ 6 ] [ 7+ ]
+
+or a numeric selector.
+
+Also support natural language:
+
+"I'll be in Lucknow for six days."
+
+The system must interpret this dynamically.
+
+Longer trips should not simply repeat attractions.
+
+For longer stays:
+
+introduce:
+
+- deeper food exploration
+- additional parks
+- shopping
+- markets
+- less-famous experiences
+- leisure time
+- slower pace
+- optional day trips only if supported
+
+============================================================
+27. BUDGET
+============================================================
+
+Budget should be optional but supported.
+
+Example:
+
+₹10,000
+₹20,000
+₹30,000
+₹50,000
+Custom
+
+The AI should explain approximate spending.
+
+Do NOT fabricate precise live prices.
+
+Use ranges where appropriate.
+
+Example:
+
+Food:
+₹₹
+
+rather than fake exact prices.
+
+If reliable structured pricing exists:
+
+display it with source.
+
+============================================================
+28. "MY AREA" — LEVEL 1 VERSION
+============================================================
+
+A full nationwide My Area system is future scope.
+
+For Level 1 implement a focused version if feasible.
+
+When a user chooses a location/hotel/area:
+
+show nearby:
+
+- attractions
+- restaurants
+- parks
+- shopping
+- pharmacies
+- hospitals
+- transport
+- essentials
+
+Do not show hundreds of markers.
+
+Use category filters.
+
+============================================================
+29. CATEGORY-BASED MAP UX
+============================================================
+
+Map categories should include:
+
+TOURISM
+FOOD
+SHOPPING
+PARKS
+TRANSPORT
+ESSENTIALS
+
+Users can toggle categories.
+
+Default map:
+
+show only the most relevant places.
+
+This prevents visual clutter.
+
+============================================================
+30. PLACE DETAIL PAGE / MODAL
+============================================================
+
+Every important place should have a consistent visual component.
+
+Display:
+
+IMAGE
+
+PLACE NAME
+
+CATEGORY
+
+WHY VISIT
+
+SHORT VERIFIED DESCRIPTION
+
+BEST TIME
+if reliable
+
+ESTIMATED VISIT TIME
+if reliable
+
+LOCATION
+
+MAP
+
+GET DIRECTIONS
+
+NEARBY
+
+SOURCE / VERIFIED STATUS
+
+This creates consistency across the website.
+
+============================================================
+31. IMAGE STRATEGY
+============================================================
+
+Images significantly improve tourist relevance and panel impact.
+
+Use images for major places.
+
+Examples:
+
+- Bara Imambara
+- Rumi Darwaza
+- Chhota Imambara
+- Residency
+- Janeshwar Mishra Park
+- Lohia Park
+- Ambedkar Memorial Park
+- Gomti Riverfront
+- Lulu Mall
+- Phoenix Palassio
+- Ekana
+- Charbagh
+- airport
+- food experiences
+- Chikankari
+- markets
+
+Every image must have:
+
+- appropriate usage rights
+- meaningful alt text
+- optimized size
+
+Do not spend excessive time sourcing dozens of images.
+
+Prioritize high-impact places.
+
+============================================================
+32. DESIGN DIRECTION
+============================================================
+
+UI/UX IS A TOP PRIORITY.
+
+The website should feel:
+
+premium
+modern
+cinematic
+Indian
+clean
+intelligent
+responsive
+credible
+
+Avoid:
+
+- generic Bootstrap appearance
+- excessive cards
+- excessive gradients
+- visual clutter
+- unnecessary 3D
+- excessive animation
+- giant walls of text
+- tourist-blog appearance
+
+The design should feel closer to a premium travel product
+than a college project.
+
+============================================================
+33. VISUAL LANGUAGE
+============================================================
+
+Use sophisticated Indian visual cues.
+
+Potential palette:
+
+- warm neutral
+- deep navy
+- subtle saffron
+- muted green
+- ivory
+- architectural sandstone tones
+
+Use restraint.
+
+India should be visible through:
+
+- imagery
+- typography
+- architecture
+- subtle motifs
+- composition
+
+NOT through:
+
+- flags everywhere
+- excessive tricolour
+- patriotic graphics
+- national symbols on every section
+
+The previously considered tricolour India-map concept is DROPPED.
+
+Do not implement it unless explicitly requested later.
+
+============================================================
+34. MOTION
+============================================================
+
+Use motion intentionally.
+
+Good:
+
+- page transitions
+- image reveal
+- scroll animations
+- map transitions
+- itinerary progression
+- hover interactions
+- subtle parallax
+- cinematic hero movement
+
+Bad:
+
+- excessive spinning
+- distracting particles
+- animations that slow the website
+- animation required to understand content
+
+Support prefers-reduced-motion.
+
+============================================================
+35. OPTIONAL GENAI / AGENTIC AI
+============================================================
+
+GENAI is useful for Level 1.
+
+AGENTIC AI should NOT become a complicated autonomous multi-agent
+system merely for the sake of saying "agentic AI."
+
+If a lightweight agentic workflow can be implemented reliably
+within the 15-hour development window, use it.
+
+Example:
+
+Planner Agent
+→ reads user preferences
+
+Data Retrieval Layer
+→ obtains trusted Lucknow data
+
+Itinerary Agent
+→ creates schedule
+
+Validation Layer
+→ checks places against structured data
+
+Final Response
+→ generates user-friendly itinerary
+
+This is sufficient.
+
+DO NOT build:
+
+- unnecessary multi-agent orchestration
+- autonomous booking agents
+- complex vector databases
+- long-running background agents
+
+unless already available and trivial to integrate.
+
+Reliability > terminology.
+
+============================================================
+36. TRYBLOOM.AI
+============================================================
+
+The team has suggested investigating TryBloom.ai/API.
+
+Claude Code must FIRST inspect whether:
+
+- an official API exists
+- credentials are available
+- integration is legitimate
+- documentation is accessible
+- integration can be completed safely within the deadline
+
+If it provides meaningful value to the prototype:
+
+use it.
+
+If integration would consume significant development time:
+
+DO NOT BLOCK THE PROJECT.
+
+Create a provider abstraction or document future integration.
+
+Never fabricate a TryBloom integration.
+
+============================================================
+37. DEVELOPMENT PLUGINS / MCP / TOOLS
+============================================================
+
+The following tools may be available:
+
+- OmniRoute
+- claude-mem
+- HEADROOM
+- Claude Code setup plugins
+- task-observer
+- Context7 MCP
+- Chrome DevTools MCP
+- Sentry MCP
+- Supabase MCP
+- Vercel MCP
+
+IMPORTANT:
+
+DO NOT blindly install or configure all of them.
+
+FIRST inspect what is already installed and available.
+
+Use tools only when they directly reduce development time or
+increase reliability.
+
+Priority:
+
+1. coding
+2. debugging
+3. browser testing
+4. database work
+5. documentation
+6. deployment
+7. optional productivity tools
+
+Do not lose hours configuring developer tooling.
+
+============================================================
+38. CONTEXT7
+============================================================
+
+Use Context7 if available for current official documentation
+when working with libraries/frameworks.
+
+Prefer official documentation.
+
+Do not guess APIs.
+
+============================================================
+39. CHROME DEVTOOLS MCP
+============================================================
+
+Use Chrome DevTools MCP if available for:
+
+- browser testing
+- console errors
+- layout issues
+- responsive testing
+- network problems
+- interaction validation
+
+This is HIGH VALUE for the final polish phase.
+
+============================================================
+40. SUPABASE MCP
+============================================================
+
+Use Supabase MCP if available and relevant.
+
+Use it for:
+
+- database inspection
+- schema
+- migrations
+- data validation
+- debugging
+
+Do not expose credentials.
+
+============================================================
+41. VERCEL MCP
+============================================================
+
+Use Vercel MCP if available for:
+
+- deployment inspection
+- build errors
+- environment configuration
+- deployment debugging
+
+Do not deploy broken code merely because the deadline is near.
+
+============================================================
+42. SENTRY MCP
+============================================================
+
+Use Sentry only if already available or easily configured.
+
+Do not spend substantial time implementing sophisticated
+observability during the Level 1 sprint.
+
+Basic error visibility is sufficient.
+
+============================================================
+43. CLAUDE-MEM / TASK-OBSERVER / HEADROOM / OMNIROUTE
+============================================================
+
+These are productivity tools.
+
+Use them only if already available and useful.
+
+They are NOT product requirements.
+
+The final product matters more than the tooling.
+
+============================================================
+44. DOCUMENTATION REQUIREMENTS
+============================================================
+
+Create professional documentation.
+
+Minimum:
+
+/docs/PRD.md
+
+/docs/DESIGN_DOCUMENT.md
+
+/docs/TECHNICAL_REQUIREMENTS.md
+
+/docs/IMPLEMENTATION_PLAN.md
+
+/docs/DATA_SOURCES_AND_TRUST.md
+
+/docs/PROVIDER_STATUS.md
+
+/docs/ARCHITECTURE_READINESS_REPORT.md
+
+The documents must agree with the actual implementation.
+
+============================================================
+45. PRD
+============================================================
+
+PRD.md must describe:
+
+- problem
+- target users
+- Level 1 objective
+- Lucknow-first strategy
+- core user journey
+- features
+- non-goals
+- future expansion
+- success criteria
+
+============================================================
+46. DESIGN DOCUMENT
+============================================================
+
+DESIGN_DOCUMENT.md must map:
+
+SCREEN 1:
+Homepage
+
+SCREEN 2:
+Lucknow Explore
+
+SCREEN 3:
+Category discovery
+
+SCREEN 4:
+Place details
+
+SCREEN 5:
+AI Planner
+
+SCREEN 6:
+Preferences
+
+SCREEN 7:
+Generated itinerary
+
+SCREEN 8:
+Map experience
+
+SCREEN 9:
+Food discovery
+
+SCREEN 10:
+Shopping / Chikankari
+
+SCREEN 11:
+Parks / Evening
+
+SCREEN 12:
+Transport / Practical information
+
+Include:
+
+- screen purpose
+- layout
+- components
+- navigation
+- interaction
+- responsive behavior
+- visual hierarchy
+- connection to other screens
+
+============================================================
+47. TECHNICAL REQUIREMENTS
+============================================================
+
+Document:
+
+- framework
+- frontend
+- backend
+- database
+- AI
+- maps
+- data model
+- API architecture
+- provider abstraction
+- security
+- environment variables
+- deployment
+- testing
+
+============================================================
+48. IMPLEMENTATION PLAN
+============================================================
+
+The implementation plan MUST be based on:
+
+MAXIMUM 15 HOURS
+
+3 DEVELOPMENT DAYS
+
+5 HOURS PER DAY MAXIMUM
+
+Do NOT assume unlimited development time.
+
+Divide work into:
+
+DAY 1
+DAY 2
+DAY 3
+
+But this refers ONLY to development.
+
+Do NOT impose 3-day travel plans on users.
+
+============================================================
+49. 15-HOUR PRIORITY MODEL
+============================================================
+
+P0 — ABSOLUTELY REQUIRED:
+
+1. Premium homepage
+2. Lucknow destination discovery
+3. Structured place categories
+4. High-quality Lucknow data
+5. Place detail experience
+6. Interactive map
+7. Flexible AI trip planner
+8. Flexible trip duration
+9. Day-wise itinerary
+10. Food discovery
+11. Old Lucknow / Modern Lucknow
+12. Parks / evening experiences
+13. Shopping / Chikankari
+14. Practical transport information
+15. Responsive UI
+
+P1 — IMPLEMENT IF P0 IS STABLE:
+
+- budget planning
+- richer map filters
+- My Area
+- more sophisticated itinerary optimization
+- professional travel context
+- additional local experiences
+- richer data provenance UI
+
+P2 — FUTURE:
+
+- booking APIs
+- hotel APIs
+- flight APIs
+- affiliate integrations
+- live availability
+- advanced recommendation engine
+- advanced agentic AI
+- semantic search
+- personalization
+- analytics
+
+P3 — FUTURE NATIONAL PRODUCT:
+
+- verified partnerships
+- booking ecosystem
+- business dashboards
+- tourism business analytics
+- multi-city expansion
+- nationwide provider ecosystem
+
+============================================================
+50. DAY 1 — DEVELOPMENT PRIORITY
+============================================================
+
+DAY 1:
+
+1. Repository audit
+2. Determine actual stack
+3. Inspect existing implementation
+4. Decide architecture
+5. Establish data model
+6. Establish Lucknow data layer
+7. Build design system
+8. Build homepage
+9. Build primary navigation
+10. Build Lucknow explore structure
+11. Add initial verified place data
+12. Ensure project runs cleanly
+
+Do not spend Day 1 on advanced integrations.
+
+============================================================
+51. DAY 2 — DEVELOPMENT PRIORITY
+============================================================
+
+DAY 2:
+
+1. Place detail system
+2. Category system
+3. Maps
+4. Food
+5. Shopping
+6. Parks
+7. Old Lucknow / Modern Lucknow
+8. Transport
+9. AI planner
+10. Dynamic trip duration
+11. itinerary generation
+
+Prioritize working functionality over edge cases.
+
+============================================================
+52. DAY 3 — DEVELOPMENT PRIORITY
+============================================================
+
+DAY 3:
+
+1. Connect complete user journey
+2. Improve AI itinerary quality
+3. Improve map interaction
+4. Add missing high-value Lucknow content
+5. Responsive testing
+6. Chrome/browser testing
+7. Fix errors
+8. Improve animations
+9. Improve typography
+10. Improve visual polish
+11. Verify data
+12. Remove broken functionality
+13. Build production version
+14. Deployment
+15. Final demo walkthrough
+
+The final hours must prioritize:
+
+STABILITY + POLISH.
+
+============================================================
+53. FINAL DEMO JOURNEY
+============================================================
+
+Claude Code must optimize the final application around
+a predictable panel demonstration.
+
+Recommended demo:
+
+STEP 1:
+
+Open homepage.
+
+Panel sees cinematic Lucknow experience.
+
+STEP 2:
+
+Click:
+
+"Plan My Lucknow Trip"
+
+STEP 3:
+
+Enter:
+
+"I am visiting Lucknow for 4 days with my family.
+I want heritage, authentic food, shopping and peaceful
+evening experiences."
+
+STEP 4:
+
+AI extracts preferences.
+
+STEP 5:
+
+Show recommended experiences.
+
+STEP 6:
+
+Generate:
+
+DAY 1
+DAY 2
+DAY 3
+DAY 4
+
+STEP 7:
+
+Open map.
+
+Show clustered geographic locations.
+
+STEP 8:
+
+Open a food recommendation.
+
+Example:
+
+Tunday Kababi
+→ Galouti Kebab
+→ verified location
+→ map
+
+STEP 9:
+
+Show:
+
+Old Lucknow
+
+and
+
+Modern Lucknow.
+
+STEP 10:
+
+Show:
+
+Chikankari
+Parks
+Gomti Riverfront
+Lulu / Palassio
+Ekana
+
+STEP 11:
+
+Show practical transportation context.
+
+STEP 12:
+
+Explain:
+
+"This is currently a Lucknow-focused implementation.
+The underlying destination architecture is designed so
+the same system can be expanded to other Indian cities."
+
+This final statement is IMPORTANT.
+
+============================================================
+54. BOOKING FUNCTIONALITY
+============================================================
+
+DO NOT implement fake booking.
+
+For Level 1:
+
+booking is NOT required.
+
+The product should demonstrate:
+
+DISCOVERY
++
+PLANNING
++
+LOCAL CONTEXT
++
+MAPS
++
+AI
++
+ITINERARY
+
+Future versions may integrate:
+
+- hotel booking
+- flights
+- trains
+- activities
+- local experiences
+- affiliate partners
+
+If external booking links are included:
+
+clearly distinguish them from native booking.
+
+============================================================
+55. HOTEL FUNCTIONALITY
+============================================================
+
+A full hotel booking engine is NOT required for Level 1.
+
+If time permits:
+
+show hotel/area selection conceptually or through verified
+static data.
+
+But do not sacrifice:
+
+AI planner
+maps
+Lucknow content
+itinerary
+UI
+
+for hotel APIs.
+
+Future:
+
+HotelProvider interface.
+
+============================================================
+56. NO FAKE DATA
+============================================================
+
+NEVER fabricate:
+
+- restaurant existence
+- exact coordinates
+- prices
+- opening hours
+- ratings
+- reviews
+- partnerships
+- live traffic
+- event schedules
+- booking availability
+- API responses
+
+If a value cannot be verified:
+
+either omit it
+
+OR
+
+label it:
+
+Approximate
+Estimated
+Curated
+Prototype Data
+
+depending on context.
+
+============================================================
+57. AUTHENTICITY
+============================================================
+
+Authenticity is a CORE PRODUCT PRINCIPLE for Lucknow.
+
+Yatra AI should not simply recommend generic tourist attractions.
+
+It should help visitors experience:
+
+REAL LUCKNOW.
+
+This includes:
+
+- authentic food
+- recognized establishments
+- traditional markets
+- Chikankari
+- old Lucknow
+- local parks
+- modern Lucknow
+- realistic transport advice
+- practical context
+
+However:
+
+AUTHENTICITY DOES NOT MEAN UNSOURCED CLAIMS.
+
+Verify important claims.
+
+============================================================
+58. DATA TRUST UI
+============================================================
+
+Where practical, provide subtle indicators:
+
+Verified
+Official source
+Curated
+Estimated
+
+Do not clutter every card with technical metadata.
+
+A small:
+
+"Source"
+
+or
+
+"Verified information"
+
+interaction is sufficient.
+
+============================================================
+59. SECURITY
+============================================================
+
+Implement appropriate security for the actual stack.
+
+At minimum:
+
+- environment variables
+- no exposed API secrets
+- server-side API calls where required
+- input validation
+- secure database access
+- authorization if authentication exists
+- safe AI input handling
+- safe output handling
+
+Do not over-engineer enterprise security for a 15-hour prototype.
+
+But never expose secrets.
+
+============================================================
+60. PERFORMANCE
+============================================================
+
+The homepage must load quickly.
+
+Optimize:
+
+- images
+- video
+- fonts
+- map loading
+- JavaScript
+- animations
+
+Lazy-load expensive components.
+
+Maps should not necessarily initialize before needed.
+
+============================================================
+61. RESPONSIVENESS
+============================================================
+
+Test:
+
+desktop
+laptop
+tablet
+mobile
+
+The panel will probably view the product on a laptop/desktop.
+
+However the final product must still remain usable on mobile.
+
+============================================================
+62. ACCESSIBILITY
+============================================================
+
+At minimum:
+
+- semantic HTML
+- alt text
+- readable contrast
+- keyboard-accessible buttons
+- focus states
+- reduced-motion support
+- meaningful labels
+
+============================================================
+63. ERROR HANDLING
+============================================================
+
+Every important async operation needs:
+
+loading
+success
+error
+empty state
+
+If the AI API fails:
+
+show a useful fallback.
+
+If map API fails:
+
+do not crash the page.
+
+If external data fails:
+
+fall back to verified curated data.
+
+============================================================
+64. PROVIDER ABSTRACTION
+============================================================
+
+The following architecture should exist conceptually:
+
+MapProvider
+PlaceProvider
+FoodProvider
+TransportProvider
+AIProvider
+ImageProvider
+
+Current implementation may use:
+
+LucknowCuratedProvider
+
+Future:
+
+DelhiProvider
+AgraProvider
+VaranasiProvider
+etc.
+
+The frontend should not directly depend on provider-specific
+implementation details.
+
+============================================================
+65. FUTURE EXPANSION
+============================================================
+
+After Level 1:
+
+Expand from:
+
+LUCKNOW
+
+to:
+
+MULTI-CITY INDIA.
+
+Future capabilities:
+
+- more cities
+- hotel integrations
+- booking
+- flights
+- trains
+- activities
+- partnerships
+- affiliate ecosystem
+- business dashboards
+- tourism analytics
+- advanced AI agents
+
+The architecture must support this.
+
+But DO NOT implement the future now if it threatens Level 1.
+
+============================================================
+66. WHAT MUST NOT HAPPEN
+============================================================
+
+DO NOT:
+
+- build 20 cities superficially
+- create generic AI-generated tourism cards
+- fill the UI with fake data
+- create fake booking buttons
+- use random coordinates
+- use random restaurant names
+- overload maps with markers
+- make every section a card grid
+- build unnecessary 3D
+- spend hours configuring plugins
+- build complex agent infrastructure
+- install dependencies without need
+- create a giant monolithic component
+- sacrifice functionality for animations
+- sacrifice polish for unnecessary backend complexity
+- claim live data without a live provider
+- claim partnerships
+- claim API integrations that do not work
+
+============================================================
+67. STARTING FROM SCRATCH
+============================================================
+
+The previous conceptual Yatra AI work should NOT dictate
+the Level 1 implementation if starting from scratch produces
+a cleaner result.
+
+FIRST inspect the repository.
+
+If the repository contains incomplete/irrelevant work:
+
+determine whether it is safer to:
+
+A. reuse it
+B. refactor it
+C. rebuild the Level 1 slice cleanly
+
+Do not blindly preserve poor architecture.
+
+The goal is a coherent final prototype.
+
+============================================================
+68. REQUIRED INITIAL AUDIT
+============================================================
+
+Before coding:
+
+inspect:
+
+- package.json
+- framework
+- source tree
+- existing components
+- database
+- environment
+- API configuration
+- deployment configuration
+- existing documentation
+- installed MCPs/plugins
+- existing dependencies
+
+Then report:
+
+1. Current state
+2. What can be reused
+3. What should be removed
+4. Recommended architecture
+5. Available APIs
+6. Missing API credentials
+7. Data strategy
+8. Level 1 scope
+9. 15-hour implementation plan
+10. risks
+
+============================================================
+69. DOCUMENTATION FIRST
+============================================================
+
+Create/update:
+
+PRD.md
+DESIGN_DOCUMENT.md
+TECHNICAL_REQUIREMENTS.md
+IMPLEMENTATION_PLAN.md
+DATA_SOURCES_AND_TRUST.md
+PROVIDER_STATUS.md
+ARCHITECTURE_READINESS_REPORT.md
+
+Do NOT spend excessive time writing documentation.
+
+Documentation must be concise but useful.
+
+Do NOT stop the entire implementation after documentation.
+
+Unlike the old master directive:
+
+THIS IS A TIME-BOXED LEVEL 1 EXECUTION.
+
+After a concise audit and implementation plan,
+BEGIN IMPLEMENTATION.
+
+============================================================
+70. TIME MANAGEMENT RULE
+============================================================
+
+You have approximately:
+
+15 HOURS TOTAL.
+
+Therefore:
+
+DO NOT spend:
+
+3 hours configuring MCPs.
+
+DO NOT spend:
+
+2 hours building an elaborate database.
+
+DO NOT spend:
+
+4 hours integrating an API that may not work.
+
+DO NOT spend:
+
+half the project building documentation.
+
+Use this rule:
+
+IF A TOOL OR INTEGRATION DOES NOT PROVIDE CLEAR VALUE
+WITHIN ~30–45 MINUTES:
+
+DEFER IT.
+
+Continue with the core product.
+
+============================================================
+71. IMPLEMENTATION DECISION RULE
+============================================================
+
+For every feature ask:
+
+1. Does it improve the Level 1 demo?
+2. Can it work reliably?
+3. Can it be completed within the remaining time?
+4. Does it support the core product?
+5. Can it be architected for future expansion?
+
+If YES:
+
+implement.
+
+If it is useful but risky:
+
+create the abstraction and defer implementation.
+
+If it is unnecessary:
+
+do not build it.
+
+============================================================
+72. FINAL QUALITY BAR
+============================================================
+
+Before declaring Level 1 complete:
+
+CHECK:
+
+Homepage
+✓
+
+Navigation
+✓
+
+Lucknow content
+✓
+
+Categories
+✓
+
+Images
+✓
+
+Place details
+✓
+
+Maps
+✓
+
+AI planner
+✓
+
+Flexible trip duration
+✓
+
+Itinerary
+✓
+
+Food
+✓
+
+Shopping
+✓
+
+Chikankari
+✓
+
+Parks
+✓
+
+Old Lucknow
+✓
+
+Modern Lucknow
+✓
+
+Transport
+✓
+
+Responsive UI
+✓
+
+Loading states
+✓
+
+Error states
+✓
+
+No fake claims
+✓
+
+No exposed secrets
+✓
+
+Production build
+✓
+
+Browser test
+✓
+
+Deployment
+✓
+
+============================================================
+73. FINAL PANEL IMPRESSION
+============================================================
+
+The product must communicate THREE THINGS immediately:
+
+1.
+
+WE UNDERSTAND THE TOURIST'S PROBLEM.
+
+2.
+
+WE HAVE BUILT A WORKING SOLUTION FOR LUCKNOW.
+
+3.
+
+THIS CAN SCALE TO INDIA.
+
+The panel should NOT see:
+
+"Here is a website about Lucknow."
+
+They should see:
+
+"Here is an AI tourism platform that currently uses Lucknow
+as a deeply developed pilot destination."
+
+============================================================
+74. FINAL PRODUCT STATEMENT
+============================================================
+
+Yatra AI:
+
+"Tell us how you want to travel.
+We'll help you experience the destination."
+
+For Level 1:
+
+"Start with Lucknow."
+
+Future:
+
+"Experience India."
+
+============================================================
+75. FINAL EXECUTION COMMAND
+============================================================
+
+BEGIN NOW.
+
+STEP 1:
+Audit repository.
+
+STEP 2:
+Inspect available tools, MCPs, APIs and dependencies.
+
+STEP 3:
+Create concise project documentation.
+
+STEP 4:
+Define the Level 1 architecture.
+
+STEP 5:
+Create the Lucknow structured data model.
+
+STEP 6:
+Build the premium homepage.
+
+STEP 7:
+Build the structured Lucknow discovery experience.
+
+STEP 8:
+Build place details.
+
+STEP 9:
+Integrate maps.
+
+STEP 10:
+Build AI trip planner.
+
+STEP 11:
+Support USER-DEFINED TRIP DURATION.
+
+STEP 12:
+Generate dynamic day-wise and time-wise itineraries.
+
+STEP 13:
+Integrate food, shopping, parks, heritage and modern Lucknow.
+
+STEP 14:
+Add practical transport context.
+
+STEP 15:
+Test the complete journey.
+
+STEP 16:
+Polish UI/UX.
+
+STEP 17:
+Fix errors.
+
+STEP 18:
+Build and deploy.
+
+DO NOT WAIT FOR PERFECT COMPLETENESS.
+
+BUILD THE STRONGEST COHERENT LEVEL 1 PRODUCT POSSIBLE
+WITHIN THE 15-HOUR DEVELOPMENT LIMIT.
+
+============================================================
+END OF YATRA AI LEVEL 1 MASTER DIRECTIVE
+============================================================
