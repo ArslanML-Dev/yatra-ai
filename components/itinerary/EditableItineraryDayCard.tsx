@@ -5,6 +5,7 @@ import type { Place } from "@/types/place";
 import type { Pace } from "@/types/user-preferences";
 import { useTrip } from "@/lib/trip/use-trip";
 import { EditableItinerarySlot } from "./EditableItinerarySlot";
+import { NearbySuggestions } from "@/components/place/NearbySuggestions";
 import { EmptyState } from "@/components/ui/EmptyState";
 
 const PACKED_MINUTES_THRESHOLD = 360;
@@ -29,6 +30,9 @@ export function EditableItineraryDayCard({
     return sum + (place?.estimatedVisitMinutes ?? 0);
   }, 0);
   const isPacked = day.slots.length >= 4 && totalMinutes >= PACKED_MINUTES_THRESHOLD;
+
+  const lastSlot = day.slots[day.slots.length - 1];
+  const lastPlace = lastSlot ? placesById.get(lastSlot.placeId) : undefined;
 
   function handleRegenerate(paceOverride?: Pace) {
     regenerateDay(day.dayNumber, allPlaces, paceOverride);
@@ -75,6 +79,7 @@ export function EditableItineraryDayCard({
               key={slot.id}
               slot={slot}
               place={placesById.get(slot.placeId)}
+              previousPlace={i > 0 ? placesById.get(day.slots[i - 1].placeId) : undefined}
               dayNumber={day.dayNumber}
               isFirst={i === 0}
               isLast={i === day.slots.length - 1}
@@ -83,6 +88,24 @@ export function EditableItineraryDayCard({
           ))
         )}
       </div>
+
+      {lastPlace && (
+        <details className="mt-4 rounded-xl bg-white p-4">
+          <summary className="cursor-pointer text-sm font-medium text-navy-900">
+            What should you do next?
+          </summary>
+          <div className="mt-3">
+            <NearbySuggestions
+              origin={lastPlace}
+              curatedNearby={lastPlace.nearbyIds
+                .map((id) => placesById.get(id))
+                .filter((p): p is Place => Boolean(p))}
+              allPlaces={allPlaces}
+              framing="whats-next"
+            />
+          </div>
+        </details>
+      )}
     </section>
   );
 }

@@ -1,13 +1,23 @@
+"use client";
+
 import Image from "next/image";
 import type { Place } from "@/types/place";
 import { formatCategoryLabel, formatMinutes } from "@/lib/utils/format";
 import { getSource } from "@/lib/data/sources";
+import { buildGoogleMapsDirectionsUrl } from "@/lib/geo/directions-url";
+import { useTrip } from "@/lib/trip/use-trip";
 import { SourceBadge } from "./SourceBadge";
+import { DistanceBadge } from "./DistanceBadge";
+import { ReferencePointPicker } from "./ReferencePointPicker";
 import { Badge } from "@/components/ui/Badge";
 
-export function PlaceDetail({ place }: { place: Place }) {
+export function PlaceDetail({ place, allPlaces }: { place: Place; allPlaces: Place[] }) {
+  const { trip } = useTrip();
   const image = place.images[0];
-  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${place.coordinates.lat},${place.coordinates.lng}`;
+  const directionsUrl = buildGoogleMapsDirectionsUrl(
+    place.coordinates,
+    trip?.referencePoint?.coordinates,
+  );
   const sourceLabel = getSource(place.source)?.label;
 
   return (
@@ -15,10 +25,15 @@ export function PlaceDetail({ place }: { place: Place }) {
       <div className="flex flex-wrap items-center gap-3">
         <Badge tone="navy">{formatCategoryLabel(place.category)}</Badge>
         <SourceBadge status={place.verificationStatus} />
+        <DistanceBadge coordinates={place.coordinates} />
       </div>
 
       <h1 className="mt-4 font-display text-4xl text-navy-900 sm:text-5xl">{place.name}</h1>
       <p className="mt-4 max-w-2xl text-lg text-ink-soft">{place.description}</p>
+
+      <div className="mt-4">
+        <ReferencePointPicker places={allPlaces} />
+      </div>
 
       {image && (
         <div className="relative mt-8 h-80 w-full overflow-hidden rounded-2xl bg-sandstone-100 sm:h-[420px]">
@@ -109,7 +124,7 @@ export function PlaceDetail({ place }: { place: Place }) {
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center rounded-full bg-navy-900 px-5 py-2.5 text-sm font-medium text-ivory transition-colors hover:bg-navy-800"
           >
-            Get directions
+            🧭 Get directions
           </a>
           {place.sourceUrl && (
             <a

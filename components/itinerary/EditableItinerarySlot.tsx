@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { ItinerarySlot } from "@/types/itinerary";
 import type { Place } from "@/types/place";
 import { useTrip } from "@/lib/trip/use-trip";
+import { buildGoogleMapsDirectionsUrl } from "@/lib/geo/directions-url";
 
 const TIME_LABELS: Record<ItinerarySlot["timeOfDay"], string> = {
   morning: "Morning",
@@ -16,6 +17,7 @@ const TIME_LABELS: Record<ItinerarySlot["timeOfDay"], string> = {
 interface EditableItinerarySlotProps {
   slot: ItinerarySlot;
   place?: Place;
+  previousPlace?: Place;
   dayNumber: number;
   isFirst: boolean;
   isLast: boolean;
@@ -25,15 +27,21 @@ interface EditableItinerarySlotProps {
 export function EditableItinerarySlot({
   slot,
   place,
+  previousPlace,
   dayNumber,
   isFirst,
   isLast,
   totalDays,
 }: EditableItinerarySlotProps) {
-  const { toggleLock, removeStop, reorderStop, moveStopToDay } = useTrip();
+  const { trip, toggleLock, removeStop, reorderStop, moveStopToDay } = useTrip();
 
   if (!place) return null;
   const image = place.images[0];
+
+  // Honest default origin: the previous stop that day, or the trip's
+  // chosen reference point for the first stop, or nothing.
+  const directionsOrigin = previousPlace?.coordinates ?? trip?.referencePoint?.coordinates;
+  const directionsUrl = buildGoogleMapsDirectionsUrl(place.coordinates, directionsOrigin);
 
   return (
     <div className="flex gap-3 rounded-xl border border-sandstone-200/70 bg-white p-4">
@@ -54,6 +62,19 @@ export function EditableItinerarySlot({
           {place.name}
         </Link>
         {slot.note && <p className="mt-0.5 text-xs text-ink-soft">{slot.note}</p>}
+        <div className="mt-1 flex flex-wrap gap-3">
+          <a
+            href={directionsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-saffron-600 underline"
+          >
+            🧭 Get directions{previousPlace ? ` from ${previousPlace.name}` : ""}
+          </a>
+          <Link href={`/map?highlight=${place.id}`} className="text-xs text-saffron-600 underline">
+            View on map
+          </Link>
+        </div>
       </div>
 
       <div className="flex shrink-0 items-start gap-1">

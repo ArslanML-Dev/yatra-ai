@@ -7,7 +7,15 @@ export const metadata: Metadata = {
   description: "Every curated Lucknow place, on one interactive map.",
 };
 
-export default async function MapPage() {
+type MapPageProps = {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
+
+export default async function MapPage({ searchParams }: MapPageProps) {
+  const params = await searchParams;
+  const highlightRaw = params.highlight;
+  const highlightPlaceId = Array.isArray(highlightRaw) ? highlightRaw[0] : highlightRaw;
+
   const placeProvider = getPlaceProvider("lucknow");
   const mapProvider = getMapProvider();
   const places = await placeProvider.getAllPlaces("lucknow");
@@ -22,7 +30,7 @@ export default async function MapPage() {
         curated, sourced location.
       </p>
       <div className="mt-10">
-        <MapExplorer places={places} center={center} />
+        <MapExplorer places={places} center={center} highlightPlaceId={highlightPlaceId} />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getPlaceProvider } from "@/lib/providers/provider-registry";
 import { PlaceDetail } from "@/components/place/PlaceDetail";
-import { NearbyList } from "@/components/place/NearbyList";
+import { NearbySuggestions } from "@/components/place/NearbySuggestions";
 
 type PlacePageProps = {
   params: Promise<{ id: string }>;
@@ -26,16 +26,22 @@ export default async function PlacePage({ params }: PlacePageProps) {
 
   if (!place) notFound();
 
-  const nearby = await provider.getNearby(id);
+  const [nearby, allPlaces] = await Promise.all([
+    provider.getNearby(id),
+    provider.getAllPlaces("lucknow"),
+  ]);
 
   return (
     <div>
-      <PlaceDetail place={place} />
-      {nearby.length > 0 && (
-        <div className="mx-auto max-w-4xl px-6 pb-16">
-          <NearbyList places={nearby} />
-        </div>
-      )}
+      <PlaceDetail place={place} allPlaces={allPlaces} />
+      <div className="mx-auto max-w-4xl px-6 pb-16">
+        <NearbySuggestions
+          origin={place}
+          curatedNearby={nearby}
+          allPlaces={allPlaces}
+          framing="around-this-place"
+        />
+      </div>
     </div>
   );
 }
