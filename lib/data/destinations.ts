@@ -27,6 +27,18 @@ export const destinations: Destination[] = [
         sourceUrl:
           "https://commons.wikimedia.org/wiki/File:Night_View_of_the_Ambedkar_Memorial_at_Lucknow.jpg",
       },
+      {
+        url: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Chhota_imambara_Lucknow.jpg",
+        alt: "Chhota Imambara's gilded dome and courtyard in Lucknow",
+        source: "Wikimedia Commons",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Chhota_imambara_Lucknow.jpg",
+      },
+      {
+        url: "https://upload.wikimedia.org/wikipedia/commons/8/8b/Janeshwar_Mishra_Park.jpg",
+        alt: "A lake and walking path in Janeshwar Mishra Park, Lucknow",
+        source: "Wikimedia Commons",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Janeshwar_Mishra_Park.jpg",
+      },
     ],
     shortOverview:
       "Lucknow pairs Nawabi-era heritage — imambaras, gateways, and the tehzeeb that grew up around them — with a fast-growing modern city along the Gomti river. Awadhi cuisine, chikankari embroidery, and a genuinely walkable old quarter make it a rare mix of history and everyday life.",

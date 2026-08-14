@@ -5,6 +5,7 @@ import type { Place } from "@/types/place";
 import { useTrip } from "@/lib/trip/use-trip";
 import { parseEditCommand, EDIT_COMMAND_EXAMPLES } from "@/lib/nlu/parse-edit-command";
 import { executeEditIntent } from "@/lib/nlu/execute-edit-intent";
+import { VoiceInputButton } from "@/components/planner/VoiceInputButton";
 
 interface LogEntry {
   input: string;
@@ -51,6 +52,7 @@ export function TripEditChat({ allPlaces }: { allPlaces: Place[] }) {
           Apply
         </button>
       </form>
+      <VoiceInputButton onTranscript={setText} />
 
       {log.length > 0 && (
         <ul className="mt-4 flex flex-col gap-2 text-sm">

@@ -37,10 +37,13 @@ export function HeroCarousel({ images }: { images: ImageRef[] }) {
       <AnimatePresence mode="sync">
         <motion.div
           key={current.url}
-          initial={{ opacity: 0, scale: 1.04 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, scale: 1 }}
+          animate={{ opacity: 1, scale: 1.06 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          transition={{
+            opacity: { duration: 1.2, ease: "easeOut" },
+            scale: { duration: ROTATE_MS / 1000 + 1, ease: "linear" },
+          }}
           className="absolute inset-0"
         >
           <Image

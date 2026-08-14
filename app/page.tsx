@@ -1,4 +1,5 @@
 import { getPlaceProvider } from "@/lib/providers/provider-registry";
+import { selectHighlights } from "@/lib/data/select-homepage-highlights";
 import { HeroCarousel } from "@/components/home/HeroCarousel";
 import { ExplainerSection } from "@/components/home/ExplainerSection";
 import { HighlightsGrid } from "@/components/home/HighlightsGrid";
@@ -12,7 +13,7 @@ export default async function Home() {
     provider.getAllPlaces("lucknow"),
   ]);
 
-  const highlights = places.filter((p) => p.tags.includes("anchor")).slice(0, 4);
+  const highlights = selectHighlights(places, 8);
 
   return (
     <div>
