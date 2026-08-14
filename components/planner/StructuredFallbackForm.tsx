@@ -30,12 +30,15 @@ export function StructuredFallbackForm({ preferences, onChange }: StructuredFall
       <h2 className="font-display text-lg text-navy-900">Or fine-tune it directly</h2>
 
       <div className="mt-5">
-        <p className="text-sm font-medium text-ink-soft">How many days?</p>
-        <div className="mt-2 flex flex-wrap gap-2">
+        <label id="days-label" className="text-sm font-medium text-ink-soft">
+          How many days?
+        </label>
+        <div role="group" aria-labelledby="days-label" className="mt-2 flex flex-wrap gap-2">
           {[1, 2, 3, 4, 5, 6, 7].map((n) => (
             <button
               key={n}
               type="button"
+              aria-pressed={preferences.days === n}
               onClick={() => onChange({ ...preferences, days: n })}
               className={cn(
                 "h-10 w-10 rounded-full text-sm font-medium transition-colors",
@@ -60,12 +63,15 @@ export function StructuredFallbackForm({ preferences, onChange }: StructuredFall
       </div>
 
       <div className="mt-5">
-        <p className="text-sm font-medium text-ink-soft">Who&rsquo;s coming?</p>
-        <div className="mt-2 flex flex-wrap gap-2">
+        <label id="group-label" className="text-sm font-medium text-ink-soft">
+          Who&rsquo;s coming?
+        </label>
+        <div role="group" aria-labelledby="group-label" className="mt-2 flex flex-wrap gap-2">
           {GROUPS.map((group) => (
             <button
               key={group}
               type="button"
+              aria-pressed={preferences.group === group}
               onClick={() => onChange({ ...preferences, group })}
               className={cn(
                 "rounded-full px-4 py-2 text-sm font-medium capitalize transition-colors",
@@ -81,12 +87,15 @@ export function StructuredFallbackForm({ preferences, onChange }: StructuredFall
       </div>
 
       <div className="mt-5">
-        <p className="text-sm font-medium text-ink-soft">What are you interested in?</p>
-        <div className="mt-2 flex flex-wrap gap-2">
+        <label id="interests-label" className="text-sm font-medium text-ink-soft">
+          What are you interested in?
+        </label>
+        <div role="group" aria-labelledby="interests-label" className="mt-2 flex flex-wrap gap-2">
           {INTERESTS.map((interest) => (
             <button
               key={interest}
               type="button"
+              aria-pressed={preferences.interests.includes(interest)}
               onClick={() => toggleInterest(interest)}
               className={cn(
                 "rounded-full px-4 py-2 text-sm font-medium transition-colors",
@@ -102,12 +111,15 @@ export function StructuredFallbackForm({ preferences, onChange }: StructuredFall
       </div>
 
       <div className="mt-5">
-        <p className="text-sm font-medium text-ink-soft">Pace</p>
-        <div className="mt-2 flex flex-wrap gap-2">
+        <label id="pace-label" className="text-sm font-medium text-ink-soft">
+          Pace
+        </label>
+        <div role="group" aria-labelledby="pace-label" className="mt-2 flex flex-wrap gap-2">
           {PACES.map((pace) => (
             <button
               key={pace}
               type="button"
+              aria-pressed={preferences.pace === pace}
               onClick={() => onChange({ ...preferences, pace })}
               className={cn(
                 "rounded-full px-4 py-2 text-sm font-medium capitalize transition-colors",
@@ -123,8 +135,11 @@ export function StructuredFallbackForm({ preferences, onChange }: StructuredFall
       </div>
 
       <div className="mt-5">
-        <p className="text-sm font-medium text-ink-soft">Budget (optional, ₹)</p>
+        <label htmlFor="budget-input" className="text-sm font-medium text-ink-soft">
+          Budget (optional, ₹)
+        </label>
         <input
+          id="budget-input"
           type="number"
           min={0}
           value={preferences.budget?.amount ?? ""}
@@ -136,7 +151,7 @@ export function StructuredFallbackForm({ preferences, onChange }: StructuredFall
             });
           }}
           placeholder="e.g. 25000"
-          className="mt-2 w-40 rounded-xl border border-sandstone-200 px-4 py-2 text-sm outline-none focus-visible:border-saffron-500"
+          className="mt-2 block w-40 rounded-xl border border-sandstone-200 px-4 py-2 text-sm outline-none focus-visible:border-saffron-500"
         />
       </div>
     </div>

@@ -2,14 +2,18 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils/cn";
 
-type Variant = "primary" | "secondary" | "ghost";
+type Variant = "primary" | "secondary" | "ghost" | "dark" | "outline";
 
 const variantClasses: Record<Variant, string> = {
   primary:
     "bg-saffron-600 text-ivory hover:bg-saffron-500 focus-visible:bg-saffron-500",
+  // For use on dark/hero backgrounds.
   secondary:
     "bg-transparent text-ivory border border-ivory/40 hover:border-ivory hover:bg-ivory/10",
   ghost: "bg-transparent text-navy-900 hover:bg-sandstone-100",
+  dark: "bg-navy-900 text-ivory hover:bg-navy-800",
+  // For use on light backgrounds.
+  outline: "bg-transparent text-navy-900 border border-navy-900/30 hover:bg-sandstone-100",
 };
 
 interface ButtonProps {

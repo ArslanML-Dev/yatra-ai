@@ -2,25 +2,35 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import type { ImageRef } from "@/types/place";
 
 const ROTATE_MS = 5500;
 
 export function HeroCarousel({ images }: { images: ImageRef[] }) {
   const [index, setIndex] = useState(0);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
-    if (images.length < 2) return;
+    if (images.length < 2 || prefersReducedMotion) return;
     const id = setInterval(() => setIndex((i) => (i + 1) % images.length), ROTATE_MS);
     return () => clearInterval(id);
-  }, [images.length]);
+  }, [images.length, prefersReducedMotion]);
 
   if (images.length === 0) {
     return <div className="absolute inset-0 bg-navy-900" aria-hidden="true" />;
   }
 
   const current = images[index];
+
+  if (prefersReducedMotion) {
+    return (
+      <div className="absolute inset-0 overflow-hidden bg-navy-950">
+        <Image src={current.url} alt={current.alt} fill priority className="object-cover" sizes="100vw" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/40 to-navy-950/10" />
+      </div>
+    );
+  }
 
   return (
     <div className="absolute inset-0 overflow-hidden bg-navy-950">

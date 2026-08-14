@@ -14,11 +14,12 @@ export function CategoryToggle({ active, onChange }: CategoryToggleProps) {
   const options: CategoryFilter[] = ["all", ...CATEGORIES];
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div role="group" aria-label="Filter map by category" className="flex flex-wrap gap-2">
       {options.map((option) => (
         <button
           key={option}
           type="button"
+          aria-pressed={active === option}
           onClick={() => onChange(option)}
           className={cn(
             "rounded-full px-4 py-2 text-sm font-medium transition-colors",

@@ -91,7 +91,7 @@ export default async function ItineraryPage({ searchParams }: ItineraryPageProps
       </div>
 
       <div className="mt-10 flex gap-4">
-        <Button href="/map" variant="secondary" className="!text-navy-900 !border-navy-900/30">
+        <Button href="/map" variant="outline">
           View on map
         </Button>
         <Button href="/plan" variant="ghost">

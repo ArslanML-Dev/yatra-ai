@@ -29,7 +29,7 @@ export function FreeTextInput({ value, onChange, onParse }: FreeTextInputProps) 
         className="mt-4 w-full rounded-xl border border-sandstone-200 bg-ivory px-4 py-3 text-sm text-ink outline-none focus-visible:border-saffron-500"
       />
       <div className="mt-4 flex items-center gap-3">
-        <Button type="button" onClick={onParse} variant="primary" className="!bg-navy-900 hover:!bg-navy-800">
+        <Button type="button" onClick={onParse} variant="dark">
           Understand my trip
         </Button>
         <button
