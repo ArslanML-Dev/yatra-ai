@@ -1,6 +1,7 @@
 import type { Itinerary } from "@/types/itinerary";
 import type { UserPreferences } from "@/types/user-preferences";
 import { parsePreferences } from "@/lib/nlu/parse-preferences";
+import { formatCategoryLabel } from "@/lib/utils/format";
 import type { AIProvider } from "./ai-provider";
 
 export class RuleBasedAIProvider implements AIProvider {
@@ -10,7 +11,8 @@ export class RuleBasedAIProvider implements AIProvider {
 
   explainItinerary(itinerary: Itinerary): string {
     const dayCount = itinerary.days.length;
-    const interestList = itinerary.preferences.interests.join(", ") || "a balanced mix";
+    const interestList =
+      itinerary.preferences.interests.map(formatCategoryLabel).join(", ") || "a balanced mix";
     return `A ${dayCount}-day plan for ${itinerary.preferences.group}, built around ${interestList}, at a ${itinerary.preferences.pace} pace.`;
   }
 }
