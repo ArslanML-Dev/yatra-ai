@@ -1,15 +1,12 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import type { GroupType, Pace, UserPreferences } from "@/types/user-preferences";
 import type { PlaceCategory } from "@/types/place";
 import { getPlaceProvider } from "@/lib/providers/provider-registry";
 import { generateItinerary } from "@/lib/itinerary/generate-itinerary";
-import { ruleBasedAIProvider } from "@/lib/providers/rule-based-ai-provider";
-import { ItineraryDayCard } from "@/components/itinerary/ItineraryDayCard";
-import { Button } from "@/components/ui/Button";
+import { ItineraryPageClient } from "@/components/itinerary/ItineraryPageClient";
 
 export const metadata: Metadata = {
-  title: "Your Lucknow Itinerary — Yatra AI",
+  title: "Your Lucknow Trip — Yatra AI",
 };
 
 const VALID_GROUPS: GroupType[] = ["solo", "couple", "family", "friends", "business"];
@@ -65,39 +62,26 @@ function readPreferencesFromParams(
   };
 }
 
+function readLockedPlaceIds(params: Record<string, string | string[] | undefined>): string[] {
+  const raw = Array.isArray(params.locked) ? params.locked[0] : params.locked;
+  if (!raw) return [];
+  return raw
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
 export default async function ItineraryPage({ searchParams }: ItineraryPageProps) {
   const params = await searchParams;
   const preferences = readPreferencesFromParams(params);
+  const lockedPlaceIds = readLockedPlaceIds(params);
+  const hasQueryParams = Object.keys(params).length > 0;
 
   const provider = getPlaceProvider(preferences.destinationId);
   const places = await provider.getAllPlaces(preferences.destinationId);
-  const itinerary = generateItinerary(places, preferences);
-  const summary = ruleBasedAIProvider.explainItinerary?.(itinerary);
-  const placesById = new Map(places.map((p) => [p.id, p]));
+  const itinerary = generateItinerary(places, preferences, { lockedPlaceIds });
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-16">
-      <Link href="/plan" className="text-sm font-medium text-saffron-600 hover:underline">
-        ← Adjust preferences
-      </Link>
-      <h1 className="mt-3 font-display text-4xl text-navy-900">Your Lucknow itinerary</h1>
-      {summary && <p className="mt-4 text-ink-soft">{summary}</p>}
-      <p className="mt-2 text-sm text-ink-soft/70">{itinerary.disclaimer}</p>
-
-      <div className="mt-10 flex flex-col gap-6">
-        {itinerary.days.map((day) => (
-          <ItineraryDayCard key={day.dayNumber} day={day} placesById={placesById} />
-        ))}
-      </div>
-
-      <div className="mt-10 flex gap-4">
-        <Button href="/map" variant="outline">
-          View on map
-        </Button>
-        <Button href="/plan" variant="ghost">
-          Start over
-        </Button>
-      </div>
-    </div>
+    <ItineraryPageClient serverItinerary={itinerary} places={places} hasQueryParams={hasQueryParams} />
   );
 }

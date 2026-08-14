@@ -3,6 +3,7 @@ import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import { NavBar } from "@/components/layout/NavBar";
 import { Footer } from "@/components/layout/Footer";
+import { AppProviders } from "@/components/providers/AppProviders";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -25,9 +26,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${fraunces.variable} ${inter.variable} h-full`}>
       <body className="flex min-h-full flex-col antialiased">
-        <NavBar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <AppProviders>
+          <NavBar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </AppProviders>
       </body>
     </html>
   );

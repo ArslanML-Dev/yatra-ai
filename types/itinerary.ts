@@ -2,9 +2,11 @@ import type { TimeOfDaySuitability } from "./place";
 import type { UserPreferences } from "./user-preferences";
 
 export interface ItinerarySlot {
+  id: string;
   timeOfDay: TimeOfDaySuitability;
   placeId: string;
   note?: string;
+  locked?: boolean;
 }
 
 export interface ItineraryDay {

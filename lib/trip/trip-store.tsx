@@ -1,0 +1,106 @@
+"use client";
+
+import { createContext, useEffect, useReducer, type ReactNode } from "react";
+import type { Place, PlaceCategory } from "@/types/place";
+import type { Pace, UserPreferences } from "@/types/user-preferences";
+import type { ReferencePoint, Trip } from "@/types/trip";
+import { tripReducer, type TripAction, type TripState } from "./trip-reducer";
+import { clearStoredTrip, loadTrip, saveTrip } from "./persist";
+import { loadSavedPlaceIds, saveSavedPlaceIds } from "./saved-places-persist";
+
+interface StoreState {
+  trip: TripState;
+  savedPlaceIds: string[];
+  hydrated: boolean;
+}
+
+type StoreAction =
+  | TripAction
+  | { type: "HYDRATE"; trip: Trip | null; savedPlaceIds: string[] }
+  | { type: "TOGGLE_SAVED_PLACE"; placeId: string };
+
+const initialState: StoreState = { trip: null, savedPlaceIds: [], hydrated: false };
+
+function storeReducer(state: StoreState, action: StoreAction): StoreState {
+  switch (action.type) {
+    case "HYDRATE":
+      return { trip: action.trip, savedPlaceIds: action.savedPlaceIds, hydrated: true };
+    case "TOGGLE_SAVED_PLACE":
+      return {
+        ...state,
+        savedPlaceIds: state.savedPlaceIds.includes(action.placeId)
+          ? state.savedPlaceIds.filter((id) => id !== action.placeId)
+          : [...state.savedPlaceIds, action.placeId],
+      };
+    default:
+      return { ...state, trip: tripReducer(state.trip, action) };
+  }
+}
+
+export interface TripContextValue {
+  trip: Trip | null;
+  savedPlaceIds: string[];
+  hydrated: boolean;
+  startTrip: (trip: Trip) => void;
+  clearTrip: () => void;
+  addStop: (dayNumber: number, place: Place) => void;
+  addAndLockStop: (dayNumber: number, place: Place) => void;
+  removeStop: (slotId: string) => void;
+  removeMatchingCategory: (category: PlaceCategory, placesById: Map<string, Place>) => void;
+  reorderStop: (dayNumber: number, slotId: string, direction: "up" | "down") => void;
+  moveStopToDay: (slotId: string, toDayNumber: number) => void;
+  toggleLock: (slotId: string) => void;
+  regenerateDay: (dayNumber: number, allPlaces: Place[], paceOverride?: Pace) => void;
+  updatePreferences: (preferences: Partial<UserPreferences>, allPlaces: Place[]) => void;
+  setReferencePoint: (referencePoint: ReferencePoint | null) => void;
+  toggleSavedPlace: (placeId: string) => void;
+  isSaved: (placeId: string) => boolean;
+}
+
+export const TripContext = createContext<TripContextValue | null>(null);
+
+export function TripProvider({ children }: { children: ReactNode }) {
+  const [state, dispatch] = useReducer(storeReducer, initialState);
+
+  useEffect(() => {
+    dispatch({ type: "HYDRATE", trip: loadTrip(), savedPlaceIds: loadSavedPlaceIds() });
+  }, []);
+
+  useEffect(() => {
+    if (!state.hydrated) return;
+    if (state.trip) saveTrip(state.trip);
+    else clearStoredTrip();
+  }, [state.trip, state.hydrated]);
+
+  useEffect(() => {
+    if (!state.hydrated) return;
+    saveSavedPlaceIds(state.savedPlaceIds);
+  }, [state.savedPlaceIds, state.hydrated]);
+
+  const value: TripContextValue = {
+    trip: state.trip,
+    savedPlaceIds: state.savedPlaceIds,
+    hydrated: state.hydrated,
+    startTrip: (newTrip) => dispatch({ type: "START_TRIP", trip: newTrip }),
+    clearTrip: () => dispatch({ type: "CLEAR_TRIP" }),
+    addStop: (dayNumber, place) => dispatch({ type: "ADD_STOP", dayNumber, place }),
+    addAndLockStop: (dayNumber, place) => dispatch({ type: "ADD_AND_LOCK_STOP", dayNumber, place }),
+    removeStop: (slotId) => dispatch({ type: "REMOVE_STOP", slotId }),
+    removeMatchingCategory: (category, placesById) =>
+      dispatch({ type: "REMOVE_MATCHING_CATEGORY", category, placesById }),
+    reorderStop: (dayNumber, slotId, direction) =>
+      dispatch({ type: "REORDER_STOP", dayNumber, slotId, direction }),
+    moveStopToDay: (slotId, toDayNumber) =>
+      dispatch({ type: "MOVE_STOP_TO_DAY", slotId, toDayNumber }),
+    toggleLock: (slotId) => dispatch({ type: "TOGGLE_LOCK", slotId }),
+    regenerateDay: (dayNumber, allPlaces, paceOverride) =>
+      dispatch({ type: "REGENERATE_DAY", dayNumber, allPlaces, paceOverride }),
+    updatePreferences: (preferences, allPlaces) =>
+      dispatch({ type: "UPDATE_PREFERENCES", preferences, allPlaces }),
+    setReferencePoint: (referencePoint) => dispatch({ type: "SET_REFERENCE_POINT", referencePoint }),
+    toggleSavedPlace: (placeId) => dispatch({ type: "TOGGLE_SAVED_PLACE", placeId }),
+    isSaved: (placeId) => state.savedPlaceIds.includes(placeId),
+  };
+
+  return <TripContext.Provider value={value}>{children}</TripContext.Provider>;
+}
