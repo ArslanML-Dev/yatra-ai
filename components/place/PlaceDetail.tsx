@@ -10,6 +10,7 @@ import { SourceBadge } from "./SourceBadge";
 import { DistanceBadge } from "./DistanceBadge";
 import { ReferencePointPicker } from "./ReferencePointPicker";
 import { SavedToggle } from "./SavedToggle";
+import { LiveNavigationPanel } from "@/components/navigation/LiveNavigationPanel";
 import { Badge } from "@/components/ui/Badge";
 
 export function PlaceDetail({ place, allPlaces }: { place: Place; allPlaces: Place[] }) {
@@ -128,6 +129,7 @@ export function PlaceDetail({ place, allPlaces }: { place: Place; allPlaces: Pla
           >
             🧭 Get directions
           </a>
+          <LiveNavigationPanel destinationName={place.name} destination={place.coordinates} />
           {place.sourceUrl && (
             <a
               href={place.sourceUrl}
