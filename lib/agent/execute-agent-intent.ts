@@ -158,6 +158,11 @@ export function executeAgentIntent(
     }
 
     case "update-preference-metadata":
+      // The one trip-mutating case that was missing this guard: without
+      // it, UPDATE_PREFERENCE_METADATA's own reducer silently no-ops on
+      // a null trip while this still claimed "I've saved that
+      // preference" — a false claim, not just an unhelpful one.
+      if (!trip) return { message: "Start a trip first, then I can save that preference." };
       actions.updatePreferenceMetadata(intent.preferences);
       return {
         message: "Noted — I've saved that preference. It doesn't change today's plan yet.",
