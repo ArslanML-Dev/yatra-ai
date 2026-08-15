@@ -10,6 +10,10 @@ interface SpeechRecognitionEventLike {
   results: ArrayLike<ArrayLike<SpeechRecognitionResultLike>>;
 }
 
+interface SpeechRecognitionErrorEventLike {
+  error: string;
+}
+
 interface SpeechRecognitionLike extends EventTarget {
   lang: string;
   continuous: boolean;
@@ -17,7 +21,7 @@ interface SpeechRecognitionLike extends EventTarget {
   start(): void;
   stop(): void;
   onresult: ((event: SpeechRecognitionEventLike) => void) | null;
-  onerror: (() => void) | null;
+  onerror: ((event: SpeechRecognitionErrorEventLike) => void) | null;
   onend: (() => void) | null;
 }
 
@@ -32,35 +36,58 @@ function getSpeechRecognitionConstructor(): SpeechRecognitionConstructor | null 
   return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
 }
 
+export type SpeechRecognitionStatus =
+  | "idle"
+  | "listening"
+  | "received"
+  | "denied"
+  | "unsupported"
+  | "error";
+
+/** Real Web Speech API error codes, mapped to honest copy — never a
+ * generic silent failure. https://wicg.github.io/speech-api/#speechreco-error */
+const ERROR_MESSAGES: Record<string, string> = {
+  "not-allowed": "Microphone access was denied. Allow it in your browser settings to use voice input.",
+  "service-not-allowed": "Microphone access was denied. Allow it in your browser settings to use voice input.",
+  "audio-capture": "No microphone was found on this device.",
+  "no-speech": "Didn't catch that — try again.",
+  network: "Voice recognition needs a network connection.",
+  aborted: "Voice input was cancelled.",
+};
+
 export interface UseSpeechRecognitionResult {
-  supported: boolean;
-  listening: boolean;
+  status: SpeechRecognitionStatus;
   transcript: string;
+  errorMessage: string | null;
   start: () => void;
   stop: () => void;
   reset: () => void;
 }
 
-/** Single-utterance capture, feature-detected, only starts listening
+/**
+ * Single-utterance capture, feature-detected, only starts listening
  * (and only then triggers the browser's microphone permission prompt)
- * when start() is explicitly called from a user action. */
+ * when start() is explicitly called from a user action. Every real
+ * Web Speech API error is classified into `status` and a human message
+ * — never silently swallowed into an unlabeled "not listening" state.
+ */
 export function useSpeechRecognition(): UseSpeechRecognitionResult {
-  const [supported, setSupported] = useState(false);
-  const [listening, setListening] = useState(false);
+  const [status, setStatus] = useState<SpeechRecognitionStatus>("idle");
   const [transcript, setTranscript] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
 
   useEffect(() => {
     // One-time client-only capability detection after mount — required to
     // avoid an SSR/hydration mismatch (the server has no `window` at all).
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setSupported(getSpeechRecognitionConstructor() !== null);
+    if (getSpeechRecognitionConstructor() === null) setStatus("unsupported");
   }, []);
 
   const start = useCallback(() => {
     const Ctor = getSpeechRecognitionConstructor();
     if (!Ctor) {
-      setSupported(false);
+      setStatus("unsupported");
       return;
     }
 
@@ -71,23 +98,39 @@ export function useSpeechRecognition(): UseSpeechRecognitionResult {
 
     recognition.onresult = (event) => {
       const result = event.results[0]?.[0];
-      if (result) setTranscript(result.transcript);
+      if (result) {
+        setTranscript(result.transcript);
+        setStatus("received");
+      }
     };
-    recognition.onerror = () => setListening(false);
-    recognition.onend = () => setListening(false);
+    recognition.onerror = (event) => {
+      const code = event.error;
+      setErrorMessage(ERROR_MESSAGES[code] ?? "Couldn't hear that — try again.");
+      setStatus(code === "not-allowed" || code === "service-not-allowed" ? "denied" : "error");
+    };
+    recognition.onend = () => {
+      // onresult/onerror already moved status away from "listening" on
+      // a real outcome; only downgrade to idle if the session ended
+      // with neither (e.g. the browser gave up with no result at all).
+      setStatus((prev) => (prev === "listening" ? "idle" : prev));
+    };
 
     recognitionRef.current = recognition;
     setTranscript("");
-    setListening(true);
+    setErrorMessage(null);
+    setStatus("listening");
     recognition.start();
   }, []);
 
   const stop = useCallback(() => {
     recognitionRef.current?.stop();
-    setListening(false);
   }, []);
 
-  const reset = useCallback(() => setTranscript(""), []);
+  const reset = useCallback(() => {
+    setTranscript("");
+    setErrorMessage(null);
+    setStatus("idle");
+  }, []);
 
-  return { supported, listening, transcript, start, stop, reset };
+  return { status, transcript, errorMessage, start, stop, reset };
 }

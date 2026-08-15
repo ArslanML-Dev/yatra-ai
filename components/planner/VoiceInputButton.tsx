@@ -8,23 +8,26 @@ interface VoiceInputButtonProps {
 }
 
 export function VoiceInputButton({ onTranscript }: VoiceInputButtonProps) {
-  const { supported, listening, transcript, start, reset } = useSpeechRecognition();
+  const { status, transcript, errorMessage, start, stop, reset } = useSpeechRecognition();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  if (!supported) return null;
-
-  const confirming = !listening && transcript.length > 0;
+  if (status === "unsupported") {
+    return (
+      <span className="inline-flex items-center gap-1.5 text-xs text-ink-soft/50">
+        <span aria-hidden="true" className="text-base opacity-40">
+          🎙️
+        </span>
+        Voice input isn&rsquo;t supported in this browser.
+      </span>
+    );
+  }
 
   function handleUseThis() {
     onTranscript(textareaRef.current?.value ?? transcript);
     reset();
   }
 
-  function handleCancel() {
-    reset();
-  }
-
-  if (confirming) {
+  if (status === "received") {
     return (
       <div className="mt-3 rounded-xl bg-sandstone-100 p-4">
         <p className="text-xs font-medium uppercase tracking-wide text-ink-soft/70">I heard:</p>
@@ -47,7 +50,7 @@ export function VoiceInputButton({ onTranscript }: VoiceInputButtonProps) {
           </button>
           <button
             type="button"
-            onClick={handleCancel}
+            onClick={reset}
             className="rounded-full border border-navy-900/20 px-4 py-1.5 text-xs font-medium text-navy-900 transition-colors hover:bg-sandstone-100"
           >
             Cancel
@@ -57,16 +60,35 @@ export function VoiceInputButton({ onTranscript }: VoiceInputButtonProps) {
     );
   }
 
+  if (status === "denied" || status === "error") {
+    return (
+      <div className="mt-2 flex items-center gap-2 text-xs text-ink-soft">
+        <span aria-hidden="true">⚠️</span>
+        <span>{errorMessage ?? "Voice input failed — try again."}</span>
+        <button
+          type="button"
+          onClick={reset}
+          className="font-medium text-saffron-600 underline underline-offset-2"
+        >
+          Try again
+        </button>
+      </div>
+    );
+  }
+
+  const listening = status === "listening";
+
   return (
     <button
       type="button"
-      onClick={start}
-      aria-label={listening ? "Listening…" : "Speak your trip request"}
+      onClick={listening ? stop : start}
+      aria-label={listening ? "Stop listening" : "Speak your trip request"}
+      aria-pressed={listening}
       className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-lg transition-colors ${
         listening ? "animate-pulse bg-saffron-600 text-ivory" : "bg-sandstone-100 text-ink-soft hover:bg-sandstone-200"
       }`}
     >
-      🎙️
+      {listening ? "⏹️" : "🎙️"}
     </button>
   );
 }

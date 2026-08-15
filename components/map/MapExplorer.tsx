@@ -6,6 +6,7 @@ import type { CategoryFilter } from "@/types/map";
 import type { Coordinates, Place } from "@/types/place";
 import { useTrip } from "@/lib/trip/use-trip";
 import { CategoryToggle } from "./CategoryToggle";
+import { MapErrorBoundary } from "./MapErrorBoundary";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { EmptyState } from "@/components/ui/EmptyState";
 
@@ -54,8 +55,17 @@ export function MapExplorer({ places, center, highlightPlaceId }: MapExplorerPro
         )}
       </div>
       <div className="relative h-[65vh] min-h-[420px] w-full overflow-hidden rounded-card border border-sandstone-200/70 shadow-soft">
-        {filtered.length === 0 ? (
-          <div className="flex h-full items-center justify-center p-6">
+        {/* The Leaflet instance stays mounted across category toggles —
+            react-leaflet v5 + React 19 has a known remount race ("Map
+            container is already initialized") that toggling this
+            subtree in and out of the tree would otherwise trigger every
+            time a filter matches zero places. The empty state overlays
+            on top instead of unmounting the map underneath it. */}
+        <MapErrorBoundary>
+          <MapView places={filtered} center={center} highlightPlaceId={highlightPlaceId} />
+        </MapErrorBoundary>
+        {filtered.length === 0 && (
+          <div className="absolute inset-0 z-[1000] flex items-center justify-center bg-ivory/95 p-6">
             <EmptyState
               title="Nothing here yet"
               description={
@@ -65,8 +75,6 @@ export function MapExplorer({ places, center, highlightPlaceId }: MapExplorerPro
               }
             />
           </div>
-        ) : (
-          <MapView places={filtered} center={center} highlightPlaceId={highlightPlaceId} />
         )}
       </div>
     </div>
