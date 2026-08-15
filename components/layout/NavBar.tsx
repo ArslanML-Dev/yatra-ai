@@ -34,9 +34,10 @@ export function NavBar() {
           <TravelAgentTrigger />
           <Link
             href="/plan"
-            className="rounded-full bg-navy-900 px-5 py-2 text-sm font-medium text-ivory transition-colors hover:bg-navy-800"
+            className="rounded-full bg-navy-900 px-4 py-2 text-sm font-medium text-ivory transition-colors hover:bg-navy-800 sm:px-5"
           >
-            Plan My Trip
+            <span className="sm:hidden">Plan</span>
+            <span className="hidden sm:inline">Plan My Trip</span>
           </Link>
           <button
             type="button"
