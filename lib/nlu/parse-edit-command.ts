@@ -7,6 +7,7 @@ import {
   extractDayNumber,
   INCREASE_BUDGET_WORDS,
   KEEP_VERBS,
+  MOVE_VERBS,
   PACK_WORDS,
   REDUCE_BUDGET_WORDS,
   RELAX_WORDS,
@@ -18,6 +19,7 @@ export type EditIntent =
   | { kind: "remove-place"; placeId: string; placeName: string }
   | { kind: "keep-place"; placeId: string; placeName: string }
   | { kind: "add-near"; anchorPlaceId: string; anchorName: string }
+  | { kind: "move-place"; placeId: string; placeName: string; toDayNumber: number }
   | { kind: "day-pace"; dayNumber: number; pace: Pace }
   | { kind: "budget-adjust"; direction: "reduce" | "increase" }
   | { kind: "unrecognized" };
@@ -64,6 +66,13 @@ export function parseEditCommand(rawText: string, places: Place[]): EditIntent {
     const named = matchNamedPlaces(afterPhrase, places);
     if (named.length > 0) {
       return { kind: "add-near", anchorPlaceId: named[0].id, anchorName: named[0].name };
+    }
+  }
+
+  if (dayNumber !== null && MOVE_VERBS.some((verb) => text.includes(verb))) {
+    const named = matchNamedPlaces(text, places);
+    if (named.length > 0) {
+      return { kind: "move-place", placeId: named[0].id, placeName: named[0].name, toDayNumber: dayNumber };
     }
   }
 

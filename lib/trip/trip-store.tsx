@@ -52,6 +52,9 @@ export interface TripContextValue {
   toggleLock: (slotId: string) => void;
   regenerateDay: (dayNumber: number, allPlaces: Place[], paceOverride?: Pace) => void;
   updatePreferences: (preferences: Partial<UserPreferences>, allPlaces: Place[]) => void;
+  updatePreferenceMetadata: (
+    preferences: Partial<Pick<UserPreferences, "walkingTolerance" | "foodPreferences">>,
+  ) => void;
   setReferencePoint: (referencePoint: ReferencePoint | null) => void;
   setCurrentStop: (dayNumber: number, slotId: string) => void;
   markVisited: (slotId: string) => void;
@@ -104,6 +107,8 @@ export function TripProvider({ children }: { children: ReactNode }) {
       dispatch({ type: "REGENERATE_DAY", dayNumber, allPlaces, paceOverride }),
     updatePreferences: (preferences, allPlaces) =>
       dispatch({ type: "UPDATE_PREFERENCES", preferences, allPlaces }),
+    updatePreferenceMetadata: (preferences) =>
+      dispatch({ type: "UPDATE_PREFERENCE_METADATA", preferences }),
     setReferencePoint: (referencePoint) => dispatch({ type: "SET_REFERENCE_POINT", referencePoint }),
     setCurrentStop: (dayNumber, slotId) => dispatch({ type: "SET_CURRENT_STOP", dayNumber, slotId }),
     markVisited: (slotId) => dispatch({ type: "MARK_VISITED", slotId }),

@@ -10,7 +10,7 @@ import { formatCategoryLabel } from "@/lib/utils/format";
 const BUDGET_STEP_RATIO = 0.2;
 const DEFAULT_DAILY_BUDGET_INR = 1500;
 
-function findSlotByPlaceId(trip: Trip, placeId: string) {
+export function findSlotByPlaceId(trip: Trip, placeId: string) {
   for (const day of trip.itinerary.days) {
     const slot = day.slots.find((s) => s.placeId === placeId);
     if (slot) return { dayNumber: day.dayNumber, slot };
@@ -101,6 +101,16 @@ export function executeEditIntent(
       const dayNumber = findDayContainingPlace(trip, anchor.id) ?? trip.itinerary.days[0]?.dayNumber ?? 1;
       actions.addStop(dayNumber, nearest[0].place);
       return `Added ${nearest[0].place.name} (${formatDistanceWithSource(nearest[0].distanceKm, intent.anchorName)}).`;
+    }
+
+    case "move-place": {
+      const found = findSlotByPlaceId(trip, intent.placeId);
+      if (!found) return `${intent.placeName} isn't in your trip.`;
+      if (found.dayNumber === intent.toDayNumber) {
+        return `${intent.placeName} is already on Day ${intent.toDayNumber}.`;
+      }
+      actions.moveStopToDay(found.slot.id, intent.toDayNumber);
+      return `Moved ${intent.placeName} to Day ${intent.toDayNumber}.`;
     }
 
     case "day-pace": {

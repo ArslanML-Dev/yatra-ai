@@ -18,6 +18,10 @@ export type TripAction =
   | { type: "TOGGLE_LOCK"; slotId: string }
   | { type: "REGENERATE_DAY"; dayNumber: number; allPlaces: Place[]; paceOverride?: Pace }
   | { type: "UPDATE_PREFERENCES"; preferences: Partial<UserPreferences>; allPlaces: Place[] }
+  | {
+      type: "UPDATE_PREFERENCE_METADATA";
+      preferences: Partial<Pick<UserPreferences, "walkingTolerance" | "foodPreferences">>;
+    }
   | { type: "SET_REFERENCE_POINT"; referencePoint: ReferencePoint | null }
   | { type: "SET_CURRENT_STOP"; dayNumber: number; slotId: string }
   | { type: "MARK_VISITED"; slotId: string }
@@ -282,6 +286,26 @@ export function tripReducer(state: TripState, action: TripAction): TripState {
     case "SET_REFERENCE_POINT":
       if (!state) return state;
       return { ...state, referencePoint: action.referencePoint, updatedAt: new Date().toISOString() };
+
+    /**
+     * Patches ONLY walkingTolerance/foodPreferences on the trip's
+     * preferences object. Deliberately does NOT call generateItinerary
+     * and does NOT go through touch() — itinerary.days must come out
+     * byte-identical, since these fields don't yet feed scoring (see
+     * lib/itinerary/*, frozen). This is a metadata write, not an edit
+     * to the plan.
+     */
+    case "UPDATE_PREFERENCE_METADATA": {
+      if (!state) return state;
+      return {
+        ...state,
+        itinerary: {
+          ...state.itinerary,
+          preferences: { ...state.itinerary.preferences, ...action.preferences },
+        },
+        updatedAt: new Date().toISOString(),
+      };
+    }
 
     case "SET_CURRENT_STOP": {
       if (!state) return state;

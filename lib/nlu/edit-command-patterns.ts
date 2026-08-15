@@ -1,5 +1,6 @@
 export const REMOVE_VERBS = ["remove", "drop", "delete", "cut", "skip"];
 export const KEEP_VERBS = ["keep", "lock", "must visit", "must-visit"];
+export const MOVE_VERBS = ["move", "shift", "reschedule"];
 export const ADD_NEAR_PHRASES = ["add something near", "add a place near", "something near", "add near"];
 export const RELAX_WORDS = ["relaxed", "relax", "slower", "less packed", "lighter"];
 export const PACK_WORDS = ["packed", "pack", "busier", "more to do", "fuller"];
