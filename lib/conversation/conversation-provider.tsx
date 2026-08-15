@@ -1,14 +1,17 @@
 "use client";
 
-import { createContext, useReducer, type ReactNode } from "react";
+import { createContext, useReducer, useState, type ReactNode } from "react";
 import type { ConversationState, ConversationTurn } from "@/types/conversation";
 import { createConversationState } from "@/types/conversation";
+import type { UserPreferences } from "@/types/user-preferences";
 import { accumulatePreferences, recordMention, recordTurn } from "./conversation-reducer";
+import { useProfile } from "@/lib/profile/use-profile";
 
 type ConversationAction =
   | { type: "RECORD_TURN"; turn: ConversationTurn }
   | { type: "RECORD_MENTION"; placeId: string }
-  | { type: "ACCUMULATE_PREFERENCES"; rawText: string };
+  | { type: "ACCUMULATE_PREFERENCES"; rawText: string }
+  | { type: "SEED_FROM_PROFILE"; preferences: Partial<UserPreferences> };
 
 const initialConversationState: ConversationState = createConversationState();
 
@@ -30,6 +33,10 @@ function conversationStateReducer(
       return recordMention(state, action.placeId);
     case "ACCUMULATE_PREFERENCES":
       return accumulatePreferences(state, action.rawText);
+    case "SEED_FROM_PROFILE":
+      // Any conversational input already accumulated wins over a
+      // profile default — this only ever fills gaps, never overrides.
+      return { ...state, accumulated: { ...action.preferences, ...state.accumulated } };
     default:
       return state;
   }
@@ -53,6 +60,22 @@ export const ConversationContext = createContext<ConversationContextValue | null
  */
 export function ConversationProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(conversationStateReducer, initialConversationState);
+  const { profile, hydrated: profileHydrated } = useProfile();
+  const [seededFromProfile, setSeededFromProfile] = useState(false);
+
+  // Pre-fills `accumulated` from a saved local profile, once, the first
+  // render after the profile store hydrates — the "feeds Travel Agent
+  // conversation defaults" half of the Local Profile scope. Only
+  // meaningful now that chat-based trip creation actually reads
+  // `accumulated`; never touches Trip. Adjusted during render (React's
+  // sanctioned pattern, not an effect) so it can't fire after a real
+  // conversation is already in progress.
+  if (profileHydrated && !seededFromProfile) {
+    setSeededFromProfile(true);
+    if (profile && Object.keys(profile.preferences).length > 0) {
+      dispatch({ type: "SEED_FROM_PROFILE", preferences: profile.preferences });
+    }
+  }
 
   const value: ConversationContextValue = {
     state,
