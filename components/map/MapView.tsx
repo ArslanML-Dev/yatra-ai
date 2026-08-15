@@ -2,20 +2,23 @@
 
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
-import markerIcon from "leaflet/dist/images/marker-icon.png";
-import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { useEffect, useRef } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import type { Coordinates, Place } from "@/types/place";
 import { getMapProvider } from "@/lib/providers/provider-registry";
 import { MarkerPopup } from "./MarkerPopup";
 
+// Served from /public (copied from leaflet/dist/images) rather than
+// imported from node_modules — confirmed via real browser testing that
+// Turbopack's static-asset resolution for a third-party package's own
+// PNGs doesn't reliably produce a working .src here, which threw
+// "iconUrl not set in Icon options" on every marker and crashed the
+// map. Plain, predictable string paths sidestep that entirely.
 delete (L.Icon.Default.prototype as unknown as { _getIconUrl?: unknown })._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: markerIcon2x.src,
-  iconUrl: markerIcon.src,
-  shadowUrl: markerShadow.src,
+  iconRetinaUrl: "/leaflet/marker-icon-2x.png",
+  iconUrl: "/leaflet/marker-icon.png",
+  shadowUrl: "/leaflet/marker-shadow.png",
 });
 
 interface MapViewProps {
