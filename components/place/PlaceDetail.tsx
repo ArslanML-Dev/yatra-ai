@@ -147,7 +147,7 @@ export function PlaceDetail({ place, allPlaces }: { place: Place; allPlaces: Pla
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center rounded-full bg-navy-900 px-5 py-2.5 text-sm font-medium text-ivory transition-colors hover:bg-navy-800"
           >
-            🧭 Get directions
+            🧭 Open in Google Maps
           </a>
           <LiveNavigationPanel destinationName={place.name} destination={place.coordinates} />
           {place.sourceUrl && (

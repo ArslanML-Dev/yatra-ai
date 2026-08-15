@@ -16,7 +16,14 @@ export const riverfrontEveningPlaces: Place[] = [
     suitableTimesOfDay: ["evening", "night"],
     area: "riverfront",
     coordinates: { lat: 26.8451102, lng: 80.9708927 },
-    images: [],
+    images: [
+      {
+        url: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Gomti_Riverfront%2C_Lucknow%2C_India.jpg",
+        alt: "The Gomti Riverfront promenade in Lucknow at dusk",
+        source: "Wikimedia Commons",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Gomti_Riverfront,_Lucknow,_India.jpg",
+      },
+    ],
     priceRange: "unknown",
     knownFor: ["A riverside promenade with a musical fountain and amphitheatre commonly mentioned in visitor guides"],
     tags: ["riverfront_evening", "parks"],

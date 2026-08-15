@@ -27,7 +27,7 @@ export function LiveNavigationPanel({ destinationName, destination }: LiveNaviga
         }}
         className="inline-flex items-center gap-1.5 text-xs text-ink-soft/70 underline"
       >
-        🧭 Try live guidance (beta)
+        🧭 Navigate with Yatra (beta)
       </button>
     );
   }

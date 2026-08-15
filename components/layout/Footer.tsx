@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useTravelAgentUI } from "@/components/agent/TravelAgentPanel";
+import { useProfileUI } from "@/components/profile/ProfilePanel";
 
 const exploreLinks = [
   { href: "/explore", label: "Explore Lucknow" },
@@ -11,12 +12,12 @@ const exploreLinks = [
 
 /**
  * A real multi-column footer mirroring NavBar's actual entry points —
- * not a placeholder link set. No "Account"/profile column: that
- * capability doesn't exist yet (local profile is deferred), and this
- * footer never implies a feature that isn't built.
+ * not a placeholder link set. Every link/button here maps to a genuinely
+ * working feature.
  */
 export function Footer() {
-  const { togglePanel } = useTravelAgentUI();
+  const { togglePanel: toggleAgentPanel } = useTravelAgentUI();
+  const { togglePanel: toggleProfilePanel } = useProfileUI();
 
   return (
     <footer className="border-t border-sandstone-200/70 bg-navy-950 text-ivory/70">
@@ -26,8 +27,8 @@ export function Footer() {
             Yatra <span className="text-saffron-400">AI</span>
           </p>
           <p className="mt-3 max-w-sm text-body-sm">
-            A context-aware travel companion, piloted in Lucknow. Every place shown is
-            curated and sourced — see each listing for its verification status.
+            An AI-powered tourism platform, currently showcased in Lucknow. Every place
+            shown is curated and sourced — see each listing for its verification status.
           </p>
         </div>
 
@@ -55,10 +56,19 @@ export function Footer() {
             <li>
               <button
                 type="button"
-                onClick={togglePanel}
+                onClick={toggleAgentPanel}
                 className="text-body-sm transition-colors hover:text-ivory"
               >
                 Ask the Travel Agent
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                onClick={toggleProfilePanel}
+                className="text-body-sm transition-colors hover:text-ivory"
+              >
+                Your Profile
               </button>
             </li>
           </ul>

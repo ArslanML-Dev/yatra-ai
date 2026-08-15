@@ -15,7 +15,14 @@ export const transportPlaces: Place[] = [
     estimatedVisitMinutes: 0,
     suitableTimesOfDay: ["morning", "afternoon", "evening", "night"],
     coordinates: { lat: 26.76056, lng: 80.89028 },
-    images: [],
+    images: [
+      {
+        url: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Terminal-2%2C_Lucknow_International_airport.jpg",
+        alt: "Terminal 2 at Chaudhary Charan Singh International Airport, Lucknow",
+        source: "Wikimedia Commons",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Terminal-2,_Lucknow_International_airport.jpg",
+      },
+    ],
     priceRange: "unknown",
     knownFor: ["Terminal 3's Chikankari-inspired façade"],
     tags: ["transport"],
@@ -42,7 +49,14 @@ export const transportPlaces: Place[] = [
     estimatedVisitMinutes: 30,
     suitableTimesOfDay: ["morning", "afternoon"],
     coordinates: { lat: 26.832, lng: 80.919 },
-    images: [],
+    images: [
+      {
+        url: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Charbagh_Railway_Station%2C_Lucknow.jpg",
+        alt: "Charbagh Railway Station's Indo-Saracenic facade in Lucknow",
+        source: "Wikimedia Commons",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Charbagh_Railway_Station,_Lucknow.jpg",
+      },
+    ],
     priceRange: "unknown",
     knownFor: ["Indo-Saracenic architecture echoing Lucknow's Nawabi-era monuments"],
     tags: ["transport"],

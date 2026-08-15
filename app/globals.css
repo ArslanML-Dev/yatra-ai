@@ -59,6 +59,13 @@
   --text-hero--line-height: 1.02;
   --text-hero--letter-spacing: -0.02em;
 
+  /* The one oversized, commanding size reserved for the homepage hero
+     headline — fluid via clamp() so it scales with viewport width
+     instead of jumping at breakpoints. */
+  --text-display: clamp(3.25rem, 9vw, 6.5rem);
+  --text-display--line-height: 0.94;
+  --text-display--letter-spacing: -0.03em;
+
   /* Semantic elevation tokens — one soft resting shadow, one lifted
      hover/active shadow, used instead of ad hoc shadow-* utilities. */
   --shadow-soft: 0 1px 2px rgba(11, 22, 38, 0.04), 0 8px 24px -4px rgba(11, 22, 38, 0.08);

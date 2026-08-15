@@ -36,7 +36,7 @@ export function MarkerPopup({ place }: { place: Place }) {
           rel="noopener noreferrer"
           className="text-sm text-saffron-600 underline"
         >
-          🧭 Get directions
+          🧭 Open in Google Maps
         </a>
       </div>
     </motion.div>

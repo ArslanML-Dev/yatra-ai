@@ -18,7 +18,14 @@ export const shoppingPlaces: Place[] = [
     suitableTimesOfDay: ["morning", "afternoon", "evening"],
     area: "old-lucknow",
     coordinates: { lat: 26.8677148, lng: 80.9042142 },
-    images: [],
+    images: [
+      {
+        url: "https://upload.wikimedia.org/wikipedia/commons/6/63/Chikan_embroidery%2C_Lucknow.jpg",
+        alt: "Chikankari hand embroidery from Lucknow",
+        source: "Wikimedia Commons",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Chikan_embroidery,_Lucknow.jpg",
+      },
+    ],
     priceRange: "unknown",
     knownFor: [
       "Chikankari embroidery — look for slight hand-stitch irregularity and visible shadow-work on the reverse to distinguish it from machine embroidery",
@@ -47,7 +54,14 @@ export const shoppingPlaces: Place[] = [
     suitableTimesOfDay: ["afternoon", "evening"],
     area: "hazratganj-central",
     coordinates: { lat: 26.8465111, lng: 80.9466833 },
-    images: [],
+    images: [
+      {
+        url: "https://upload.wikimedia.org/wikipedia/commons/1/17/Aminabad_market.jpg",
+        alt: "Aminabad Market in Lucknow",
+        source: "Wikimedia Commons",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Aminabad_market.jpg",
+      },
+    ],
     priceRange: "unknown",
     knownFor: ["Everyday bargain shopping — clothes, Chikan embroidery, spices and hosiery"],
     tags: ["shopping"],

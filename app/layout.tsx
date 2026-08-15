@@ -17,9 +17,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Yatra AI — Experience Lucknow",
+  title: "Yatra AI — AI-Powered Tourism, Now in Lucknow",
   description:
-    "An AI travel companion that helps you understand, plan, and experience Lucknow — heritage, food, shopping, parks, and a day-wise itinerary built around you.",
+    "Yatra AI is an AI-powered tourism platform, currently showcased in Lucknow — heritage, food, shopping, parks, and a day-wise itinerary built around how you actually want to travel.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

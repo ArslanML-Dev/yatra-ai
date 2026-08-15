@@ -92,7 +92,7 @@ export function EditableItinerarySlot({
                 rel="noopener noreferrer"
                 className="text-xs text-saffron-600 underline"
               >
-                🧭 Get directions{previousPlace ? ` from ${previousPlace.name}` : ""}
+                🧭 Open in Google Maps{previousPlace ? ` from ${previousPlace.name}` : ""}
               </a>
               <Link href={`/map?highlight=${place.id}`} className="text-xs text-saffron-600 underline">
                 View on map

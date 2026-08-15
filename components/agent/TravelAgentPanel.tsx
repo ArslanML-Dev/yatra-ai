@@ -8,7 +8,11 @@ import { useTravelAgent } from "@/lib/agent/use-travel-agent";
 import { EDIT_COMMAND_EXAMPLES } from "@/lib/nlu/parse-edit-command";
 import { VoiceInputButton } from "@/components/planner/VoiceInputButton";
 
-const QUICK_PROMPTS = EDIT_COMMAND_EXAMPLES.slice(0, 3);
+const CREATION_QUICK_PROMPTS = [
+  "Plan me 3 days focused on heritage and food",
+  "Plan a relaxed 2-day family trip",
+];
+const EDIT_QUICK_PROMPTS = EDIT_COMMAND_EXAMPLES.slice(0, 3);
 
 /**
  * Open/close visibility only — deliberately not part of ConversationState
@@ -54,10 +58,11 @@ export function useTravelAgentUI(): TravelAgentUIContextValue {
  */
 export function TravelAgentPanel() {
   const { open, closePanel } = useTravelAgentUI();
-  const { hydrated } = useTrip();
+  const { trip, hydrated } = useTrip();
   const { turns, submit } = useTravelAgent(allLucknowPlaces);
   const [text, setText] = useState("");
   const prefersReducedMotion = useReducedMotion();
+  const quickPrompts = trip ? EDIT_QUICK_PROMPTS : CREATION_QUICK_PROMPTS;
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -128,14 +133,15 @@ export function TravelAgentPanel() {
                     💬
                   </span>
                   <p className="text-body font-display text-navy-900">
-                    Ask Yatra anything about your trip
+                    {trip ? "Ask Yatra anything about your trip" : "Tell Yatra what kind of trip you want"}
                   </p>
                   <p className="max-w-xs text-body-sm text-ink-soft">
-                    Edits, navigation, and questions about your itinerary — try one below or
-                    type your own.
+                    {trip
+                      ? "Edits, navigation, and questions about your itinerary — try one below or type your own."
+                      : "Give it your days, group, and interests — in one message or a few — and it'll build the plan."}
                   </p>
                   <div className="flex flex-wrap justify-center gap-2">
-                    {QUICK_PROMPTS.map((prompt) => (
+                    {quickPrompts.map((prompt) => (
                       <button
                         key={prompt}
                         type="button"
