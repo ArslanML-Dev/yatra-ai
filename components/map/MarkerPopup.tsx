@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 import type { Place } from "@/types/place";
 import { formatCategoryLabel } from "@/lib/utils/format";
 import { buildGoogleMapsDirectionsUrl } from "@/lib/geo/directions-url";
@@ -8,13 +9,19 @@ import { useTrip } from "@/lib/trip/use-trip";
 
 export function MarkerPopup({ place }: { place: Place }) {
   const { trip } = useTrip();
+  const prefersReducedMotion = useReducedMotion();
   const directionsUrl = buildGoogleMapsDirectionsUrl(
     place.coordinates,
     trip?.referencePoint?.coordinates,
   );
 
   return (
-    <div className="min-w-[180px]">
+    <motion.div
+      className="min-w-[180px]"
+      initial={prefersReducedMotion ? undefined : { opacity: 0, scale: 0.92 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.16 }}
+    >
       <p className="text-xs font-medium uppercase tracking-wide text-saffron-600">
         {formatCategoryLabel(place.category)}
       </p>
@@ -32,6 +39,6 @@ export function MarkerPopup({ place }: { place: Place }) {
           🧭 Get directions
         </a>
       </div>
-    </div>
+    </motion.div>
   );
 }

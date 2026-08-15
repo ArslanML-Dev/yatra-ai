@@ -38,7 +38,7 @@ export function MapExplorer({ places, center, highlightPlaceId }: MapExplorerPro
 
   return (
     <div className="flex h-full flex-col gap-4">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-card border border-sandstone-200/70 bg-white p-2.5 shadow-soft">
         <CategoryToggle active={active} onChange={setActive} />
         {trip && (
           <button
@@ -53,7 +53,7 @@ export function MapExplorer({ places, center, highlightPlaceId }: MapExplorerPro
           </button>
         )}
       </div>
-      <div className="relative h-[65vh] min-h-[420px] w-full overflow-hidden rounded-2xl border border-sandstone-200/70">
+      <div className="relative h-[65vh] min-h-[420px] w-full overflow-hidden rounded-card border border-sandstone-200/70 shadow-soft">
         {filtered.length === 0 ? (
           <div className="flex h-full items-center justify-center p-6">
             <EmptyState

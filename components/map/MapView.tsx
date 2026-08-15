@@ -45,6 +45,32 @@ function HighlightEffect({
   return null;
 }
 
+/**
+ * Rendered inside Leaflet's own bottom-right control slot (the standard
+ * `leaflet-bottom`/`leaflet-control` classes), so it's positioned and
+ * layered by Leaflet itself — never collides with the default top-left
+ * zoom control, and needs no custom z-index bookkeeping.
+ */
+function RecenterControl({ center }: { center: Coordinates }) {
+  const map = useMap();
+
+  return (
+    <div className="leaflet-bottom leaflet-right">
+      <div className="leaflet-control leaflet-bar">
+        <button
+          type="button"
+          onClick={() => map.flyTo([center.lat, center.lng], 12, { duration: 0.6 })}
+          aria-label="Recenter map"
+          title="Recenter map"
+          className="flex h-8 w-8 items-center justify-center bg-white text-base text-navy-900 transition-colors hover:bg-sandstone-100"
+        >
+          🎯
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export function MapView({ places, center, highlightPlaceId }: MapViewProps) {
   const mapProvider = getMapProvider();
   const tileConfig = mapProvider.getTileConfig();
@@ -76,6 +102,7 @@ export function MapView({ places, center, highlightPlaceId }: MapViewProps) {
       {highlightPlaceId && (
         <HighlightEffect highlightPlaceId={highlightPlaceId} markersRef={markersRef} />
       )}
+      <RecenterControl center={center} />
     </MapContainer>
   );
 }

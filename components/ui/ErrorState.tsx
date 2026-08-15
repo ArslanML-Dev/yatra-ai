@@ -10,10 +10,10 @@ export function ErrorState({
   return (
     <div
       role="alert"
-      className="flex flex-col items-center gap-2 rounded-2xl border border-saffron-600/30 bg-saffron-600/5 px-6 py-16 text-center"
+      className="flex flex-col items-center gap-2 rounded-card border border-saffron-600/30 bg-saffron-600/5 px-6 py-16 text-center"
     >
-      <p className="font-display text-lg text-navy-900">{title}</p>
-      <p className="max-w-md text-sm text-ink-soft">{description}</p>
+      <p className="text-h4 font-display text-navy-900">{title}</p>
+      <p className="max-w-md text-body-sm text-ink-soft">{description}</p>
     </div>
   );
 }

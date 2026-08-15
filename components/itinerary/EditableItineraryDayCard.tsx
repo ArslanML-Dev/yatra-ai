@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence } from "framer-motion";
 import type { ItineraryDay } from "@/types/itinerary";
 import type { Place } from "@/types/place";
 import type { Pace } from "@/types/user-preferences";
@@ -45,11 +46,11 @@ export function EditableItineraryDayCard({
   }
 
   return (
-    <section className="rounded-2xl border border-sandstone-200/70 bg-ivory-dim p-6">
+    <section className="rounded-card border border-sandstone-200/70 bg-ivory-dim p-6 shadow-soft">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-baseline gap-3">
-          <span className="font-display text-2xl text-saffron-600">Day {day.dayNumber}</span>
-          {day.theme && <span className="text-sm font-medium text-ink-soft">{day.theme}</span>}
+          <span className="text-h3 font-display text-saffron-600">Day {day.dayNumber}</span>
+          {day.theme && <span className="text-body-sm font-medium text-ink-soft">{day.theme}</span>}
         </div>
         <button
           type="button"
@@ -73,27 +74,31 @@ export function EditableItineraryDayCard({
         </div>
       )}
 
-      <div className="mt-4 flex flex-col gap-3">
-        {day.slots.length === 0 ? (
+      {day.slots.length === 0 ? (
+        <div className="mt-4">
           <EmptyState
             title="A lighter day"
             description="No fresh recommendations left for this day yet — use it to revisit a favourite spot at your own pace."
           />
-        ) : (
-          day.slots.map((slot, i) => (
-            <EditableItinerarySlot
-              key={slot.id}
-              slot={slot}
-              place={placesById.get(slot.placeId)}
-              previousPlace={i > 0 ? placesById.get(day.slots[i - 1].placeId) : undefined}
-              dayNumber={day.dayNumber}
-              isFirst={i === 0}
-              isLast={i === day.slots.length - 1}
-              totalDays={totalDays}
-            />
-          ))
-        )}
-      </div>
+        </div>
+      ) : (
+        <ul className="mt-4 flex flex-col gap-3">
+          <AnimatePresence initial={false}>
+            {day.slots.map((slot, i) => (
+              <EditableItinerarySlot
+                key={slot.id}
+                slot={slot}
+                place={placesById.get(slot.placeId)}
+                previousPlace={i > 0 ? placesById.get(day.slots[i - 1].placeId) : undefined}
+                dayNumber={day.dayNumber}
+                isFirst={i === 0}
+                isLast={i === day.slots.length - 1}
+                totalDays={totalDays}
+              />
+            ))}
+          </AnimatePresence>
+        </ul>
+      )}
 
       {lastPlace && (
         <details className="mt-4 rounded-xl bg-white p-4">

@@ -29,9 +29,9 @@ export function TripEditChat({ allPlaces }: { allPlaces: Place[] }) {
   const recentTurns = turns.slice(-RECENT_TURNS_SHOWN);
 
   return (
-    <div className="rounded-2xl border border-sandstone-200/70 bg-white p-6">
-      <h2 className="font-display text-lg text-navy-900">Adapt my trip</h2>
-      <p className="mt-1 text-sm text-ink-soft">
+    <div className="rounded-card border border-sandstone-200/70 bg-white p-6 shadow-soft">
+      <h2 className="text-h4 font-display text-navy-900">Adapt my trip</h2>
+      <p className="mt-1 text-body-sm text-ink-soft">
         Tell it what to change — e.g. &ldquo;{EDIT_COMMAND_EXAMPLES[0]}&rdquo; or &ldquo;
         {EDIT_COMMAND_EXAMPLES[3]}&rdquo;.
       </p>

@@ -23,42 +23,62 @@ export function PlaceDetail({ place, allPlaces }: { place: Place; allPlaces: Pla
   const sourceLabel = getSource(place.source)?.label;
 
   return (
-    <article className="mx-auto max-w-4xl px-6 py-16">
-      <div className="flex flex-wrap items-center gap-3">
-        <Badge tone="navy">{formatCategoryLabel(place.category)}</Badge>
-        <SourceBadge status={place.verificationStatus} />
-        <DistanceBadge coordinates={place.coordinates} />
-        <SavedToggle placeId={place.id} placeName={place.name} />
-      </div>
-
-      <h1 className="mt-4 font-display text-4xl text-navy-900 sm:text-5xl">{place.name}</h1>
-      <p className="mt-4 max-w-2xl text-lg text-ink-soft">{place.description}</p>
-
-      <div className="mt-4">
-        <ReferencePointPicker places={allPlaces} />
-      </div>
-
-      {image && (
-        <div className="relative mt-8 h-80 w-full overflow-hidden rounded-2xl bg-sandstone-100 sm:h-[420px]">
-          <Image src={image.url} alt={image.alt} fill className="object-cover" priority sizes="(min-width: 768px) 800px, 100vw" />
+    <article>
+      {image ? (
+        <div className="relative flex h-[52vh] min-h-[320px] w-full items-end overflow-hidden bg-navy-950">
+          <Image
+            src={image.url}
+            alt={image.alt}
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/50 to-navy-950/10" />
+          <div className="relative z-10 mx-auto w-full max-w-4xl px-6 pb-10">
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge tone="translucent">{formatCategoryLabel(place.category)}</Badge>
+              <SourceBadge status={place.verificationStatus} />
+              <DistanceBadge coordinates={place.coordinates} tone="light" />
+            </div>
+            <h1 className="mt-4 text-h1 font-display text-ivory">{place.name}</h1>
+            <p className="mt-3 max-w-2xl text-body-lg text-ivory/80">{place.description}</p>
+          </div>
+        </div>
+      ) : (
+        <div className="mx-auto max-w-4xl px-6 pt-16">
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge tone="navy">{formatCategoryLabel(place.category)}</Badge>
+            <SourceBadge status={place.verificationStatus} />
+            <DistanceBadge coordinates={place.coordinates} />
+          </div>
+          <h1 className="mt-4 text-h1 font-display text-navy-900">{place.name}</h1>
+          <p className="mt-3 max-w-2xl text-body-lg text-ink-soft">{place.description}</p>
         </div>
       )}
-      {image && (
-        <p className="mt-2 text-xs text-ink-soft/60">
-          Image: {image.source}
-          {image.sourceUrl && (
-            <>
-              {" "}
-              &middot;{" "}
-              <a href={image.sourceUrl} className="underline" target="_blank" rel="noopener noreferrer">
-                source
-              </a>
-            </>
-          )}
-        </p>
-      )}
 
-      <div className="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-3">
+      <div className="mx-auto max-w-4xl px-6 py-8">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <ReferencePointPicker places={allPlaces} />
+          <SavedToggle placeId={place.id} placeName={place.name} />
+        </div>
+        {image && (
+          <p className="mt-3 text-xs text-ink-soft/60">
+            Image: {image.source}
+            {image.sourceUrl && (
+              <>
+                {" "}
+                &middot;{" "}
+                <a href={image.sourceUrl} className="underline" target="_blank" rel="noopener noreferrer">
+                  source
+                </a>
+              </>
+            )}
+          </p>
+        )}
+      </div>
+
+      <div className="mx-auto grid max-w-4xl grid-cols-1 gap-10 px-6 pb-16 sm:grid-cols-3">
         <div className="sm:col-span-2 flex flex-col gap-8">
           <section>
             <h2 className="font-display text-xl text-navy-900">Why visit</h2>

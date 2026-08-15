@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils/cn";
 
 interface BadgeProps {
   children: ReactNode;
-  tone?: "sandstone" | "navy" | "leaf";
+  tone?: "sandstone" | "navy" | "leaf" | "translucent";
   className?: string;
 }
 
@@ -11,6 +11,8 @@ const toneClasses = {
   sandstone: "bg-sandstone-100 text-ink-soft",
   navy: "bg-navy-900 text-ivory",
   leaf: "bg-leaf-600/10 text-leaf-600",
+  // For use over a photo/dark background, e.g. the place-page hero.
+  translucent: "border border-ivory/25 bg-ivory/10 text-ivory backdrop-blur-sm",
 };
 
 export function Badge({ children, tone = "sandstone", className }: BadgeProps) {
