@@ -56,10 +56,10 @@ function extractInterests(text: string): PlaceCategory[] {
   return Array.from(found);
 }
 
-function extractPace(text: string): Pace {
-  if (PACE_KEYWORDS.relaxed.some((kw) => text.includes(kw))) return "relaxed";
-  if (PACE_KEYWORDS.packed.some((kw) => text.includes(kw))) return "packed";
-  return "moderate";
+function extractPace(text: string): { pace: Pace; matched: boolean } {
+  if (PACE_KEYWORDS.relaxed.some((kw) => text.includes(kw))) return { pace: "relaxed", matched: true };
+  if (PACE_KEYWORDS.packed.some((kw) => text.includes(kw))) return { pace: "packed", matched: true };
+  return { pace: "moderate", matched: false };
 }
 
 function extractBudget(text: string): Budget | null {
@@ -77,24 +77,41 @@ function extractBudget(text: string): Budget | null {
   return { amount, currency: "INR" };
 }
 
+/**
+ * Parses one message's preferences, honoring `defaults` (typically the
+ * conversation's accumulated preferences so far) for any field this
+ * specific message doesn't itself mention — this is what makes
+ * multi-turn accumulation genuine rather than each new message
+ * resetting anything unmentioned back to a hardcoded default.
+ */
 export function parsePreferences(
   rawText: string,
   defaults?: Partial<UserPreferences>,
 ): UserPreferences {
   const text = rawText.toLowerCase();
 
-  const { days, matched: daysMatched } = extractDays(text);
-  const { group, matched: groupMatched } = extractGroup(text);
-  const interests = extractInterests(text);
-  const pace = extractPace(text);
-  const budget = extractBudget(text);
+  const { days: parsedDays, matched: daysMatched } = extractDays(text);
+  const { group: parsedGroup, matched: groupMatched } = extractGroup(text);
+  const parsedInterests = extractInterests(text);
+  const { pace: parsedPace, matched: paceMatched } = extractPace(text);
+  const parsedBudget = extractBudget(text);
+
+  const days = daysMatched ? parsedDays : (defaults?.days ?? parsedDays);
+  const group = groupMatched ? parsedGroup : (defaults?.group ?? parsedGroup);
+  const interests = parsedInterests.length > 0 ? parsedInterests : (defaults?.interests ?? parsedInterests);
+  const pace = paceMatched ? parsedPace : (defaults?.pace ?? parsedPace);
+  const budget = parsedBudget ?? defaults?.budget ?? null;
+
+  const daysResolved = daysMatched || defaults?.days !== undefined;
+  const groupResolved = groupMatched || defaults?.group !== undefined;
+  const interestsResolved = interests.length > 0;
 
   const unresolvedFields: string[] = [];
-  if (!daysMatched) unresolvedFields.push("days");
-  if (!groupMatched) unresolvedFields.push("group");
-  if (interests.length === 0) unresolvedFields.push("interests");
+  if (!daysResolved) unresolvedFields.push("days");
+  if (!groupResolved) unresolvedFields.push("group");
+  if (!interestsResolved) unresolvedFields.push("interests");
 
-  const confidence: UserPreferences["confidence"] = !daysMatched
+  const confidence: UserPreferences["confidence"] = !daysResolved
     ? "low"
     : unresolvedFields.length > 0
       ? "medium"

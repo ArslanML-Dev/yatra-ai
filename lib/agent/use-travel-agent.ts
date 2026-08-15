@@ -6,6 +6,7 @@ import type { Place } from "@/types/place";
 import { useTrip } from "@/lib/trip/use-trip";
 import { useConversation } from "@/lib/conversation/use-conversation";
 import { mentionedPlaceIdFromIntent } from "@/lib/conversation/conversation-reducer";
+import { buildItineraryQueryString } from "@/lib/trip/itinerary-query";
 import { routeMessage } from "./intent-router";
 import { executeAgentIntent } from "./execute-agent-intent";
 
@@ -48,10 +49,23 @@ export function useTravelAgent(allPlaces: Place[]) {
           router.push(`/place/${intent.destinationPlaceId}`);
           navigated = true;
           message = `Taking you to ${intent.destinationName} — you can try live guidance from there.`;
+        } else if (intent.kind === "create-trip" && intent.ready) {
+          // Same boundary as navigation-start: execute-agent-intent.ts
+          // has no router access by design. Navigates through the exact
+          // route PlannerForm already uses, so generation runs through
+          // the one existing generateItinerary pipeline either way.
+          router.push(`/plan/itinerary?${buildItineraryQueryString(intent.preferences)}`);
+          navigated = true;
+          message = `Building your ${intent.preferences.days}-day Lucknow trip…`;
         } else {
           const result = executeAgentIntent(intent, tripCtx.trip, allPlaces, tripCtx);
           message = result.message;
         }
+
+        // Keeps ConversationState.accumulated current for the next turn
+        // — the same pre-existing, previously-uncalled action Phase 5
+        // added for exactly this purpose.
+        if (intent.kind === "create-trip") conversation.accumulatePreferences(text);
 
         const mentionedId = mentionedPlaceIdFromIntent(intent);
         if (mentionedId) conversation.recordMention(mentionedId);

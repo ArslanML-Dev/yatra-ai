@@ -7,7 +7,9 @@ import { ADD_NEAR_PHRASES, PACK_WORDS, RELAX_WORDS } from "@/lib/nlu/edit-comman
 import { resolveDeicticReference } from "./resolve-reference";
 import { resolveContextualAnchor } from "./resolve-anchor";
 import { resolveRelativeDay } from "./resolve-relative-day";
+import { parsePreferences } from "@/lib/nlu/parse-preferences";
 import {
+  CREATE_TRIP_PHRASES,
   FIND_NEARBY_PHRASES,
   FOOD_MILD_PHRASES,
   FOOD_NONVEG_PHRASES,
@@ -24,6 +26,7 @@ import {
   WALKING_HIGH_PHRASES,
   WALKING_MINIMAL_PHRASES,
   WHATS_NEXT_PHRASES,
+  looksLikeTripPreferences,
 } from "./agent-intent-patterns";
 
 export interface RouteMessageContext {
@@ -48,6 +51,9 @@ function afterPhrase(text: string, phrase: string): string {
  *
  * Priority order (checked top to bottom, first match wins):
  *  1. Navigation phrases — recognized, never executed this phase.
+ *  1b. Explicit trip-creation trigger ("plan my trip") — pre-trip only,
+ *     checked early since no other table overlaps "plan"/"build"/
+ *     "generate".
  *  2. The existing deterministic edit-command parser (remove/keep/
  *     add-near-named/day-pace/budget/move-place) — reused verbatim,
  *     never reimplemented.
@@ -55,6 +61,10 @@ function afterPhrase(text: string, phrase: string): string {
  *     step 2 has already failed to find an absolute "day N".
  *  4. Contextual intents requiring reference/anchor resolution.
  *  5. Preference-metadata and accommodation phrases.
+ *  5c. Soft trip-creation signal (a day count or category keyword, no
+ *     trigger word) — pre-trip only, checked last so it never steals a
+ *     more specific phrase's match (e.g. "I don't want much walking"
+ *     matching step 5a first, not this).
  *  6. Unrecognized — the honest terminal case.
  */
 export function routeMessage(rawText: string, context: RouteMessageContext): AgentIntent {
@@ -70,6 +80,15 @@ export function routeMessage(rawText: string, context: RouteMessageContext): Age
     }
   }
   if (includesAny(text, STOP_NAVIGATION_PHRASES)) return { kind: "navigation-stop" };
+
+  // 1b. Explicit trip-creation trigger — pre-trip only. Reuses
+  // parsePreferences(text, accumulated) exactly as the master plan
+  // specifies: no parallel generation path, the same function
+  // PlannerForm's free-text input already calls.
+  if (!context.trip && includesAny(text, CREATE_TRIP_PHRASES)) {
+    const preferences = parsePreferences(rawText, context.conversation.accumulated);
+    return { kind: "create-trip", preferences, ready: true };
+  }
 
   // 2. Existing edit-command parser. Always attempted, regardless of
   // whether a trip exists yet — execute-edit-intent.ts already has the
@@ -153,6 +172,20 @@ export function routeMessage(rawText: string, context: RouteMessageContext): Age
           capturedAt: new Date().toISOString(),
         },
       };
+    }
+  }
+
+  // 5c. Soft trip-creation signal — pre-trip only, checked last so it
+  // never steals a more specific phrase's match above. Fires once a
+  // creation flow is already accumulating (any prior turn contributed
+  // something) or this message itself carries a day count / group /
+  // interest / pace keyword — genuinely accumulating across turns
+  // rather than requiring the trigger phrase every time.
+  if (!context.trip) {
+    const alreadyAccumulating = Object.keys(context.conversation.accumulated).length > 0;
+    if (alreadyAccumulating || looksLikeTripPreferences(text)) {
+      const preferences = parsePreferences(rawText, context.conversation.accumulated);
+      return { kind: "create-trip", preferences, ready: false };
     }
   }
 

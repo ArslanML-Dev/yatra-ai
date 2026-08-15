@@ -1,13 +1,38 @@
 import type { Place } from "@/types/place";
 import type { Trip } from "@/types/trip";
+import type { UserPreferences } from "@/types/user-preferences";
 import type { AgentIntent } from "@/types/conversation";
 import type { TripContextValue } from "@/lib/trip/trip-store";
 import { executeEditIntent, findSlotByPlaceId } from "@/lib/nlu/execute-edit-intent";
 import { findNearestPlaces } from "@/lib/geo/nearest-places";
 import { formatDistanceWithSource } from "@/lib/geo/format-distance";
+import { formatCategoryLabel } from "@/lib/utils/format";
 
 export interface AgentExecutionResult {
   message: string;
+}
+
+/**
+ * Honest progress message for a still-accumulating creation flow — only
+ * states what parsePreferences actually matched (per unresolvedFields),
+ * never claims certainty about a guessed/defaulted field.
+ */
+function buildCreationFollowUp(preferences: UserPreferences): string {
+  const known: string[] = [];
+  if (!preferences.unresolvedFields.includes("days")) {
+    known.push(`${preferences.days} day${preferences.days > 1 ? "s" : ""}`);
+  }
+  if (!preferences.unresolvedFields.includes("group")) known.push(preferences.group);
+  if (!preferences.unresolvedFields.includes("interests") && preferences.interests.length > 0) {
+    known.push(preferences.interests.map(formatCategoryLabel).join(", "));
+  }
+
+  const summary = known.length > 0 ? `Got it — ${known.join(", ")} so far. ` : "";
+  const missing =
+    preferences.unresolvedFields.length > 0
+      ? `Tell me ${preferences.unresolvedFields.join(", ")} whenever you're ready, or `
+      : "";
+  return `${summary}${missing}say "plan my trip" and I'll build it with what I have.`;
 }
 
 /**
@@ -38,6 +63,19 @@ export function executeAgentIntent(
     case "budget-adjust":
     case "unrecognized":
       return { message: executeEditIntent(intent, trip, allPlaces, actions) };
+
+    case "create-trip":
+      // Real generation + navigation to /plan/itinerary (the existing
+      // generateItinerary pipeline) happens in use-travel-agent.ts when
+      // intent.ready is true — see navigation-start immediately below
+      // for the identical precedent: this function has no router
+      // access by design. This branch only ever actually runs for the
+      // still-accumulating (ready: false) case.
+      return {
+        message: intent.ready
+          ? `Building your ${intent.preferences.days}-day Lucknow trip…`
+          : buildCreationFollowUp(intent.preferences),
+      };
 
     case "navigation-start":
       // Recognized, never executed this phase — no TripContextValue

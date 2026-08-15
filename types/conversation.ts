@@ -54,6 +54,7 @@ export interface ResolvedAnchor {
  */
 export type AgentIntent =
   | EditIntent
+  | { kind: "create-trip"; preferences: UserPreferences; ready: boolean }
   | { kind: "add-near-anchor"; anchor: ResolvedAnchor }
   | { kind: "whats-next" }
   | { kind: "find-nearby"; anchor: ResolvedAnchor }

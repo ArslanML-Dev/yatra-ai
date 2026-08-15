@@ -5,8 +5,49 @@
  * patterns.ts — plain substring matching, no fuzzy tolerance.
  */
 
+import { GROUP_KEYWORDS, INTEREST_KEYWORDS, PACE_KEYWORDS } from "@/lib/nlu/patterns";
+
+const DAY_COUNT_PATTERN =
+  /\d{1,2}\s*(?:-|to)?\s*(?:days?|nights?)|\ba week\b|fortnight|long weekend|two weeks?/;
+
+/**
+ * Soft, no-trigger-word signal that a pre-trip message is describing
+ * trip preferences (a day count, or a group/interest/pace keyword) —
+ * reuses the exact same keyword tables lib/nlu/parse-preferences.ts
+ * itself matches against, so "does this look like trip planning" never
+ * drifts out of sync with what parsePreferences would actually extract.
+ */
+export function looksLikeTripPreferences(text: string): boolean {
+  if (DAY_COUNT_PATTERN.test(text)) return true;
+  if (Object.values(GROUP_KEYWORDS).some((kws) => kws.some((kw) => text.includes(kw)))) return true;
+  if (Object.values(INTEREST_KEYWORDS).some((kws) => kws.some((kw) => text.includes(kw)))) return true;
+  if (Object.values(PACE_KEYWORDS).some((kws) => kws.some((kw) => text.includes(kw)))) return true;
+  return false;
+}
+
 export const TAKE_ME_TO_PHRASES = ["take me to", "navigate to", "directions to", "go to"];
 export const STOP_NAVIGATION_PHRASES = ["stop navigation", "end navigation", "cancel navigation"];
+
+/** Unambiguous "generate it now" signal — safe to check early since no
+ * other phrase table in this file overlaps with "plan"/"build"/
+ * "generate". Softer preference-only signal (no trip yet, "3 days" or a
+ * category keyword with no trigger word) is handled separately, late in
+ * routeMessage's priority order, so it never steals a more specific
+ * phrase's match. */
+export const CREATE_TRIP_PHRASES = [
+  "plan me",
+  "plan my trip",
+  "plan a trip",
+  "plan our trip",
+  "plan my lucknow trip",
+  "create a trip",
+  "build me a trip",
+  "build my itinerary",
+  "generate my itinerary",
+  "generate an itinerary",
+  "make me an itinerary",
+  "make my itinerary",
+];
 
 export const WHATS_NEXT_PHRASES = ["what's next", "whats next", "what is next", "next stop"];
 export const HOW_FAR_PHRASES = ["how far", "how much further", "distance to"];

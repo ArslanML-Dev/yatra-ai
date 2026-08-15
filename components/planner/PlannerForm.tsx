@@ -7,6 +7,7 @@ import type { UserPreferences } from "@/types/user-preferences";
 import { ruleBasedAIProvider } from "@/lib/providers/rule-based-ai-provider";
 import { matchNamedPlaces } from "@/lib/nlu/named-place-matcher";
 import { useProfile } from "@/lib/profile/use-profile";
+import { buildItineraryQueryString } from "@/lib/trip/itinerary-query";
 import { FreeTextInput } from "./FreeTextInput";
 import { PreferencesSummary } from "./PreferencesSummary";
 import { StructuredFallbackForm } from "./StructuredFallbackForm";
@@ -22,18 +23,6 @@ const DEFAULT_PREFERENCES: UserPreferences = {
   confidence: "low",
   unresolvedFields: ["days", "group", "interests"],
 };
-
-function toQueryString(preferences: UserPreferences, lockedPlaceIds: string[]): string {
-  const params = new URLSearchParams({
-    days: String(preferences.days),
-    group: preferences.group,
-    interests: preferences.interests.join(","),
-    pace: preferences.pace,
-  });
-  if (preferences.budget) params.set("budget", String(preferences.budget.amount));
-  if (lockedPlaceIds.length > 0) params.set("locked", lockedPlaceIds.join(","));
-  return params.toString();
-}
 
 export function PlannerForm({ places }: { places: Place[] }) {
   const router = useRouter();
@@ -72,7 +61,7 @@ export function PlannerForm({ places }: { places: Place[] }) {
 
   function handleGenerate() {
     const lockedPlaceIds = lockedPlaces.map((p) => p.id);
-    router.push(`/plan/itinerary?${toQueryString(preferences, lockedPlaceIds)}`);
+    router.push(`/plan/itinerary?${buildItineraryQueryString(preferences, lockedPlaceIds)}`);
   }
 
   return (
