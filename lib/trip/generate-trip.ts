@@ -20,7 +20,6 @@ export function createTripFromPreferences(
     id: createId(),
     itinerary,
     lockedPlaceIds,
-    referencePoint: null,
     createdAt: now,
     updatedAt: now,
   };

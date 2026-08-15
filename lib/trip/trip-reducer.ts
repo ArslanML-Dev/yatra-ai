@@ -1,7 +1,7 @@
 import type { Place, PlaceCategory, TimeOfDaySuitability } from "@/types/place";
 import type { Itinerary, ItineraryDay, ItinerarySlot } from "@/types/itinerary";
 import type { Pace, UserPreferences } from "@/types/user-preferences";
-import type { NamedLocation, NavigationMode, ReferencePoint, Trip } from "@/types/trip";
+import type { NamedLocation, NavigationMode, Trip } from "@/types/trip";
 import { generateItinerary } from "@/lib/itinerary/generate-itinerary";
 
 export type TripState = Trip | null;
@@ -22,7 +22,6 @@ export type TripAction =
       type: "UPDATE_PREFERENCE_METADATA";
       preferences: Partial<Pick<UserPreferences, "walkingTolerance" | "foodPreferences">>;
     }
-  | { type: "SET_REFERENCE_POINT"; referencePoint: ReferencePoint | null }
   | { type: "SET_CURRENT_STOP"; dayNumber: number; slotId: string }
   | { type: "MARK_VISITED"; slotId: string }
   | { type: "MARK_SKIPPED"; slotId: string }
@@ -293,10 +292,6 @@ export function tripReducer(state: TripState, action: TripAction): TripState {
       });
       return touch(state, regenerated);
     }
-
-    case "SET_REFERENCE_POINT":
-      if (!state) return state;
-      return { ...state, referencePoint: action.referencePoint, updatedAt: new Date().toISOString() };
 
     /**
      * Patches ONLY walkingTolerance/foodPreferences on the trip's

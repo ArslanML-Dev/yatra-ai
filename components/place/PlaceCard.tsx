@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Place } from "@/types/place";
@@ -6,7 +9,11 @@ import { SourceBadge } from "./SourceBadge";
 import { SavedToggle } from "./SavedToggle";
 
 export function PlaceCard({ place }: { place: Place }) {
-  const image = place.images[0];
+  // A hotlinked Wikimedia source can rate-limit or fail transiently —
+  // confirmed via real browser testing. Falls back to the same branded
+  // placeholder used for places that never had an image.
+  const [imageFailed, setImageFailed] = useState(false);
+  const image = imageFailed ? undefined : place.images[0];
 
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-sandstone-200/70 bg-white transition-shadow hover:shadow-lg hover:shadow-navy-900/5">
@@ -22,6 +29,7 @@ export function PlaceCard({ place }: { place: Place }) {
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"
               sizes="(min-width: 768px) 33vw, 100vw"
+              onError={() => setImageFailed(true)}
             />
           ) : (
             <div className="flex h-full items-center justify-center text-sandstone-300">

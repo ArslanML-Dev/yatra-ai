@@ -36,6 +36,7 @@ export function useTravelAgent(allPlaces: Place[]) {
           trip: tripCtx.trip,
           allPlaces,
           conversation: conversation.state,
+          referencePoint: tripCtx.referencePoint,
         });
 
         if (intent.kind === "navigation-start") {

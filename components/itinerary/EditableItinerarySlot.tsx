@@ -34,15 +34,15 @@ export function EditableItinerarySlot({
   isLast,
   totalDays,
 }: EditableItinerarySlotProps) {
-  const { trip, toggleLock, removeStop, reorderStop, moveStopToDay } = useTrip();
+  const { referencePoint, toggleLock, removeStop, reorderStop, moveStopToDay } = useTrip();
   const prefersReducedMotion = useReducedMotion();
 
   if (!place) return null;
   const image = place.images[0];
 
-  // Honest default origin: the previous stop that day, or the trip's
+  // Honest default origin: the previous stop that day, or the user's
   // chosen reference point for the first stop, or nothing.
-  const directionsOrigin = previousPlace?.coordinates ?? trip?.referencePoint?.coordinates;
+  const directionsOrigin = previousPlace?.coordinates ?? referencePoint?.coordinates;
   const directionsUrl = buildGoogleMapsDirectionsUrl(place.coordinates, directionsOrigin);
 
   return (

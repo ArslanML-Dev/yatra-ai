@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import type { Place } from "@/types/place";
 import { formatCategoryLabel, formatMinutes } from "@/lib/utils/format";
@@ -14,11 +15,16 @@ import { LiveNavigationPanel } from "@/components/navigation/LiveNavigationPanel
 import { Badge } from "@/components/ui/Badge";
 
 export function PlaceDetail({ place, allPlaces }: { place: Place; allPlaces: Place[] }) {
-  const { trip } = useTrip();
-  const image = place.images[0];
+  const { referencePoint } = useTrip();
+  // A hotlinked Wikimedia source can rate-limit or fail transiently —
+  // confirmed via real browser testing on this exact page. Falls back
+  // to the same honest no-image layout used for places that never had
+  // one, rather than leaving a broken/invisible hero.
+  const [imageFailed, setImageFailed] = useState(false);
+  const image = imageFailed ? undefined : place.images[0];
   const directionsUrl = buildGoogleMapsDirectionsUrl(
     place.coordinates,
-    trip?.referencePoint?.coordinates,
+    referencePoint?.coordinates,
   );
   const sourceLabel = getSource(place.source)?.label;
 
@@ -33,6 +39,7 @@ export function PlaceDetail({ place, allPlaces }: { place: Place; allPlaces: Pla
             priority
             className="object-cover"
             sizes="100vw"
+            onError={() => setImageFailed(true)}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/50 to-navy-950/10" />
           <div className="relative z-10 mx-auto w-full max-w-4xl px-6 pb-10">

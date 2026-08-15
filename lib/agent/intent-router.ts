@@ -1,5 +1,5 @@
 import type { Place } from "@/types/place";
-import type { Trip } from "@/types/trip";
+import type { ReferencePoint, Trip } from "@/types/trip";
 import type { AgentIntent, ConversationState } from "@/types/conversation";
 import { parseEditCommand } from "@/lib/nlu/parse-edit-command";
 import { matchNamedPlaces } from "@/lib/nlu/named-place-matcher";
@@ -33,6 +33,7 @@ export interface RouteMessageContext {
   trip: Trip | null;
   allPlaces: Place[];
   conversation: ConversationState;
+  referencePoint: ReferencePoint | null;
 }
 
 function includesAny(text: string, phrases: string[]): boolean {
@@ -125,7 +126,7 @@ export function routeMessage(rawText: string, context: RouteMessageContext): Age
   // here).
   const nearPhrase = ADD_NEAR_PHRASES.find((p) => text.includes(p));
   if (nearPhrase && includesAny(text, NEAR_HERE_WORDS)) {
-    const anchor = resolveContextualAnchor(context.trip, placesById);
+    const anchor = resolveContextualAnchor(context.trip, context.referencePoint, placesById);
     if (anchor) return { kind: "add-near-anchor", anchor };
     return { kind: "clarification-needed", reason: "anchor-unavailable" };
   }
@@ -133,7 +134,7 @@ export function routeMessage(rawText: string, context: RouteMessageContext): Age
   // 4c. Read-only contextual queries.
   if (includesAny(text, WHATS_NEXT_PHRASES)) return { kind: "whats-next" };
   if (includesAny(text, FIND_NEARBY_PHRASES) || includesAny(text, HOW_FAR_PHRASES)) {
-    const anchor = resolveContextualAnchor(context.trip, placesById);
+    const anchor = resolveContextualAnchor(context.trip, context.referencePoint, placesById);
     if (anchor) return { kind: "find-nearby", anchor };
     return { kind: "clarification-needed", reason: "anchor-unavailable" };
   }

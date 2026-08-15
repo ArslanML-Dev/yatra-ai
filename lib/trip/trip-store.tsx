@@ -11,20 +11,27 @@ import { loadSavedPlaceIds, saveSavedPlaceIds } from "./saved-places-persist";
 interface StoreState {
   trip: TripState;
   savedPlaceIds: string[];
+  // Ephemeral, session-only — a sibling of `trip`, not a field on it, so
+  // it's available on every place page regardless of whether a trip
+  // exists yet. Deliberately not persisted (matching its own documented
+  // "re-derived per use" intent): starts null on every load rather than
+  // surviving a reload, same as ConversationState.
+  referencePoint: ReferencePoint | null;
   hydrated: boolean;
 }
 
 type StoreAction =
   | TripAction
   | { type: "HYDRATE"; trip: Trip | null; savedPlaceIds: string[] }
-  | { type: "TOGGLE_SAVED_PLACE"; placeId: string };
+  | { type: "TOGGLE_SAVED_PLACE"; placeId: string }
+  | { type: "SET_REFERENCE_POINT"; referencePoint: ReferencePoint | null };
 
-const initialState: StoreState = { trip: null, savedPlaceIds: [], hydrated: false };
+const initialState: StoreState = { trip: null, savedPlaceIds: [], referencePoint: null, hydrated: false };
 
 function storeReducer(state: StoreState, action: StoreAction): StoreState {
   switch (action.type) {
     case "HYDRATE":
-      return { trip: action.trip, savedPlaceIds: action.savedPlaceIds, hydrated: true };
+      return { ...state, trip: action.trip, savedPlaceIds: action.savedPlaceIds, hydrated: true };
     case "TOGGLE_SAVED_PLACE":
       return {
         ...state,
@@ -32,6 +39,8 @@ function storeReducer(state: StoreState, action: StoreAction): StoreState {
           ? state.savedPlaceIds.filter((id) => id !== action.placeId)
           : [...state.savedPlaceIds, action.placeId],
       };
+    case "SET_REFERENCE_POINT":
+      return { ...state, referencePoint: action.referencePoint };
     default:
       return { ...state, trip: tripReducer(state.trip, action) };
   }
@@ -40,6 +49,7 @@ function storeReducer(state: StoreState, action: StoreAction): StoreState {
 export interface TripContextValue {
   trip: Trip | null;
   savedPlaceIds: string[];
+  referencePoint: ReferencePoint | null;
   hydrated: boolean;
   startTrip: (trip: Trip) => void;
   clearTrip: () => void;
@@ -90,6 +100,7 @@ export function TripProvider({ children }: { children: ReactNode }) {
   const value: TripContextValue = {
     trip: state.trip,
     savedPlaceIds: state.savedPlaceIds,
+    referencePoint: state.referencePoint,
     hydrated: state.hydrated,
     startTrip: (newTrip) => dispatch({ type: "START_TRIP", trip: newTrip }),
     clearTrip: () => dispatch({ type: "CLEAR_TRIP" }),

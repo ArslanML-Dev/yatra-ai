@@ -17,7 +17,6 @@ export function wrapItineraryAsTrip(itinerary: Itinerary): Trip {
     id: createId(),
     itinerary,
     lockedPlaceIds: deriveLockedPlaceIds(itinerary),
-    referencePoint: null,
     accommodationLocation: null,
     startLocation: null,
     currentDayNumber: firstPending?.dayNumber ?? null,

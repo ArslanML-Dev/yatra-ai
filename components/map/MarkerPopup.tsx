@@ -8,11 +8,11 @@ import { buildGoogleMapsDirectionsUrl } from "@/lib/geo/directions-url";
 import { useTrip } from "@/lib/trip/use-trip";
 
 export function MarkerPopup({ place }: { place: Place }) {
-  const { trip } = useTrip();
+  const { referencePoint } = useTrip();
   const prefersReducedMotion = useReducedMotion();
   const directionsUrl = buildGoogleMapsDirectionsUrl(
     place.coordinates,
-    trip?.referencePoint?.coordinates,
+    referencePoint?.coordinates,
   );
 
   return (

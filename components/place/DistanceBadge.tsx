@@ -13,8 +13,7 @@ export function DistanceBadge({
   /** "light" for use over a photo/dark background — see the place-page hero. */
   tone?: "muted" | "light";
 }) {
-  const { trip } = useTrip();
-  const referencePoint = trip?.referencePoint;
+  const { referencePoint } = useTrip();
 
   if (!referencePoint) return null;
 

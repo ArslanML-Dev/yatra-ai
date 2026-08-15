@@ -1,5 +1,5 @@
 import type { Place } from "@/types/place";
-import type { Trip } from "@/types/trip";
+import type { ReferencePoint, Trip } from "@/types/trip";
 import type { ResolvedAnchor } from "@/types/conversation";
 
 /**
@@ -7,13 +7,15 @@ import type { ResolvedAnchor } from "@/types/conversation";
  * priority order, stopping at the first available source:
  *
  *  1. Live location — a fresh `referencePoint` of kind "geolocation".
+ *     Trip-independent (see types/trip.ts) — available even before a
+ *     trip exists.
  *  2. Current physical/navigation position — NOT implemented here. Live
  *     GPS tracking during navigation lives in the client-side
  *     use-live-navigation hook (Phase 6 territory) and isn't wired to
  *     Trip yet, so this pure function genuinely has no access to it.
  *     Skipping this tier honestly rather than pretending to check it.
- *  3. Current itinerary stop (`trip.currentSlotId`).
- *  4. Accommodation or start location.
+ *  3. Current itinerary stop (`trip.currentSlotId`) — requires a trip.
+ *  4. Accommodation or start location — requires a trip.
  *  5. Unresolved — returns null; the caller must ask the user, never
  *     guess or fabricate a location.
  *
@@ -24,17 +26,18 @@ import type { ResolvedAnchor } from "@/types/conversation";
  */
 export function resolveContextualAnchor(
   trip: Trip | null,
+  referencePoint: ReferencePoint | null,
   placesById: Map<string, Place>,
 ): ResolvedAnchor | null {
-  if (!trip) return null;
-
-  if (trip.referencePoint?.kind === "geolocation") {
+  if (referencePoint?.kind === "geolocation") {
     return {
-      label: trip.referencePoint.label,
-      coordinates: trip.referencePoint.coordinates,
+      label: referencePoint.label,
+      coordinates: referencePoint.coordinates,
       source: "live-location",
     };
   }
+
+  if (!trip) return null;
 
   if (trip.currentSlotId) {
     for (const day of trip.itinerary.days) {

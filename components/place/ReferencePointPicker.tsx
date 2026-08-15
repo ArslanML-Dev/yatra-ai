@@ -10,7 +10,7 @@ interface ReferencePointPickerProps {
 }
 
 export function ReferencePointPicker({ places }: ReferencePointPickerProps) {
-  const { trip, setReferencePoint } = useTrip();
+  const { referencePoint, setReferencePoint } = useTrip();
   const { coordinates, status, error, requestLocation } = useGeolocation();
   const [pickerOpen, setPickerOpen] = useState(false);
 
@@ -47,12 +47,12 @@ export function ReferencePointPicker({ places }: ReferencePointPickerProps) {
     setPickerOpen(false);
   }
 
-  if (trip?.referencePoint) {
+  if (referencePoint) {
     return (
       <div className="flex flex-wrap items-center gap-2 text-sm">
         <span className="text-ink-soft">
           Measuring distance from{" "}
-          <strong className="text-navy-900">{trip.referencePoint.label}</strong>
+          <strong className="text-navy-900">{referencePoint.label}</strong>
         </span>
         <button type="button" onClick={handleClear} className="text-saffron-600 underline">
           Clear
