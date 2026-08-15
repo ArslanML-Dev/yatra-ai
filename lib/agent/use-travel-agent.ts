@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
+import { useRouter } from "next/navigation";
 import type { Place } from "@/types/place";
 import { useTrip } from "@/lib/trip/use-trip";
 import { useConversation } from "@/lib/conversation/use-conversation";
@@ -20,21 +21,37 @@ import { executeAgentIntent } from "./execute-agent-intent";
 export function useTravelAgent(allPlaces: Place[]) {
   const tripCtx = useTrip();
   const conversation = useConversation();
+  const router = useRouter();
 
   const submit = useCallback(
-    (rawText: string) => {
+    (rawText: string): { navigated: boolean } => {
       const text = rawText.trim();
-      if (!text) return;
+      if (!text) return { navigated: false };
 
       let message: string;
+      let navigated = false;
       try {
         const intent = routeMessage(text, {
           trip: tripCtx.trip,
           allPlaces,
           conversation: conversation.state,
         });
-        const result = executeAgentIntent(intent, tripCtx.trip, allPlaces, tripCtx);
-        message = result.message;
+
+        if (intent.kind === "navigation-start") {
+          // Real application navigation to the place page, where actual
+          // live guidance (LiveNavigationPanel) already exists — this is
+          // the honest scope of "navigation" here, not turn-by-turn.
+          // execute-agent-intent.ts is deliberately not involved: it has
+          // no router access, and its contract (zero side effects for
+          // navigation intents) stays exactly as Phase 5 verified it —
+          // navigation-stop still goes through it, unchanged, below.
+          router.push(`/place/${intent.destinationPlaceId}`);
+          navigated = true;
+          message = `Taking you to ${intent.destinationName} — you can try live guidance from there.`;
+        } else {
+          const result = executeAgentIntent(intent, tripCtx.trip, allPlaces, tripCtx);
+          message = result.message;
+        }
 
         const mentionedId = mentionedPlaceIdFromIntent(intent);
         if (mentionedId) conversation.recordMention(mentionedId);
@@ -47,8 +64,9 @@ export function useTravelAgent(allPlaces: Place[]) {
 
       conversation.recordTurn({ role: "user", text });
       conversation.recordTurn({ role: "agent", text: message });
+      return { navigated };
     },
-    [tripCtx, conversation, allPlaces],
+    [tripCtx, conversation, allPlaces, router],
   );
 
   return { turns: conversation.state.turns, submit };

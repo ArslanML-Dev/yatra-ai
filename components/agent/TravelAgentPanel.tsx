@@ -60,8 +60,9 @@ export function TravelAgentPanel() {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    submit(text);
+    const { navigated } = submit(text);
     setText("");
+    if (navigated) closePanel();
   }
 
   return (
