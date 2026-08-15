@@ -1,7 +1,7 @@
 import type { Place, PlaceCategory, TimeOfDaySuitability } from "@/types/place";
 import type { Itinerary, ItineraryDay, ItinerarySlot } from "@/types/itinerary";
 import type { Pace, UserPreferences } from "@/types/user-preferences";
-import type { ReferencePoint, Trip } from "@/types/trip";
+import type { NamedLocation, NavigationMode, ReferencePoint, Trip } from "@/types/trip";
 import { generateItinerary } from "@/lib/itinerary/generate-itinerary";
 
 export type TripState = Trip | null;
@@ -18,7 +18,14 @@ export type TripAction =
   | { type: "TOGGLE_LOCK"; slotId: string }
   | { type: "REGENERATE_DAY"; dayNumber: number; allPlaces: Place[]; paceOverride?: Pace }
   | { type: "UPDATE_PREFERENCES"; preferences: Partial<UserPreferences>; allPlaces: Place[] }
-  | { type: "SET_REFERENCE_POINT"; referencePoint: ReferencePoint | null };
+  | { type: "SET_REFERENCE_POINT"; referencePoint: ReferencePoint | null }
+  | { type: "SET_CURRENT_STOP"; dayNumber: number; slotId: string }
+  | { type: "MARK_VISITED"; slotId: string }
+  | { type: "MARK_SKIPPED"; slotId: string }
+  | { type: "SET_NAVIGATION_MODE"; mode: NavigationMode }
+  | { type: "SET_ACCOMMODATION_LOCATION"; location: NamedLocation | null }
+  | { type: "SET_START_LOCATION"; location: NamedLocation | null }
+  | { type: "ADVANCE_TO_NEXT_STOP" };
 
 const TIME_ORDER: TimeOfDaySuitability[] = ["morning", "afternoon", "evening", "night"];
 
@@ -74,6 +81,21 @@ function findSlotLocation(
     if (index >= 0) return { day, index };
   }
   return null;
+}
+
+/** Every slot in display order (day array order, then slot array order
+ * within each day) — both already display order elsewhere in this file
+ * (e.g. REORDER_STOP). Empty days simply contribute nothing. */
+function flattenSlotsInOrder(itinerary: Itinerary): { dayNumber: number; slot: ItinerarySlot }[] {
+  const flat: { dayNumber: number; slot: ItinerarySlot }[] = [];
+  for (const day of itinerary.days) {
+    for (const slot of day.slots) flat.push({ dayNumber: day.dayNumber, slot });
+  }
+  return flat;
+}
+
+function isPending(slot: ItinerarySlot): boolean {
+  return !slot.visited && !slot.skipped;
 }
 
 export function tripReducer(state: TripState, action: TripAction): TripState {
@@ -260,6 +282,116 @@ export function tripReducer(state: TripState, action: TripAction): TripState {
     case "SET_REFERENCE_POINT":
       if (!state) return state;
       return { ...state, referencePoint: action.referencePoint, updatedAt: new Date().toISOString() };
+
+    case "SET_CURRENT_STOP": {
+      if (!state) return state;
+      const day = findDay(state.itinerary, action.dayNumber);
+      if (!day || !day.slots.some((s) => s.id === action.slotId)) return state;
+      return {
+        ...state,
+        currentDayNumber: action.dayNumber,
+        currentSlotId: action.slotId,
+        updatedAt: new Date().toISOString(),
+      };
+    }
+
+    case "MARK_VISITED": {
+      if (!state) return state;
+      const location = findSlotLocation(state.itinerary, action.slotId);
+      if (!location) return state;
+
+      const days = state.itinerary.days.map((d) =>
+        d.dayNumber === location.day.dayNumber
+          ? {
+              ...d,
+              slots: d.slots.map((s) =>
+                s.id === action.slotId ? { ...s, visited: true, skipped: false } : s,
+              ),
+            }
+          : d,
+      );
+      return touch(state, { ...state.itinerary, days });
+    }
+
+    case "MARK_SKIPPED": {
+      if (!state) return state;
+      const location = findSlotLocation(state.itinerary, action.slotId);
+      if (!location) return state;
+
+      const days = state.itinerary.days.map((d) =>
+        d.dayNumber === location.day.dayNumber
+          ? {
+              ...d,
+              slots: d.slots.map((s) =>
+                s.id === action.slotId ? { ...s, skipped: true, visited: false } : s,
+              ),
+            }
+          : d,
+      );
+      return touch(state, { ...state.itinerary, days });
+    }
+
+    case "SET_NAVIGATION_MODE":
+      if (!state) return state;
+      return { ...state, navigationMode: action.mode, updatedAt: new Date().toISOString() };
+
+    case "SET_ACCOMMODATION_LOCATION":
+      if (!state) return state;
+      return { ...state, accommodationLocation: action.location, updatedAt: new Date().toISOString() };
+
+    case "SET_START_LOCATION":
+      if (!state) return state;
+      return { ...state, startLocation: action.location, updatedAt: new Date().toISOString() };
+
+    /**
+     * Marks the current slot visited (unless it was already explicitly
+     * skipped — advancing past a skipped stop must never silently turn
+     * it into a visited one) then moves currentDayNumber/currentSlotId
+     * to the next pending (neither visited nor skipped) slot in display
+     * order, walking across day boundaries and over empty days. If
+     * nothing is currently set, it just finds the first pending slot
+     * without marking anything. If nothing pending remains anywhere,
+     * clears currentDayNumber/currentSlotId to null. Genuinely no-op
+     * calls (nothing to mark, nothing to advance to) return `state`
+     * unchanged rather than bumping updatedAt, matching the no-op
+     * convention already used elsewhere in this reducer (e.g.
+     * REORDER_STOP at an invalid index).
+     */
+    case "ADVANCE_TO_NEXT_STOP": {
+      if (!state) return state;
+
+      let days = state.itinerary.days;
+      let markedSomething = false;
+
+      if (state.currentSlotId) {
+        const location = findSlotLocation(state.itinerary, state.currentSlotId);
+        if (location && !location.day.slots[location.index].skipped) {
+          markedSomething = true;
+          days = days.map((d) =>
+            d.dayNumber === location.day.dayNumber
+              ? {
+                  ...d,
+                  slots: d.slots.map((s) =>
+                    s.id === state.currentSlotId ? { ...s, visited: true, skipped: false } : s,
+                  ),
+                }
+              : d,
+          );
+        }
+      }
+
+      const updatedItinerary = { ...state.itinerary, days };
+      const next = flattenSlotsInOrder(updatedItinerary).find(({ slot }) => isPending(slot));
+
+      const nextDayNumber = next?.dayNumber ?? null;
+      const nextSlotId = next?.slot.id ?? null;
+      const positionChanged = nextDayNumber !== (state.currentDayNumber ?? null) || nextSlotId !== (state.currentSlotId ?? null);
+
+      if (!markedSomething && !positionChanged) return state;
+
+      const touched = touch(state, updatedItinerary);
+      return { ...touched, currentDayNumber: nextDayNumber, currentSlotId: nextSlotId };
+    }
 
     default:
       return state;

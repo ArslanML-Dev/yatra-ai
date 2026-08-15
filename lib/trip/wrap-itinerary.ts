@@ -17,6 +17,11 @@ export function wrapItineraryAsTrip(itinerary: Itinerary): Trip {
     itinerary,
     lockedPlaceIds: deriveLockedPlaceIds(itinerary),
     referencePoint: null,
+    accommodationLocation: null,
+    startLocation: null,
+    currentDayNumber: null,
+    currentSlotId: null,
+    navigationMode: "off",
     createdAt: now,
     updatedAt: now,
   };

@@ -7,6 +7,11 @@ export interface ItinerarySlot {
   placeId: string;
   note?: string;
   locked?: boolean;
+  /** Mutually exclusive with `skipped` — enforced by the reducer
+   * (MARK_VISITED/MARK_SKIPPED/ADVANCE_TO_NEXT_STOP), never left for a
+   * caller or the UI to maintain. */
+  visited?: boolean;
+  skipped?: boolean;
 }
 
 export interface ItineraryDay {

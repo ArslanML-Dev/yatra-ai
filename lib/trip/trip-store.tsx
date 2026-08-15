@@ -3,7 +3,7 @@
 import { createContext, useEffect, useReducer, type ReactNode } from "react";
 import type { Place, PlaceCategory } from "@/types/place";
 import type { Pace, UserPreferences } from "@/types/user-preferences";
-import type { ReferencePoint, Trip } from "@/types/trip";
+import type { NamedLocation, NavigationMode, ReferencePoint, Trip } from "@/types/trip";
 import { tripReducer, type TripAction, type TripState } from "./trip-reducer";
 import { clearStoredTrip, loadTrip, saveTrip } from "./persist";
 import { loadSavedPlaceIds, saveSavedPlaceIds } from "./saved-places-persist";
@@ -53,6 +53,13 @@ export interface TripContextValue {
   regenerateDay: (dayNumber: number, allPlaces: Place[], paceOverride?: Pace) => void;
   updatePreferences: (preferences: Partial<UserPreferences>, allPlaces: Place[]) => void;
   setReferencePoint: (referencePoint: ReferencePoint | null) => void;
+  setCurrentStop: (dayNumber: number, slotId: string) => void;
+  markVisited: (slotId: string) => void;
+  markSkipped: (slotId: string) => void;
+  setNavigationMode: (mode: NavigationMode) => void;
+  setAccommodationLocation: (location: NamedLocation | null) => void;
+  setStartLocation: (location: NamedLocation | null) => void;
+  advanceToNextStop: () => void;
   toggleSavedPlace: (placeId: string) => void;
   isSaved: (placeId: string) => boolean;
 }
@@ -98,6 +105,13 @@ export function TripProvider({ children }: { children: ReactNode }) {
     updatePreferences: (preferences, allPlaces) =>
       dispatch({ type: "UPDATE_PREFERENCES", preferences, allPlaces }),
     setReferencePoint: (referencePoint) => dispatch({ type: "SET_REFERENCE_POINT", referencePoint }),
+    setCurrentStop: (dayNumber, slotId) => dispatch({ type: "SET_CURRENT_STOP", dayNumber, slotId }),
+    markVisited: (slotId) => dispatch({ type: "MARK_VISITED", slotId }),
+    markSkipped: (slotId) => dispatch({ type: "MARK_SKIPPED", slotId }),
+    setNavigationMode: (mode) => dispatch({ type: "SET_NAVIGATION_MODE", mode }),
+    setAccommodationLocation: (location) => dispatch({ type: "SET_ACCOMMODATION_LOCATION", location }),
+    setStartLocation: (location) => dispatch({ type: "SET_START_LOCATION", location }),
+    advanceToNextStop: () => dispatch({ type: "ADVANCE_TO_NEXT_STOP" }),
     toggleSavedPlace: (placeId) => dispatch({ type: "TOGGLE_SAVED_PLACE", placeId }),
     isSaved: (placeId) => state.savedPlaceIds.includes(placeId),
   };
