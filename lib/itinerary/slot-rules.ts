@@ -17,6 +17,30 @@ const TIME_OF_DAY_MATCH_BONUS = 3;
 const PROXIMITY_BONUS_CAP_KM = 10;
 const OPENING_HOURS_PENALTY = 40;
 
+/**
+ * Experience-redundancy penalty: one uniform value applied whenever a
+ * candidate shares a `subcategory` with something already placed today
+ * (e.g. two "mall" entries) — distinct from, and stricter than, the
+ * category-level tolerance in scoring.ts, which only discourages
+ * repeated broad categories. `anchor`-tagged places are exempt (see
+ * scoreForPhase) because that tag is real curated evidence a place is
+ * independently distinctive, not interchangeable with a same-subcategory
+ * peer — this is why two anchor imambaras still coexist normally while
+ * two non-anchor malls don't.
+ */
+const SUBCATEGORY_REPEAT_PENALTY = 35;
+
+/**
+ * A phase's winning candidate must clear this net score to be included
+ * at all. When every remaining candidate for a phase is experientially
+ * redundant (or otherwise heavily penalized) and nothing clears the bar,
+ * the day is left shorter rather than padded with a poor repeat — an
+ * honest gap beats a forced stop. Locked places are always exempt (see
+ * assignSlots) since a user's explicit choice is never rejected for
+ * scoring low.
+ */
+const MIN_INCLUSION_SCORE = 0;
+
 function createSlotId(): string {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) return crypto.randomUUID();
   return `slot-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
@@ -32,6 +56,8 @@ function createSlotId(): string {
  *  - a bonus for matching the legacy suitableTimesOfDay bucket
  *  - the category-repetition-tolerance decay (see scoring.ts) — the same
  *    one formula for every category, only the tolerance constant differs
+ *  - a subcategory experience-redundancy penalty for non-anchor places
+ *    repeating an already-used subcategory (see SUBCATEGORY_REPEAT_PENALTY)
  *  - a geographic-continuity bonus toward whatever was placed last, which
  *    is what actually produces greedy-nearest-next ordering rather than
  *    relying on cluster membership alone
@@ -44,6 +70,7 @@ function scoreForPhase(
   phase: RhythmPhase,
   baseRank: number,
   categoryCountsToday: Map<PlaceCategory, number>,
+  subcategoryCountsToday: Map<string, number>,
   lastPlaced: Place | undefined,
   locked: boolean,
 ): number {
@@ -60,6 +87,11 @@ function scoreForPhase(
   const tolerance = CATEGORY_REPETITION_TOLERANCE[place.category] ?? 1;
   const countSoFar = categoryCountsToday.get(place.category) ?? 0;
   score *= Math.pow(tolerance, countSoFar);
+
+  const isAnchor = place.tags.includes("anchor");
+  if (!isAnchor && place.subcategory && (subcategoryCountsToday.get(place.subcategory) ?? 0) > 0) {
+    score -= SUBCATEGORY_REPEAT_PENALTY;
+  }
 
   if (lastPlaced) {
     const distanceKm = haversineDistanceKm(lastPlaced.coordinates, place.coordinates);
@@ -91,7 +123,15 @@ function scoreForPhase(
  * exclude one, it bumps the lowest-priority unlocked pick rather than
  * being silently dropped (a user's explicit choice always wins — see
  * generate-itinerary.ts's guaranteeLockedPlacement for the cross-day
- * backstop).
+ * backstop). Locked candidates are also exempt from the minimum-
+ * inclusion floor below — an explicit choice is never rejected for
+ * scoring low.
+ *
+ * A phase is left empty, rather than filled with the least-bad option,
+ * when nothing remaining clears MIN_INCLUSION_SCORE — e.g. when the
+ * only candidates left are experientially redundant with something
+ * already placed today (see SUBCATEGORY_REPEAT_PENALTY). A shorter,
+ * honest day beats a padded one.
  */
 export function assignSlots(
   candidates: Place[],
@@ -101,6 +141,7 @@ export function assignSlots(
   const phases = RHYTHM_BY_PACE[pace];
   const baseRank = new Map(candidates.map((p, i) => [p.id, candidates.length - i]));
   const categoryCountsToday = new Map<PlaceCategory, number>();
+  const subcategoryCountsToday = new Map<string, number>();
   const used = new Set<string>();
   const slots: ItinerarySlot[] = [];
   let lastPlaced: Place | undefined;
@@ -116,6 +157,7 @@ export function assignSlots(
         phase,
         baseRank.get(place.id) ?? 0,
         categoryCountsToday,
+        subcategoryCountsToday,
         lastPlaced,
         lockedPlaceIds.includes(place.id),
       );
@@ -127,8 +169,14 @@ export function assignSlots(
 
     if (!best) continue;
 
+    const bestIsLocked = lockedPlaceIds.includes(best.id);
+    if (!bestIsLocked && bestScore < MIN_INCLUSION_SCORE) continue;
+
     used.add(best.id);
     categoryCountsToday.set(best.category, (categoryCountsToday.get(best.category) ?? 0) + 1);
+    if (best.subcategory) {
+      subcategoryCountsToday.set(best.subcategory, (subcategoryCountsToday.get(best.subcategory) ?? 0) + 1);
+    }
     lastPlaced = best;
 
     slots.push({
