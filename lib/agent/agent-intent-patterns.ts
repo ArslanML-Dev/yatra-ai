@@ -26,6 +26,7 @@ export const MARK_VISITED_PHRASES = [
   "been there",
 ];
 export const SKIP_THIS_PHRASES = ["skip this", "skip that", "skip it"];
+export const REMOVE_THIS_PHRASES = ["remove it", "remove this", "delete it", "delete this"];
 
 /** Reuses the existing ADD_NEAR_PHRASES from edit-command-patterns.ts —
  * this table only adds the "...but no named place, just a deictic

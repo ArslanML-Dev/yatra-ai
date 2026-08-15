@@ -16,6 +16,7 @@ import {
   HOW_FAR_PHRASES,
   MARK_VISITED_PHRASES,
   NEAR_HERE_WORDS,
+  REMOVE_THIS_PHRASES,
   SKIP_THIS_PHRASES,
   STAYING_PHRASES,
   STOP_NAVIGATION_PHRASES,
@@ -88,9 +89,11 @@ export function routeMessage(rawText: string, context: RouteMessageContext): Age
     }
   }
 
-  // 4a. Deictic mark-visited / skip-this.
+  // 4a. Deictic mark-visited / skip-this / remove-this — same resolution
+  // mechanism, three different outcomes depending on which verb was used.
   if (includesAny(text, MARK_VISITED_PHRASES)) return resolveDeicticIntent(context, "mark-visited");
   if (includesAny(text, SKIP_THIS_PHRASES)) return resolveDeicticIntent(context, "skip-this");
+  if (includesAny(text, REMOVE_THIS_PHRASES)) return resolveDeicticIntent(context, "remove-place");
 
   // 4b. Contextual add-near — a near-phrase with a deictic word instead
   // of a named place (the existing edit-command parser above already
@@ -153,7 +156,7 @@ export function routeMessage(rawText: string, context: RouteMessageContext): Age
 
 function resolveDeicticIntent(
   context: RouteMessageContext,
-  kind: "mark-visited" | "skip-this",
+  kind: "mark-visited" | "skip-this" | "remove-place",
 ): AgentIntent {
   const resolution = resolveDeicticReference(context.conversation);
   if (resolution.status === "resolved") {

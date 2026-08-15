@@ -1,30 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import type { Place } from "@/types/place";
-import { useTrip } from "@/lib/trip/use-trip";
-import { parseEditCommand, EDIT_COMMAND_EXAMPLES } from "@/lib/nlu/parse-edit-command";
-import { executeEditIntent } from "@/lib/nlu/execute-edit-intent";
+import { useTravelAgent } from "@/lib/agent/use-travel-agent";
+import { EDIT_COMMAND_EXAMPLES } from "@/lib/nlu/parse-edit-command";
 import { VoiceInputButton } from "@/components/planner/VoiceInputButton";
 
-interface LogEntry {
-  input: string;
-  message: string;
-}
+const RECENT_TURNS_SHOWN = 10;
 
+/**
+ * Page-scoped edit surface. Migrated from directly calling
+ * parseEditCommand/executeEditIntent to the shared useTravelAgent hook,
+ * which now runs the verified Phase 5 routeMessage/executeAgentIntent
+ * pipeline and reads/writes the same global ConversationState the
+ * TravelAgentPanel uses — a place mentioned here is resolvable there,
+ * and vice versa.
+ */
 export function TripEditChat({ allPlaces }: { allPlaces: Place[] }) {
-  const trip = useTrip();
+  const { turns, submit } = useTravelAgent(allPlaces);
   const [text, setText] = useState("");
-  const [log, setLog] = useState<LogEntry[]>([]);
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    if (!text.trim()) return;
-    const intent = parseEditCommand(text, allPlaces);
-    const message = executeEditIntent(intent, trip.trip, allPlaces, trip);
-    setLog((prev) => [{ input: text, message }, ...prev].slice(0, 5));
+    submit(text);
     setText("");
   }
+
+  const recentTurns = turns.slice(-RECENT_TURNS_SHOWN);
 
   return (
     <div className="rounded-2xl border border-sandstone-200/70 bg-white p-6">
@@ -54,12 +56,18 @@ export function TripEditChat({ allPlaces }: { allPlaces: Place[] }) {
       </form>
       <VoiceInputButton onTranscript={setText} />
 
-      {log.length > 0 && (
+      {recentTurns.length > 0 && (
         <ul className="mt-4 flex flex-col gap-2 text-sm">
-          {log.map((entry, i) => (
-            <li key={i} className="rounded-xl bg-sandstone-100 px-4 py-2.5">
-              <p className="text-ink-soft/70">&ldquo;{entry.input}&rdquo;</p>
-              <p className="mt-0.5 text-navy-900">{entry.message}</p>
+          {recentTurns.map((turn, i) => (
+            <li
+              key={i}
+              className={
+                turn.role === "user"
+                  ? "rounded-xl bg-sandstone-100 px-4 py-2.5 text-ink-soft/70"
+                  : "rounded-xl bg-sandstone-100 px-4 py-2.5 text-navy-900"
+              }
+            >
+              {turn.role === "user" ? `“${turn.text}”` : turn.text}
             </li>
           ))}
         </ul>

@@ -1,4 +1,4 @@
-import type { ConversationState, ConversationTurn } from "@/types/conversation";
+import type { AgentIntent, ConversationState, ConversationTurn } from "@/types/conversation";
 import { MAX_RECENT_MENTIONS } from "@/types/conversation";
 import { parsePreferences } from "@/lib/nlu/parse-preferences";
 
@@ -28,4 +28,29 @@ export function recordTurn(state: ConversationState, turn: ConversationTurn): Co
 export function accumulatePreferences(state: ConversationState, rawText: string): ConversationState {
   const parsed = parsePreferences(rawText, state.accumulated);
   return { ...state, accumulated: { ...state.accumulated, ...parsed } };
+}
+
+/**
+ * Given an already-resolved AgentIntent, returns the placeId (if any)
+ * that should become the next "recently mentioned" referent — e.g. after
+ * "keep Bara Imambara" succeeds, a later "remove it" should resolve to
+ * Bara Imambara. Only intents that genuinely name/act on one specific
+ * place qualify; read-only or place-less intents return null rather than
+ * guessing a referent.
+ */
+export function mentionedPlaceIdFromIntent(intent: AgentIntent): string | null {
+  switch (intent.kind) {
+    case "remove-place":
+    case "keep-place":
+    case "mark-visited":
+    case "skip-this":
+    case "move-place":
+      return intent.placeId;
+    case "add-near":
+      return intent.anchorPlaceId;
+    case "navigation-start":
+      return intent.destinationPlaceId;
+    default:
+      return null;
+  }
 }

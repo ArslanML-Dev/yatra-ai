@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { TravelAgentTrigger } from "@/components/agent/TravelAgentTrigger";
 
 const links = [
   { href: "/explore", label: "Explore" },
@@ -28,6 +29,7 @@ export function NavBar() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <TravelAgentTrigger />
           <Link
             href="/plan"
             className="rounded-full bg-navy-900 px-5 py-2 text-sm font-medium text-ivory transition-colors hover:bg-navy-800"
