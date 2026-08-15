@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Itinerary } from "@/types/itinerary";
 import type { Place } from "@/types/place";
 import { formatTripAsText } from "@/lib/trip/share-formatter";
@@ -12,8 +12,19 @@ interface ShareTripButtonProps {
 
 export function ShareTripButton({ itinerary, placesById }: ShareTripButtonProps) {
   const [copied, setCopied] = useState(false);
+  // Deferred to an effect, not computed inline during render: `navigator`
+  // doesn't exist during SSR, and whether `.share` exists can differ
+  // between server (never) and client (maybe) — computing this
+  // synchronously caused a real, confirmed-via-browser-testing hydration
+  // mismatch (server rendered "Copy itinerary", client immediately
+  // swapped to "Share my trip"). Starting false and only ever flipping
+  // true post-hydration guarantees the first client render matches SSR.
+  const [canShare, setCanShare] = useState(false);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setCanShare(typeof navigator.share === "function");
+  }, []);
   const text = formatTripAsText(itinerary, placesById);
-  const canShare = typeof navigator !== "undefined" && typeof navigator.share === "function";
   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
 
   async function handleShare() {

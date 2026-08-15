@@ -106,7 +106,7 @@ export function ProfilePanel() {
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[60] flex justify-end"
+          className="fixed inset-0 z-60 flex justify-end"
           initial={prefersReducedMotion ? undefined : { opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={prefersReducedMotion ? undefined : { opacity: 0 }}
@@ -122,7 +122,7 @@ export function ProfilePanel() {
             role="dialog"
             aria-modal="true"
             aria-label="Your profile"
-            className="relative flex h-full w-full flex-col overflow-y-auto bg-ivory shadow-lift sm:w-[420px] sm:border-l sm:border-sandstone-200/70"
+            className="relative flex h-full w-full flex-col overflow-y-auto bg-ivory shadow-lift sm:w-105 sm:border-l sm:border-sandstone-200/70"
             initial={prefersReducedMotion ? undefined : { x: "100%" }}
             animate={{ x: 0 }}
             exit={prefersReducedMotion ? undefined : { x: "100%" }}
