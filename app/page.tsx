@@ -4,6 +4,7 @@ import { HeroCarousel } from "@/components/home/HeroCarousel";
 import { ExplainerSection } from "@/components/home/ExplainerSection";
 import { HighlightsGrid } from "@/components/home/HighlightsGrid";
 import { TwoSidesSection } from "@/components/home/TwoSidesSection";
+import { SectionDivider } from "@/components/ui/SectionDivider";
 import { Button } from "@/components/ui/Button";
 
 export default async function Home() {
@@ -19,14 +20,14 @@ export default async function Home() {
     <div>
       <section className="relative flex min-h-[88vh] items-end overflow-hidden">
         <HeroCarousel images={destination?.heroImages ?? []} />
-        <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-20">
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-saffron-400">
+        <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-24">
+          <p className="text-caption font-medium uppercase text-saffron-400">
             Smile, you are in Lucknow
           </p>
-          <h1 className="mt-4 max-w-2xl font-display text-4xl leading-tight text-ivory sm:text-6xl">
+          <h1 className="mt-4 max-w-2xl text-h1 font-display text-ivory sm:text-hero">
             Experience Lucknow. We&rsquo;ll organize the journey.
           </h1>
-          <p className="mt-5 max-w-xl text-base text-ivory/80 sm:text-lg">
+          <p className="mt-5 max-w-xl text-body-lg text-ivory/80">
             An AI travel companion for one city, done properly — heritage, food, shopping
             and parks, turned into a day-wise plan built around how you actually want to
             travel.
@@ -40,19 +41,42 @@ export default async function Home() {
             </Button>
           </div>
         </div>
+        <div className="absolute right-0 bottom-0 left-0 z-10">
+          <SectionDivider tone="ivory" />
+        </div>
       </section>
 
       {destination && (
-        <section className="mx-auto max-w-6xl px-6 py-16">
-          <p className="max-w-3xl text-lg leading-relaxed text-ink-soft">
+        <section className="mx-auto max-w-3xl px-6 pt-16 pb-6 text-center">
+          <p className="text-body-lg leading-relaxed text-ink-soft">
             {destination.shortOverview}
           </p>
         </section>
       )}
 
+      <ExplainerSection />
       <HighlightsGrid places={highlights} />
       <TwoSidesSection />
-      <ExplainerSection />
+
+      <SectionDivider tone="navy" />
+      <section className="bg-navy-950 px-6 py-20 text-center">
+        <div className="mx-auto max-w-2xl">
+          <p className="text-caption font-medium uppercase text-saffron-400">
+            Ready when you are
+          </p>
+          <h2 className="mt-3 text-h2 font-display text-ivory">
+            Your Lucknow itinerary, built around how you actually travel.
+          </h2>
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <Button href="/plan" variant="primary">
+              Plan My Lucknow Trip
+            </Button>
+            <Button href="/explore" variant="secondary">
+              Explore Lucknow
+            </Button>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

@@ -20,9 +20,51 @@
   --color-sandstone-300: #cdb488;
 
   --color-leaf-600: #4b6b4f;
+  --color-leaf-500: #6b8f6f;
 
   --font-display: var(--font-fraunces), Georgia, serif;
   --font-body: var(--font-inter), system-ui, sans-serif;
+
+  /* Semantic type scale — layered on top of Tailwind's default scale,
+     not a replacement for it. Used where a section needs deliberate
+     display/body hierarchy rather than an ad hoc text-* size. */
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.4;
+  --text-caption--letter-spacing: 0.08em;
+
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.65;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.7;
+
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.7;
+
+  --text-h4: 1.25rem;
+  --text-h4--line-height: 1.3;
+
+  --text-h3: 1.75rem;
+  --text-h3--line-height: 1.2;
+
+  --text-h2: 2.25rem;
+  --text-h2--line-height: 1.12;
+  --text-h2--letter-spacing: -0.01em;
+
+  --text-h1: 3rem;
+  --text-h1--line-height: 1.05;
+  --text-h1--letter-spacing: -0.015em;
+
+  --text-hero: 3.75rem;
+  --text-hero--line-height: 1.02;
+  --text-hero--letter-spacing: -0.02em;
+
+  /* Semantic elevation tokens — one soft resting shadow, one lifted
+     hover/active shadow, used instead of ad hoc shadow-* utilities. */
+  --shadow-soft: 0 1px 2px rgba(11, 22, 38, 0.04), 0 8px 24px -4px rgba(11, 22, 38, 0.08);
+  --shadow-lift: 0 4px 8px rgba(11, 22, 38, 0.06), 0 16px 40px -8px rgba(11, 22, 38, 0.16);
+
+  --radius-card: 1.25rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

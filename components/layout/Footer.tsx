@@ -1,13 +1,72 @@
+"use client";
+
+import Link from "next/link";
+import { useTravelAgentUI } from "@/components/agent/TravelAgentPanel";
+
+const exploreLinks = [
+  { href: "/explore", label: "Explore Lucknow" },
+  { href: "/map", label: "Map" },
+  { href: "/transport", label: "Getting Around" },
+];
+
+/**
+ * A real multi-column footer mirroring NavBar's actual entry points —
+ * not a placeholder link set. No "Account"/profile column: that
+ * capability doesn't exist yet (local profile is deferred), and this
+ * footer never implies a feature that isn't built.
+ */
 export function Footer() {
+  const { togglePanel } = useTravelAgentUI();
+
   return (
     <footer className="border-t border-sandstone-200/70 bg-navy-950 text-ivory/70">
-      <div className="mx-auto max-w-6xl px-6 py-10 text-sm">
-        <p className="font-display text-lg text-ivory">Yatra AI</p>
-        <p className="mt-2 max-w-xl">
-          A context-aware travel companion, piloted in Lucknow. Every place shown is
-          curated and sourced — see each listing for its verification status.
-        </p>
-        <p className="mt-6 text-xs text-ivory/50">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 py-14 sm:grid-cols-[1.3fr_1fr_1fr]">
+        <div>
+          <p className="text-h4 font-display text-ivory">
+            Yatra <span className="text-saffron-400">AI</span>
+          </p>
+          <p className="mt-3 max-w-sm text-body-sm">
+            A context-aware travel companion, piloted in Lucknow. Every place shown is
+            curated and sourced — see each listing for its verification status.
+          </p>
+        </div>
+
+        <div>
+          <p className="text-caption font-medium uppercase text-ivory/40">Explore</p>
+          <ul className="mt-4 flex flex-col gap-2.5">
+            {exploreLinks.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className="text-body-sm transition-colors hover:text-ivory">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <p className="text-caption font-medium uppercase text-ivory/40">Plan</p>
+          <ul className="mt-4 flex flex-col gap-2.5">
+            <li>
+              <Link href="/plan" className="text-body-sm transition-colors hover:text-ivory">
+                Plan My Trip
+              </Link>
+            </li>
+            <li>
+              <button
+                type="button"
+                onClick={togglePanel}
+                className="text-body-sm transition-colors hover:text-ivory"
+              >
+                Ask the Travel Agent
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="border-t border-ivory/10">
+        <p className="mx-auto max-w-6xl px-6 py-6 text-caption text-ivory/40">
           Prototype build for SIH 2026, Level 1 screening. Not affiliated with any
           government tourism body.
         </p>
