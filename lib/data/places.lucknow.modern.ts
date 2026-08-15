@@ -16,7 +16,15 @@ export const modernPlaces: Place[] = [
     suitableTimesOfDay: ["afternoon", "evening"],
     coordinates: { lat: 26.7844475, lng: 80.9915203 },
     address: "Amar Shaheed Path, Sushant Golf City, Sector B, Ansal API, Lucknow 226030",
-    images: [],
+    images: [
+      {
+        url: "https://upload.wikimedia.org/wikipedia/commons/0/0f/Lulu_Mall_-_Lucknow_20220717_171859.jpg",
+        alt: "Exterior of Lulu Mall, Lucknow",
+        source: "Wikimedia Commons",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Lulu_Mall_-_Lucknow_20220717_171859.jpg",
+        license: "CC BY 3.0",
+      },
+    ],
     priceRange: "unknown",
     knownFor: ["Widely described as one of the largest malls in India"],
     tags: ["modern", "shopping", "family-friendly"],
@@ -70,7 +78,15 @@ export const modernPlaces: Place[] = [
     estimatedVisitMinutes: 30,
     suitableTimesOfDay: ["afternoon", "evening"],
     coordinates: { lat: 26.81111, lng: 81.01694 },
-    images: [],
+    images: [
+      {
+        url: "https://upload.wikimedia.org/wikipedia/commons/a/a4/LucknowCricketStadium.jpg",
+        alt: "Exterior of the Ekana Cricket Stadium, Lucknow",
+        source: "Wikimedia Commons",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:LucknowCricketStadium.jpg",
+        license: "CC BY-SA 4.0",
+      },
+    ],
     priceRange: "unknown",
     knownFor: [
       "Widely reported to have the longest straight boundaries of any stadium in India",

@@ -40,14 +40,14 @@ export const foodPlaces: Place[] = [
   {
     id: "raheems-nihari",
     destinationId: "lucknow",
-    name: "Raheem's",
+    name: "Raheem's Kulcha Nihari",
     category: "food",
     subcategory: "nihari-kulcha",
     description:
       "A long-running Old Lucknow eatery near Akbari Gate, known for nihari (slow-cooked mutton stew) served with kulcha bread.",
     whyVisit: "Old Lucknow's benchmark nihari-kulcha, a short walk from Bara Imambara.",
     historicalContext:
-      "Widely reported as dating to around 1890, though this figure comes from food/travel write-ups rather than a primary historical record — treat the founding year as approximate.",
+      "Widely reported as dating to around 1890 (some current listings say roughly 135 years, which points to a similar era), though this figure comes from food/travel write-ups rather than a primary historical record — treat the founding year as approximate.",
     bestTime: "Morning through late night — reported to stay open past midnight",
     estimatedVisitMinutes: 40,
     suitableTimesOfDay: ["morning", "afternoon", "evening"],
@@ -57,7 +57,7 @@ export const foodPlaces: Place[] = [
     priceRange: "unknown",
     knownFor: ["Nihari-kulcha — regarded by several food writers as the city's benchmark nihari"],
     tags: ["food"],
-    nearbyIds: ["bara-imambara", "tunday-kababi", "chowk-food-street"],
+    nearbyIds: ["bara-imambara", "tunday-kababi", "chowk-food-street", "chowk-chikankari-market"],
     source: "openstreetmap",
     sourceUrl: "https://www.openstreetmap.org/node/4634084889",
     retrievedAt: "2026-08-14",

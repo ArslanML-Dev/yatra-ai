@@ -26,6 +26,15 @@ export interface ImageRef {
   license?: string;
 }
 
+/** Structured hours, populated only where confidently sourceable from
+ * multiple independent tourism sources — most places in this dataset
+ * won't have this field, and that's the honest default, not a gap to
+ * fill in with a guess. */
+export interface OpeningHours {
+  weekdayText: string[];
+  note?: string;
+}
+
 export interface Place {
   id: string;
   destinationId: string;
@@ -36,6 +45,7 @@ export interface Place {
   whyVisit: string;
   historicalContext?: string;
   bestTime?: string;
+  openingHours?: OpeningHours;
   estimatedVisitMinutes: number;
   suitableTimesOfDay: TimeOfDaySuitability[];
   coordinates: Coordinates;

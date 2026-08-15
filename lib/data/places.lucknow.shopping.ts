@@ -23,7 +23,7 @@ export const shoppingPlaces: Place[] = [
       "Chikankari embroidery — look for slight hand-stitch irregularity and visible shadow-work on the reverse to distinguish it from machine embroidery",
     ],
     tags: ["shopping"],
-    nearbyIds: ["bara-imambara", "tunday-kababi", "chowk-food-street"],
+    nearbyIds: ["bara-imambara", "tunday-kababi", "chowk-food-street", "raheems-nihari"],
     source: "wikipedia",
     sourceUrl: "https://en.wikipedia.org/wiki/Chikankari",
     retrievedAt: "2026-08-14",

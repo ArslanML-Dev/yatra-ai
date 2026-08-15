@@ -14,6 +14,11 @@ export const heritagePlaces: Place[] = [
     historicalContext:
       "Commissioned by Nawab Asaf-ud-Daula of Awadh and built between 1780 and 1784. The central hall spans roughly 50 by 16 metres with no supporting beams — the Bhulbhulaiya labyrinth of interconnecting passages above it developed partly as a structural solution to distribute the roof's weight.",
     bestTime: "Early morning or late afternoon, especially in the cooler months (Oct–Feb)",
+    openingHours: {
+      weekdayText: ["Mon–Sun: approximately 6:00 AM – 5:00 PM"],
+      note:
+        "Reported consistently across several tourism sources; a few separately mention a Monday closure that others don't corroborate — confirm locally, especially around Muharram and other religious observances when access can change.",
+    },
     estimatedVisitMinutes: 150,
     suitableTimesOfDay: ["morning", "afternoon"],
     coordinates: { lat: 26.86917, lng: 80.91278 },
@@ -93,6 +98,11 @@ export const heritagePlaces: Place[] = [
     historicalContext:
       "Commissioned in 1838 by Muhammad Ali Shah, Nawab of Awadh, as a congregation hall and mausoleum for himself and his mother; the full complex took around 54 years to complete.",
     bestTime: "Late afternoon into early evening, when the chandelier-lit interior is most striking",
+    openingHours: {
+      weekdayText: ["Mon–Sun: approximately 6:00 AM – 6:00 PM"],
+      note:
+        "Sources report slightly different closing times (as early as 5 PM in some, as late as 6 PM in others) — treat as approximate and confirm locally.",
+    },
     estimatedVisitMinutes: 50,
     suitableTimesOfDay: ["afternoon", "evening"],
     coordinates: { lat: 26.873784, lng: 80.904409 },
@@ -126,6 +136,11 @@ export const heritagePlaces: Place[] = [
     historicalContext:
       "Built between 1780 and 1800 as the residence of the British Resident to the Nawab's court. Besieged from July to November 1857 during the uprising against East India Company rule; the ruins, including a cemetery of roughly 2,000 graves, have been preserved largely as they were left.",
     bestTime: "Cooler months (Oct–Feb); some sources report an evening sound-and-light show — confirm timing locally",
+    openingHours: {
+      weekdayText: ["Mon–Sun: approximately 6:00 AM – 6:00 PM"],
+      note:
+        "ASI-maintained site, reported open daily with no weekly closure — confirm locally for festival/holiday exceptions.",
+    },
     estimatedVisitMinutes: 75,
     suitableTimesOfDay: ["morning", "afternoon"],
     coordinates: { lat: 26.8618, lng: 80.9257 },
@@ -141,11 +156,50 @@ export const heritagePlaces: Place[] = [
     priceRange: "unknown",
     knownFor: ["Cannon-scarred ruined walls from the 1857 siege"],
     tags: ["heritage", "history"],
-    nearbyIds: ["chowk-food-street"],
+    nearbyIds: ["chowk-food-street", "qaiserbagh"],
     source: "wikipedia",
     sourceUrl: "https://en.wikipedia.org/wiki/The_Residency,_Lucknow",
     retrievedAt: "2026-08-14",
     verificationStatus: "VERIFIED_STATIC",
     dataType: "VERIFIED_STATIC",
+  },
+  {
+    id: "qaiserbagh",
+    destinationId: "lucknow",
+    name: "Qaiserbagh",
+    category: "heritage",
+    subcategory: "palace-complex",
+    description:
+      "The remains of a once-vast pleasure-palace complex built by Wajid Ali Shah, the last Nawab of Awadh. Most of it was destroyed by British forces after 1857; the surviving Safed Baradari (White Pavilion) is its most recognisable standing structure today.",
+    whyVisit:
+      "See the White Pavilion — the clearest surviving fragment of Wajid Ali Shah's 'heaven on earth' palace gardens, and the historic ground Begum Hazrat Mahal held during the 1857 uprising.",
+    historicalContext:
+      "Built by Wajid Ali Shah between roughly 1848 and 1850 as a walled garden-palace complex meant to evoke paradise. After the 1857 uprising — during which Begum Hazrat Mahal used it as a stronghold — British forces demolished large sections they considered a rebel base. The Safed Baradari (1854), originally an Imambara named Qasr-ul-Aza, survived and passed to the British India Association of Oudh around 1923; it functions today mainly as a heritage building and event venue rather than a museum.",
+    bestTime: "Daytime; the Safed Baradari is reported to keep roughly 10 AM–5 PM hours, but as a privately-managed heritage venue this can vary — confirm locally before visiting",
+    estimatedVisitMinutes: 45,
+    suitableTimesOfDay: ["morning", "afternoon"],
+    coordinates: { lat: 26.856825, lng: 80.926367 },
+    address: "Qaiserbagh, Lucknow 226001",
+    images: [
+      {
+        url: "https://upload.wikimedia.org/wikipedia/commons/b/b5/Safed_Baradari_2.jpg",
+        alt: "The Safed Baradari (White Pavilion), the main surviving structure of the Qaiserbagh palace complex, Lucknow",
+        source: "Wikimedia Commons",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Safed_Baradari_2.jpg",
+        license: "CC BY-SA 4.0",
+      },
+    ],
+    priceRange: "unknown",
+    knownFor: [
+      "The Safed Baradari (White Pavilion) — white-marble hall, the complex's best-preserved structure",
+      "Begum Hazrat Mahal's base of operations during the 1857 uprising",
+    ],
+    tags: ["heritage", "history"],
+    nearbyIds: ["british-residency", "begum-hazrat-mahal-park"],
+    source: "wikipedia",
+    sourceUrl: "https://en.wikipedia.org/wiki/Qaisar_Bagh",
+    retrievedAt: "2026-08-15",
+    verificationStatus: "CURATED",
+    dataType: "CURATED",
   },
 ];
