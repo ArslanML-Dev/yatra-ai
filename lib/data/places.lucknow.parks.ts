@@ -16,6 +16,7 @@ export const parkPlaces: Place[] = [
     bestTime: "Early morning (cooler, joggers and yoga groups) or evening (families, sunset)",
     estimatedVisitMinutes: 90,
     suitableTimesOfDay: ["morning", "evening"],
+    area: "gomti-nagar-modern",
     coordinates: { lat: 26.834899, lng: 80.988686 },
     images: [
       {
@@ -53,6 +54,7 @@ export const parkPlaces: Place[] = [
     bestTime: "Late afternoon into evening, when the sandstone catches the light and the park is illuminated",
     estimatedVisitMinutes: 75,
     suitableTimesOfDay: ["evening", "night"],
+    area: "gomti-nagar-modern",
     coordinates: { lat: 26.848882, lng: 80.977893 },
     images: [
       {
@@ -90,6 +92,7 @@ export const parkPlaces: Place[] = [
     bestTime: "Morning or early evening for a quieter walk",
     estimatedVisitMinutes: 40,
     suitableTimesOfDay: ["morning", "evening"],
+    area: "old-lucknow",
     coordinates: { lat: 26.8557493, lng: 80.9343728 },
     address: "Qaiserbagh, Lucknow 226001",
     images: [

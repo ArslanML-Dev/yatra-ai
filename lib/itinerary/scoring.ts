@@ -1,7 +1,25 @@
-import type { Place, PriceRange } from "@/types/place";
+import type { Place, PlaceCategory, PriceRange } from "@/types/place";
 import type { UserPreferences } from "@/types/user-preferences";
 
 const ANCHOR_HERITAGE_TAGS = ["anchor"];
+
+/**
+ * How gracefully a category tolerates repeating within a single day,
+ * applied as `tolerance ^ countAlreadyPlacedToday` — a value near 1
+ * barely decays (multiple food stops in a day is normal travel
+ * behaviour), a value near 0 decays sharply (a second mall in the same
+ * day almost never happens in real trip planning). One uniform formula;
+ * only these constants are category-specific.
+ */
+export const CATEGORY_REPETITION_TOLERANCE: Record<PlaceCategory, number> = {
+  modern: 0.35,
+  shopping: 0.5,
+  parks: 0.6,
+  riverfront_evening: 0.6,
+  heritage: 0.7,
+  food: 0.8,
+  transport: 1,
+};
 
 /** Guarantees a user-locked place always sorts before anything else. */
 const LOCKED_PLACE_BONUS = 100;
@@ -49,10 +67,19 @@ const DEFAULT_BALANCED_CATEGORIES = new Set(["heritage", "food", "parks", "shopp
 
 /**
  * Selects the candidate pool for itinerary generation: places matching the
- * user's interests, a small always-included anchor set, and — critically —
- * any explicitly locked places, which are included unconditionally
- * regardless of interest/category filtering. A user's explicit choice must
- * never be silently excluded for not matching their stated interests.
+ * user's interests, a small always-included heritage-anchor safety net
+ * (major landmarks a first-time visitor expects, e.g. Bara Imambara),
+ * and — critically — any explicitly locked places, which are included
+ * unconditionally regardless of interest/category filtering. A user's
+ * explicit choice must never be silently excluded for not matching their
+ * stated interests.
+ *
+ * The anchor safety net is deliberately scoped to `category: "heritage"`
+ * only — it exists so a heritage-interested trip never misses an iconic
+ * landmark, not as a blanket bypass for every category. Earlier this also
+ * let anchor-tagged places from *unrequested* categories (e.g. a park)
+ * leak into unrelated trips; scoping it to heritage fixes that while
+ * keeping the one legitimate fallback reason intact.
  */
 export function selectCandidates(
   places: Place[],
@@ -69,7 +96,9 @@ export function selectCandidates(
   const excludedHeritage = hasExplicitInterests && !preferences.interests.includes("heritage");
   const anchors = excludedHeritage
     ? []
-    : places.filter((p) => p.tags.includes("anchor") && !matching.includes(p));
+    : places.filter(
+        (p) => p.category === "heritage" && p.tags.includes("anchor") && !matching.includes(p),
+      );
 
   const locked = places.filter((p) => lockedPlaceIds.includes(p.id));
 

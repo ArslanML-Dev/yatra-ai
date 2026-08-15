@@ -8,7 +8,13 @@ import { EditableItinerarySlot } from "./EditableItinerarySlot";
 import { NearbySuggestions } from "@/components/place/NearbySuggestions";
 import { EmptyState } from "@/components/ui/EmptyState";
 
-const PACKED_MINUTES_THRESHOLD = 360;
+// A day now normally carries 5-7 rhythm-phase stops (breakfast through
+// dinner — see lib/itinerary/day-rhythm.ts), so the packed-day warning
+// needs a higher bar than the old flat 3/4-slot count: only flag days
+// that are genuinely heavy, not every moderate-pace day with a full
+// meal rhythm.
+const PACKED_SLOT_THRESHOLD = 6;
+const PACKED_MINUTES_THRESHOLD = 480;
 
 interface EditableItineraryDayCardProps {
   day: ItineraryDay;
@@ -29,7 +35,7 @@ export function EditableItineraryDayCard({
     const place = placesById.get(slot.placeId);
     return sum + (place?.estimatedVisitMinutes ?? 0);
   }, 0);
-  const isPacked = day.slots.length >= 4 && totalMinutes >= PACKED_MINUTES_THRESHOLD;
+  const isPacked = day.slots.length >= PACKED_SLOT_THRESHOLD && totalMinutes >= PACKED_MINUTES_THRESHOLD;
 
   const lastSlot = day.slots[day.slots.length - 1];
   const lastPlace = lastSlot ? placesById.get(lastSlot.placeId) : undefined;

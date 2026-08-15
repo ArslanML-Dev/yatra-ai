@@ -14,6 +14,7 @@ export const modernPlaces: Place[] = [
     bestTime: "Evening for dining and entertainment",
     estimatedVisitMinutes: 135,
     suitableTimesOfDay: ["afternoon", "evening"],
+    area: "gomti-nagar-modern",
     coordinates: { lat: 26.7844475, lng: 80.9915203 },
     address: "Amar Shaheed Path, Sushant Golf City, Sector B, Ansal API, Lucknow 226030",
     images: [
@@ -48,6 +49,7 @@ export const modernPlaces: Place[] = [
     bestTime: "Evening for dining and entertainment",
     estimatedVisitMinutes: 135,
     suitableTimesOfDay: ["afternoon", "evening"],
+    area: "gomti-nagar-modern",
     coordinates: { lat: 26.8087716, lng: 81.0127929 },
     address: "Amar Shaheed Path, Sector 7, Gomti Nagar Extension, Lucknow 226010",
     images: [],
@@ -77,6 +79,7 @@ export const modernPlaces: Place[] = [
     bestTime: "Exterior/landmark viewing any time; match-day visits depend on the fixture schedule, which this listing does not track",
     estimatedVisitMinutes: 30,
     suitableTimesOfDay: ["afternoon", "evening"],
+    area: "gomti-nagar-modern",
     coordinates: { lat: 26.81111, lng: 81.01694 },
     images: [
       {

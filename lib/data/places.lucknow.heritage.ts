@@ -18,9 +18,12 @@ export const heritagePlaces: Place[] = [
       weekdayText: ["Mon–Sun: approximately 6:00 AM – 5:00 PM"],
       note:
         "Reported consistently across several tourism sources; a few separately mention a Monday closure that others don't corroborate — confirm locally, especially around Muharram and other religious observances when access can change.",
+      opensHour: 6,
+      closesHour: 17,
     },
     estimatedVisitMinutes: 150,
     suitableTimesOfDay: ["morning", "afternoon"],
+    area: "old-lucknow",
     coordinates: { lat: 26.86917, lng: 80.91278 },
     images: [
       {
@@ -66,6 +69,7 @@ export const heritagePlaces: Place[] = [
     bestTime: "Evening, when the gateway is lit — often paired with a Bara/Chhota Imambara visit",
     estimatedVisitMinutes: 20,
     suitableTimesOfDay: ["morning", "afternoon", "evening"],
+    area: "old-lucknow",
     coordinates: { lat: 26.860556, lng: 80.915833 },
     images: [
       {
@@ -102,9 +106,12 @@ export const heritagePlaces: Place[] = [
       weekdayText: ["Mon–Sun: approximately 6:00 AM – 6:00 PM"],
       note:
         "Sources report slightly different closing times (as early as 5 PM in some, as late as 6 PM in others) — treat as approximate and confirm locally.",
+      opensHour: 6,
+      closesHour: 18,
     },
     estimatedVisitMinutes: 50,
     suitableTimesOfDay: ["afternoon", "evening"],
+    area: "old-lucknow",
     coordinates: { lat: 26.873784, lng: 80.904409 },
     images: [
       {
@@ -140,9 +147,12 @@ export const heritagePlaces: Place[] = [
       weekdayText: ["Mon–Sun: approximately 6:00 AM – 6:00 PM"],
       note:
         "ASI-maintained site, reported open daily with no weekly closure — confirm locally for festival/holiday exceptions.",
+      opensHour: 6,
+      closesHour: 18,
     },
     estimatedVisitMinutes: 75,
     suitableTimesOfDay: ["morning", "afternoon"],
+    area: "old-lucknow",
     coordinates: { lat: 26.8618, lng: 80.9257 },
     images: [
       {
@@ -178,6 +188,7 @@ export const heritagePlaces: Place[] = [
     bestTime: "Daytime; the Safed Baradari is reported to keep roughly 10 AM–5 PM hours, but as a privately-managed heritage venue this can vary — confirm locally before visiting",
     estimatedVisitMinutes: 45,
     suitableTimesOfDay: ["morning", "afternoon"],
+    area: "old-lucknow",
     coordinates: { lat: 26.856825, lng: 80.926367 },
     address: "Qaiserbagh, Lucknow 226001",
     images: [

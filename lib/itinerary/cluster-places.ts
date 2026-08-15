@@ -1,4 +1,4 @@
-import type { Place, PlaceCategory } from "@/types/place";
+import type { LucknowArea, Place, PlaceCategory } from "@/types/place";
 import { haversineDistanceKm } from "@/lib/geo/distance";
 
 export interface PlaceCluster {
@@ -20,6 +20,39 @@ const CATEGORY_CLUSTER_LABELS: Record<PlaceCategory, string> = {
   modern: "Modern Lucknow & Leisure",
   transport: "Getting Around",
 };
+
+const AREA_CLUSTER_LABELS: Record<LucknowArea, string> = {
+  "old-lucknow": "Old Lucknow — Heritage & Food",
+  "hazratganj-central": "Hazratganj & Central Lucknow",
+  "gomti-nagar-modern": "Gomti Nagar & Modern Lucknow",
+  riverfront: "Riverfront & Evening",
+};
+
+/** Returns the shared area of a cluster's members when they're genuinely
+ * area-homogeneous (≥70% of the area-tagged members agree) — used only
+ * for a more meaningful display label than the category-based fallback.
+ * Places without an `area` tag (e.g. transport) simply don't count
+ * toward the total, they don't get invented one. */
+function dominantArea(places: Place[]): LucknowArea | null {
+  const counts = new Map<LucknowArea, number>();
+  let tagged = 0;
+  for (const place of places) {
+    if (!place.area) continue;
+    tagged += 1;
+    counts.set(place.area, (counts.get(place.area) ?? 0) + 1);
+  }
+  if (tagged === 0) return null;
+
+  let best: LucknowArea | null = null;
+  let bestCount = 0;
+  for (const [area, count] of counts) {
+    if (count > bestCount) {
+      best = area;
+      bestCount = count;
+    }
+  }
+  return best && bestCount / tagged >= 0.7 ? best : null;
+}
 
 function dominantCategory(places: Place[]): PlaceCategory {
   const counts = new Map<PlaceCategory, number>();
@@ -63,10 +96,11 @@ export function clusterPlaces(scoredPlaces: Place[]): PlaceCluster[] {
       }
     }
 
-    const category = dominantCategory(members);
+    const area = dominantArea(members);
+    const label = area ? AREA_CLUSTER_LABELS[area] : CATEGORY_CLUSTER_LABELS[dominantCategory(members)];
     clusters.push({
       id: `cluster-${clusters.length + 1}`,
-      label: CATEGORY_CLUSTER_LABELS[category],
+      label,
       places: members,
       densityScore: members.length,
     });

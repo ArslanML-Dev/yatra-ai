@@ -14,6 +14,7 @@ export const riverfrontEveningPlaces: Place[] = [
     bestTime: "Evening — a musical fountain show is commonly mentioned around 7:30–9pm, though exact timing varies by source and should be confirmed locally",
     estimatedVisitMinutes: 60,
     suitableTimesOfDay: ["evening", "night"],
+    area: "riverfront",
     coordinates: { lat: 26.8451102, lng: 80.9708927 },
     images: [],
     priceRange: "unknown",
