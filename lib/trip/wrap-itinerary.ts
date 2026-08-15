@@ -1,6 +1,6 @@
 import type { Itinerary } from "@/types/itinerary";
 import type { Trip } from "@/types/trip";
-import { deriveLockedPlaceIds } from "./trip-reducer";
+import { deriveLockedPlaceIds, findFirstPendingSlot } from "./trip-reducer";
 
 function createId(): string {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) return crypto.randomUUID();
@@ -12,6 +12,7 @@ function createId(): string {
  * re-running generation. */
 export function wrapItineraryAsTrip(itinerary: Itinerary): Trip {
   const now = new Date().toISOString();
+  const firstPending = findFirstPendingSlot(itinerary);
   return {
     id: createId(),
     itinerary,
@@ -19,8 +20,8 @@ export function wrapItineraryAsTrip(itinerary: Itinerary): Trip {
     referencePoint: null,
     accommodationLocation: null,
     startLocation: null,
-    currentDayNumber: null,
-    currentSlotId: null,
+    currentDayNumber: firstPending?.dayNumber ?? null,
+    currentSlotId: firstPending?.slot.id ?? null,
     navigationMode: "off",
     createdAt: now,
     updatedAt: now,

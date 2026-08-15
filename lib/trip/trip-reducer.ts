@@ -102,6 +102,17 @@ function isPending(slot: ItinerarySlot): boolean {
   return !slot.visited && !slot.skipped;
 }
 
+/** The same "first pending slot in display order" definition
+ * ADVANCE_TO_NEXT_STOP bootstraps from when nothing is currently set —
+ * exported so a freshly created Trip can start with a meaningful
+ * currentDayNumber/currentSlotId instead of leaving both permanently
+ * null until some other action happens to touch them. */
+export function findFirstPendingSlot(
+  itinerary: Itinerary,
+): { dayNumber: number; slot: ItinerarySlot } | null {
+  return flattenSlotsInOrder(itinerary).find(({ slot }) => isPending(slot)) ?? null;
+}
+
 export function tripReducer(state: TripState, action: TripAction): TripState {
   switch (action.type) {
     case "START_TRIP":

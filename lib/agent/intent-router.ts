@@ -71,11 +71,16 @@ export function routeMessage(rawText: string, context: RouteMessageContext): Age
   }
   if (includesAny(text, STOP_NAVIGATION_PHRASES)) return { kind: "navigation-stop" };
 
-  // 2. Existing edit-command parser — only meaningful once a trip exists.
-  if (context.trip) {
-    const editIntent = parseEditCommand(rawText, context.allPlaces);
-    if (editIntent.kind !== "unrecognized") return editIntent;
-  }
+  // 2. Existing edit-command parser. Always attempted, regardless of
+  // whether a trip exists yet — execute-edit-intent.ts already has the
+  // correct "Start a trip first" reply for a recognized edit command
+  // with no trip. Gating this behind `context.trip` meant that reply
+  // was unreachable: a genuinely recognized phrase (e.g. one of the
+  // Travel Agent panel's own quick-prompt suggestions, shown before any
+  // trip exists) fell through everything else and came back
+  // "unrecognized" instead of honestly explaining why it can't act yet.
+  const editIntent = parseEditCommand(rawText, context.allPlaces);
+  if (editIntent.kind !== "unrecognized") return editIntent;
 
   // 3. Relative-day pace changes.
   if (includesAny(text, RELAX_WORDS) || includesAny(text, PACK_WORDS)) {

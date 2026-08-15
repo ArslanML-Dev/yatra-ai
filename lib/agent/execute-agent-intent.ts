@@ -74,7 +74,11 @@ export function executeAgentIntent(
       if (!trip) return { message: "Start a trip first." };
       const found = findSlotByPlaceId(trip, intent.placeId);
       if (!found) return { message: `${intent.placeName} isn't part of your trip.` };
+      // Per the approved interaction model: "skip this" both flags the
+      // stop and moves the current-stop pointer forward — not just a
+      // flag with no progress consequence.
       actions.markSkipped(found.slot.id);
+      actions.advanceToNextStop();
       return { message: `Marked ${intent.placeName} as skipped — it'll stay in your plan, just flagged.` };
     }
 
