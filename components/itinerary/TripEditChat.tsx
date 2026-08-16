@@ -11,10 +11,8 @@ const RECENT_TURNS_SHOWN = 10;
 /**
  * Page-scoped edit surface. Migrated from directly calling
  * parseEditCommand/executeEditIntent to the shared useTravelAgent hook,
- * which now runs the verified Phase 5 routeMessage/executeAgentIntent
- * pipeline and reads/writes the same global ConversationState the
- * TravelAgentPanel uses — a place mentioned here is resolvable there,
- * and vice versa.
+ * which runs the verified routeMessage/executeAgentIntent pipeline and
+ * reads/writes the global ConversationState.
  */
 export function TripEditChat({ allPlaces }: { allPlaces: Place[] }) {
   const { turns, submit } = useTravelAgent(allPlaces);

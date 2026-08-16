@@ -11,13 +11,15 @@ import { routeMessage } from "./intent-router";
 import { executeAgentIntent } from "./execute-agent-intent";
 
 /**
- * The single orchestration path shared by every UI surface — the global
- * TravelAgentPanel and the itinerary page's TripEditChat both call this
- * hook rather than wiring routeMessage/executeAgentIntent themselves.
- * This is what makes "same pipeline, same conversation state, same trip
- * state" true by construction rather than by convention: there is
- * exactly one place a raw message turns into a Trip mutation plus a
- * conversation-state update.
+ * The single orchestration path for turning a raw message into a Trip
+ * mutation — the itinerary page's TripEditChat ("Adapt my trip") calls
+ * this hook rather than wiring routeMessage/executeAgentIntent itself,
+ * so there is exactly one place a message turns into a Trip mutation
+ * plus a conversation-state update. (A second UI surface, a global
+ * "Ask Yatra" chat panel, previously called this hook too; it was
+ * removed for replying with the same generic message regardless of
+ * input — this hook and the conversation-state pipeline it drives are
+ * unrelated to that bug and remain the real, working edit pathway.)
  */
 export function useTravelAgent(allPlaces: Place[]) {
   const tripCtx = useTrip();

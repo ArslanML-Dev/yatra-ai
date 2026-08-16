@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useTravelAgentUI } from "@/components/agent/TravelAgentPanel";
 import { useProfileUI } from "@/components/profile/ProfilePanel";
 
 const exploreLinks = [
@@ -16,7 +15,6 @@ const exploreLinks = [
  * working feature.
  */
 export function Footer() {
-  const { togglePanel: toggleAgentPanel } = useTravelAgentUI();
   const { togglePanel: toggleProfilePanel } = useProfileUI();
 
   return (
@@ -52,15 +50,6 @@ export function Footer() {
               <Link href="/plan" className="text-body-sm transition-colors hover:text-ivory">
                 Plan My Trip
               </Link>
-            </li>
-            <li>
-              <button
-                type="button"
-                onClick={toggleAgentPanel}
-                className="text-body-sm transition-colors hover:text-ivory"
-              >
-                Ask the Travel Agent
-              </button>
             </li>
             <li>
               <button

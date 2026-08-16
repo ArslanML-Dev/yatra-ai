@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { TravelAgentTrigger } from "@/components/agent/TravelAgentTrigger";
 import { ProfileTrigger } from "@/components/profile/ProfileTrigger";
 
 const links = [
@@ -32,7 +31,6 @@ export function NavBar() {
 
         <div className="flex items-center gap-2">
           <ProfileTrigger />
-          <TravelAgentTrigger />
           <Link
             href="/plan"
             className="rounded-full bg-navy-900 px-4 py-2 text-sm font-medium text-ivory transition-colors hover:bg-navy-800 sm:px-5"

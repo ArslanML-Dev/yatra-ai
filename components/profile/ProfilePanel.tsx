@@ -50,9 +50,8 @@ function pillClass(active: boolean): string {
 }
 
 /**
- * Global local-profile overlay — same architectural family as
- * TravelAgentPanel (co-located UI context, mounted once via
- * AppProviders, reachable from any route via a NavBar trigger). Saving
+ * Global local-profile overlay — a co-located UI context, mounted once
+ * via AppProviders, reachable from any route via a NavBar trigger. Saving
  * writes only to the local profile store; it never touches Trip. See
  * PlannerForm.tsx for the one place these preferences feed a new trip's
  * defaults.
