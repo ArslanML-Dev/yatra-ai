@@ -22,3 +22,15 @@ export function formatCategoryLabel(category: string): string {
 export function formatRupees(amount: number): string {
   return `₹${amount.toLocaleString("en-IN")}`;
 }
+
+export function formatEssentialCategoryLabel(category: string): string {
+  const labels: Record<string, string> = {
+    hospital: "Hospital",
+    pharmacy: "Pharmacy",
+    atm: "ATM",
+    police: "Police",
+    grocery: "Grocery",
+    mall: "Mall",
+  };
+  return labels[category] ?? category;
+}

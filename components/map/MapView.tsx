@@ -3,9 +3,11 @@
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useEffect, useRef } from "react";
-import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import { CircleMarker, MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import type { Coordinates, Place } from "@/types/place";
+import type { EssentialPOI } from "@/types/essentials";
 import { getMapProvider } from "@/lib/providers/provider-registry";
+import { formatEssentialCategoryLabel } from "@/lib/utils/format";
 import { MarkerPopup } from "./MarkerPopup";
 
 // Served from /public (copied from leaflet/dist/images) rather than
@@ -25,6 +27,10 @@ interface MapViewProps {
   places: Place[];
   center: Coordinates;
   highlightPlaceId?: string;
+  /** Live POI results (Nearby Essentials) — rendered as small filled
+   * circles rather than the curated-place pin icon, so it's visually
+   * obvious these come from a different, live data source. */
+  essentials?: EssentialPOI[];
 }
 
 function HighlightEffect({
@@ -74,7 +80,7 @@ function RecenterControl({ center }: { center: Coordinates }) {
   );
 }
 
-export function MapView({ places, center, highlightPlaceId }: MapViewProps) {
+export function MapView({ places, center, highlightPlaceId, essentials }: MapViewProps) {
   const mapProvider = getMapProvider();
   const tileConfig = mapProvider.getTileConfig();
   const markers = mapProvider.toMarkers(places);
@@ -101,6 +107,21 @@ export function MapView({ places, center, highlightPlaceId }: MapViewProps) {
             <MarkerPopup place={marker.place} />
           </Popup>
         </Marker>
+      ))}
+      {essentials?.map((poi) => (
+        <CircleMarker
+          key={poi.id}
+          center={[poi.coordinates.lat, poi.coordinates.lng]}
+          radius={7}
+          pathOptions={{ color: "#1F497D", fillColor: "#1F497D", fillOpacity: 0.85, weight: 2 }}
+        >
+          <Popup>
+            <p className="text-xs font-medium uppercase tracking-wide text-saffron-600">
+              {formatEssentialCategoryLabel(poi.category)}
+            </p>
+            <p className="mt-1 font-display text-base text-navy-900">{poi.name}</p>
+          </Popup>
+        </CircleMarker>
       ))}
       {highlightPlaceId && (
         <HighlightEffect highlightPlaceId={highlightPlaceId} markersRef={markersRef} />

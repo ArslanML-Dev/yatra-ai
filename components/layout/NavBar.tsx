@@ -9,6 +9,7 @@ const links = [
   { href: "/explore", label: "Explore" },
   { href: "/map", label: "Map" },
   { href: "/transport", label: "Getting Around" },
+  { href: "/essentials", label: "Nearby" },
 ];
 
 export function NavBar() {
