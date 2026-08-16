@@ -39,6 +39,12 @@ export const destinations: Destination[] = [
         source: "Wikimedia Commons",
         sourceUrl: "https://commons.wikimedia.org/wiki/File:Janeshwar_Mishra_Park.jpg",
       },
+      {
+        url: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Charbagh_Railway_Station%2C_Lucknow.jpg",
+        alt: "Charbagh Railway Station's Indo-Saracenic facade in Lucknow",
+        source: "Wikimedia Commons",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Charbagh_Railway_Station,_Lucknow.jpg",
+      },
     ],
     shortOverview:
       "Lucknow pairs Nawabi-era heritage — imambaras, gateways, and the tehzeeb that grew up around them — with a fast-growing modern city along the Gomti river. Awadhi cuisine, chikankari embroidery, and a genuinely walkable old quarter make it a rare mix of history and everyday life.",

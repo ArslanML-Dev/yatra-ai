@@ -57,16 +57,16 @@ export function TwoSidesSection({
                 <div className="h-full w-full bg-navy-900" />
               )}
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-navy-950/95 via-navy-950/55 to-navy-950/10 transition-opacity group-hover:from-navy-950" />
+            <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-navy-950/90 via-navy-950/40 to-transparent transition-opacity group-hover:from-navy-950" />
 
             <div className="relative z-10">
-              <h3 className="text-h3 font-display text-ivory [text-shadow:0_1px_10px_rgba(0,0,0,0.5)]">
+              <h3 className="text-h3 font-display text-ivory [text-shadow:0_2px_16px_rgba(0,0,0,0.7)]">
                 {side.title}
               </h3>
-              <p className="mt-3 max-w-sm text-body-sm text-ivory/85 [text-shadow:0_1px_10px_rgba(0,0,0,0.5)]">
+              <p className="mt-3 max-w-sm text-body-sm text-ivory/90 [text-shadow:0_1px_12px_rgba(0,0,0,0.7)]">
                 {side.body}
               </p>
-              <span className="mt-6 inline-flex items-center text-body-sm font-medium text-saffron-400 transition-transform group-hover:translate-x-1">
+              <span className="mt-6 inline-flex items-center text-body-sm font-medium text-saffron-400 [text-shadow:0_1px_10px_rgba(0,0,0,0.7)] transition-transform group-hover:translate-x-1">
                 {side.cta} →
               </span>
             </div>

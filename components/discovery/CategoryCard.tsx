@@ -26,14 +26,14 @@ export function CategoryCard({ category, place }: { category: PlaceCategory; pla
           <div className="h-full w-full bg-navy-900" />
         )}
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-navy-950/95 via-navy-950/55 to-navy-950/5 transition-opacity group-hover:from-navy-950" />
+      <div className="absolute inset-x-0 bottom-0 h-[62%] bg-gradient-to-t from-navy-950/90 via-navy-950/40 to-transparent transition-opacity group-hover:from-navy-950" />
 
       <div className="relative z-10">
-        <h3 className="font-display text-xl text-ivory [text-shadow:0_1px_10px_rgba(0,0,0,0.5)]">
+        <h3 className="font-display text-xl text-ivory [text-shadow:0_2px_16px_rgba(0,0,0,0.7)]">
           {formatCategoryLabel(category)}
         </h3>
-        <p className="mt-2 text-sm text-ivory/85 [text-shadow:0_1px_10px_rgba(0,0,0,0.5)]">{descriptions[category]}</p>
-        <span className="mt-3 inline-flex items-center text-sm font-medium text-saffron-400 transition-transform group-hover:translate-x-1">
+        <p className="mt-2 text-sm text-ivory/90 [text-shadow:0_1px_12px_rgba(0,0,0,0.7)]">{descriptions[category]}</p>
+        <span className="mt-3 inline-flex items-center text-sm font-medium text-saffron-400 [text-shadow:0_1px_10px_rgba(0,0,0,0.7)] transition-transform group-hover:translate-x-1">
           Explore →
         </span>
       </div>
