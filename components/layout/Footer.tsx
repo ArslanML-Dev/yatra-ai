@@ -68,8 +68,13 @@ export function Footer() {
                 onClick={toggleProfilePanel}
                 className="text-body-sm transition-colors hover:text-ivory"
               >
-                Your Profile
+                Travel Preferences
               </button>
+            </li>
+            <li>
+              <Link href="/saved" className="text-body-sm transition-colors hover:text-ivory">
+                Saved Places
+              </Link>
             </li>
           </ul>
         </div>

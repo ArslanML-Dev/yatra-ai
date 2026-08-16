@@ -121,7 +121,7 @@ export function ProfilePanel() {
           <motion.div
             role="dialog"
             aria-modal="true"
-            aria-label="Your profile"
+            aria-label="Travel preferences"
             className="relative flex h-full w-full flex-col overflow-y-auto bg-ivory shadow-lift sm:w-105 sm:border-l sm:border-sandstone-200/70"
             initial={prefersReducedMotion ? undefined : { x: "100%" }}
             animate={{ x: 0 }}
@@ -132,12 +132,19 @@ export function ProfilePanel() {
               <div className="flex items-center gap-2.5">
                 <span
                   aria-hidden="true"
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-navy-900 text-base"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-navy-900 text-ivory"
                 >
-                  👤
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="4" y1="7" x2="20" y2="7" />
+                    <circle cx="9" cy="7" r="2" fill="currentColor" stroke="none" />
+                    <line x1="4" y1="14" x2="20" y2="14" />
+                    <circle cx="16" cy="14" r="2" fill="currentColor" stroke="none" />
+                    <line x1="4" y1="19" x2="20" y2="19" />
+                    <circle cx="11" cy="19" r="2" fill="currentColor" stroke="none" />
+                  </svg>
                 </span>
                 <div>
-                  <h2 className="text-h4 font-display text-navy-900">Your profile</h2>
+                  <h2 className="text-h4 font-display text-navy-900">Travel preferences</h2>
                   <p className="text-caption text-ink-soft/60">Stored only on this device</p>
                 </div>
               </div>
