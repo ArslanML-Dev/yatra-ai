@@ -1,6 +1,7 @@
 import Link from "next/link";
-import type { PlaceCategory } from "@/types/place";
+import type { Place, PlaceCategory } from "@/types/place";
 import { formatCategoryLabel } from "@/lib/utils/format";
+import { PlaceImage } from "@/components/place/PlaceImage";
 
 const descriptions: Record<PlaceCategory, string> = {
   heritage: "Imambaras, gateways and the stories carved into old Lucknow.",
@@ -12,19 +13,30 @@ const descriptions: Record<PlaceCategory, string> = {
   transport: "Getting in, out, and around the city without the guesswork.",
 };
 
-export function CategoryCard({ category }: { category: PlaceCategory }) {
+export function CategoryCard({ category, place }: { category: PlaceCategory; place?: Place }) {
   return (
     <Link
       href={`/explore/${category}`}
-      className="group flex flex-col justify-between gap-6 rounded-2xl border border-sandstone-200/70 bg-white p-6 transition-shadow hover:shadow-lg hover:shadow-navy-900/5"
+      className="group relative flex h-72 flex-col justify-end overflow-hidden rounded-2xl p-6 shadow-soft transition-shadow hover:shadow-lift"
     >
-      <div>
-        <h3 className="font-display text-xl text-navy-900">{formatCategoryLabel(category)}</h3>
-        <p className="mt-2 text-sm text-ink-soft">{descriptions[category]}</p>
+      <div className="absolute inset-0">
+        {place ? (
+          <PlaceImage place={place} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" tone="dark" iconSize="lg" />
+        ) : (
+          <div className="h-full w-full bg-navy-900" />
+        )}
       </div>
-      <span className="text-sm font-medium text-saffron-600 transition-transform group-hover:translate-x-1">
-        Explore →
-      </span>
+      <div className="absolute inset-0 bg-gradient-to-t from-navy-950/95 via-navy-950/55 to-navy-950/5 transition-opacity group-hover:from-navy-950" />
+
+      <div className="relative z-10">
+        <h3 className="font-display text-xl text-ivory [text-shadow:0_1px_10px_rgba(0,0,0,0.5)]">
+          {formatCategoryLabel(category)}
+        </h3>
+        <p className="mt-2 text-sm text-ivory/85 [text-shadow:0_1px_10px_rgba(0,0,0,0.5)]">{descriptions[category]}</p>
+        <span className="mt-3 inline-flex items-center text-sm font-medium text-saffron-400 transition-transform group-hover:translate-x-1">
+          Explore →
+        </span>
+      </div>
     </Link>
   );
 }

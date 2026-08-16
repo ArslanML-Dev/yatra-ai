@@ -13,7 +13,7 @@ export function HeroHeadline() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <h1 className="text-display font-display text-ivory">
+    <h1 className="text-display font-display text-ivory [text-shadow:0_2px_24px_rgba(0,0,0,0.45)]">
       {LINES.map((line, i) => (
         <motion.span
           key={line}

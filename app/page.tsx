@@ -1,5 +1,6 @@
 import { getPlaceProvider } from "@/lib/providers/provider-registry";
 import { selectHighlights } from "@/lib/data/select-homepage-highlights";
+import { selectRepresentativePlace } from "@/lib/data/select-representative-place";
 import { HeroCarousel } from "@/components/home/HeroCarousel";
 import { HeroHeadline } from "@/components/home/HeroHeadline";
 import { HeroModeSelect } from "@/components/home/HeroModeSelect";
@@ -23,11 +24,11 @@ export default async function Home() {
       <section className="relative flex min-h-[92vh] items-end overflow-hidden">
         <HeroCarousel images={destination?.heroImages ?? []} />
         <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-24">
-          <p className="text-caption font-medium uppercase text-saffron-400">
+          <p className="text-caption font-medium uppercase text-saffron-400 [text-shadow:0_1px_12px_rgba(0,0,0,0.6)]">
             AI-powered tourism platform · Now showcasing Lucknow
           </p>
           <HeroHeadline />
-          <p className="mt-5 max-w-xl text-body-lg text-ivory/80">
+          <p className="mt-5 max-w-xl text-body-lg text-ivory/90 [text-shadow:0_1px_12px_rgba(0,0,0,0.5)]">
             Yatra AI turns how you actually want to travel into a real day-wise plan —
             heritage, food, shopping and parks, organized around you, not a generic
             checklist.
@@ -49,7 +50,10 @@ export default async function Home() {
 
       <ExplainerSection />
       <HighlightsGrid places={highlights} />
-      <TwoSidesSection />
+      <TwoSidesSection
+        heritagePlace={selectRepresentativePlace(places, "heritage")}
+        modernPlace={selectRepresentativePlace(places, "modern")}
+      />
 
       <SectionDivider tone="navy" />
       <section className="bg-navy-950 px-6 py-20 text-center">

@@ -1,25 +1,42 @@
 import Link from "next/link";
+import type { Place } from "@/types/place";
+import { PlaceImage } from "@/components/place/PlaceImage";
 
-const sides = [
-  {
-    key: "old",
-    title: "Old Lucknow",
-    body: "Imambaras, gateways, Chowk's narrow lanes and the food stalls that have anchored them for generations.",
-    href: "/explore/heritage",
-    cta: "See heritage Lucknow",
-    tone: "bg-navy-900 text-ivory",
-  },
-  {
-    key: "modern",
-    title: "Modern Lucknow",
-    body: "Gomti Nagar's malls, Ekana Stadium and a riverfront that comes alive as the evening cools down.",
-    href: "/explore/modern",
-    cta: "See modern Lucknow",
-    tone: "bg-sandstone-100 text-navy-900",
-  },
-];
+interface Side {
+  key: string;
+  title: string;
+  body: string;
+  href: string;
+  cta: string;
+  place?: Place;
+}
 
-export function TwoSidesSection() {
+export function TwoSidesSection({
+  heritagePlace,
+  modernPlace,
+}: {
+  heritagePlace?: Place;
+  modernPlace?: Place;
+}) {
+  const sides: Side[] = [
+    {
+      key: "old",
+      title: "Old Lucknow",
+      body: "Imambaras, gateways, Chowk's narrow lanes and the food stalls that have anchored them for generations.",
+      href: "/explore/heritage",
+      cta: "See heritage Lucknow",
+      place: heritagePlace,
+    },
+    {
+      key: "modern",
+      title: "Modern Lucknow",
+      body: "Gomti Nagar's malls, Ekana Stadium and a riverfront that comes alive as the evening cools down.",
+      href: "/explore/modern",
+      cta: "See modern Lucknow",
+      place: modernPlace,
+    },
+  ];
+
   return (
     <section className="mx-auto max-w-6xl px-6 py-16">
       <p className="text-caption font-medium uppercase text-saffron-600">
@@ -31,13 +48,28 @@ export function TwoSidesSection() {
           <Link
             key={side.key}
             href={side.href}
-            className={`flex flex-col justify-between gap-8 rounded-card p-8 shadow-soft transition-[opacity,box-shadow] hover:opacity-90 hover:shadow-lift ${side.tone}`}
+            className="group relative flex h-80 flex-col justify-end overflow-hidden rounded-card p-8 shadow-soft transition-shadow hover:shadow-lift"
           >
-            <div>
-              <h3 className="text-h3 font-display">{side.title}</h3>
-              <p className="mt-3 max-w-sm text-body-sm opacity-80">{side.body}</p>
+            <div className="absolute inset-0">
+              {side.place ? (
+                <PlaceImage place={side.place} sizes="(min-width: 640px) 50vw, 100vw" tone="dark" iconSize="lg" />
+              ) : (
+                <div className="h-full w-full bg-navy-900" />
+              )}
             </div>
-            <span className="text-body-sm font-medium">{side.cta} →</span>
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-950/95 via-navy-950/55 to-navy-950/10 transition-opacity group-hover:from-navy-950" />
+
+            <div className="relative z-10">
+              <h3 className="text-h3 font-display text-ivory [text-shadow:0_1px_10px_rgba(0,0,0,0.5)]">
+                {side.title}
+              </h3>
+              <p className="mt-3 max-w-sm text-body-sm text-ivory/85 [text-shadow:0_1px_10px_rgba(0,0,0,0.5)]">
+                {side.body}
+              </p>
+              <span className="mt-6 inline-flex items-center text-body-sm font-medium text-saffron-400 transition-transform group-hover:translate-x-1">
+                {side.cta} →
+              </span>
+            </div>
           </Link>
         ))}
       </div>

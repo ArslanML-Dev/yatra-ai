@@ -28,12 +28,14 @@ export function PlaceCard({ place }: { place: Place }) {
           </div>
           <p className="line-clamp-2 text-sm text-ink-soft">{place.description}</p>
           <div className="mt-auto flex items-center gap-3 pt-2 text-xs text-ink-soft/80">
-            <span>
-              <span aria-hidden="true">🕐</span> Visit: {formatMinutes(place.estimatedVisitMinutes)}
-            </span>
+            {place.estimatedVisitMinutes > 0 && (
+              <span>
+                <span aria-hidden="true">🕐</span> Visit: {formatMinutes(place.estimatedVisitMinutes)}
+              </span>
+            )}
             {place.bestTime && (
               <>
-                <span aria-hidden="true">·</span>
+                {place.estimatedVisitMinutes > 0 && <span aria-hidden="true">·</span>}
                 <span>{place.bestTime}</span>
               </>
             )}

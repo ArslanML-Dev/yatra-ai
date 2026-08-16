@@ -100,14 +100,16 @@ export function PlaceDetail({ place, allPlaces }: { place: Place; allPlaces: Pla
         </div>
 
         <aside className="flex flex-col gap-6 rounded-2xl border border-sandstone-200/70 bg-white p-6 h-fit">
-          <div>
-            <p className="text-xs font-medium uppercase tracking-wide text-ink-soft/70">
-              Time required
-            </p>
-            <p className="mt-1 font-display text-lg text-navy-900">
-              {formatMinutes(place.estimatedVisitMinutes)}
-            </p>
-          </div>
+          {place.estimatedVisitMinutes > 0 && (
+            <div>
+              <p className="text-xs font-medium uppercase tracking-wide text-ink-soft/70">
+                Time required
+              </p>
+              <p className="mt-1 font-display text-lg text-navy-900">
+                {formatMinutes(place.estimatedVisitMinutes)}
+              </p>
+            </div>
+          )}
           {place.bestTime && (
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-ink-soft/70">

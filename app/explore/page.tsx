@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import type { PlaceCategory } from "@/types/place";
+import { getPlaceProvider } from "@/lib/providers/provider-registry";
+import { selectRepresentativePlace } from "@/lib/data/select-representative-place";
 import { CategoryCard } from "@/components/discovery/CategoryCard";
 
 export const metadata: Metadata = {
@@ -17,7 +19,9 @@ const CATEGORIES: PlaceCategory[] = [
   "transport",
 ];
 
-export default function ExplorePage() {
+export default async function ExplorePage() {
+  const places = await getPlaceProvider("lucknow").getAllPlaces("lucknow");
+
   return (
     <div className="mx-auto max-w-6xl px-6 py-16">
       <p className="text-sm font-medium uppercase tracking-widest text-saffron-600">
@@ -32,7 +36,7 @@ export default function ExplorePage() {
       </p>
       <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {CATEGORIES.map((category) => (
-          <CategoryCard key={category} category={category} />
+          <CategoryCard key={category} category={category} place={selectRepresentativePlace(places, category)} />
         ))}
       </div>
     </div>
