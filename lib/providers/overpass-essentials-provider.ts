@@ -89,6 +89,62 @@ function categoryForTags(tags: Record<string, string> | undefined): EssentialCat
  * handle that case honestly (see EssentialsList's empty/error state) —
  * never fabricate results when the query fails.
  */
+/**
+ * Queries one mirror and throws on any failure (non-2xx, network error,
+ * timeout, malformed body) — the caller races several of these and only
+ * needs the first success, never a partial/fabricated result.
+ */
+async function queryEndpoint(endpoint: string, query: string, center: Coordinates): Promise<EssentialPOI[]> {
+  const res = await fetch(endpoint, {
+    method: "POST",
+    body: `data=${encodeURIComponent(query)}`,
+    // Confirmed via a real request during development: Overpass
+    // returns 406 with an HTML error body (not JSON) unless Accept
+    // is set explicitly — this isn't optional boilerplate. Overpass's
+    // free public mirrors have also been observed returning a 406 with
+    // no Access-Control-Allow-Origin header (an Apache content-negotiation
+    // quirk, outside app control) even when Accept is set correctly —
+    // that surfaces as a CORS-flavored "Failed to fetch" in the browser,
+    // which this function converts into a normal thrown error so the
+    // caller's race just tries the other mirror.
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+      "User-Agent": "YatraAI-Prototype/1.0 (SIH 2026 Level 1, non-commercial)",
+    },
+    signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+  });
+  if (!res.ok) throw new Error(`Overpass mirror ${endpoint} returned ${res.status}`);
+
+  const body: unknown = await res.json();
+  const elements = Array.isArray((body as { elements?: unknown }).elements)
+    ? ((body as { elements: OverpassElement[] }).elements)
+    : [];
+
+  return elements
+    .map((el): EssentialPOI | null => {
+      const lat = el.lat ?? el.center?.lat;
+      const lon = el.lon ?? el.center?.lon;
+      const category = categoryForTags(el.tags);
+      if (lat === undefined || lon === undefined || !category) return null;
+      const coordinates: Coordinates = { lat, lng: lon };
+      return {
+        id: `osm-${el.id}`,
+        name: el.tags?.name ?? categoryFallbackName(category),
+        category,
+        coordinates,
+        distanceKm: haversineDistanceKm(center, coordinates),
+        address:
+          el.tags?.["addr:full"] ??
+          (el.tags?.["addr:street"]
+            ? [el.tags["addr:housenumber"], el.tags["addr:street"]].filter(Boolean).join(" ")
+            : undefined),
+      };
+    })
+    .filter((poi): poi is EssentialPOI => poi !== null)
+    .sort((a, b) => a.distanceKm - b.distanceKm);
+}
+
 class OverpassEssentialsProvider implements EssentialsProvider {
   async findNearby(
     center: Coordinates,
@@ -99,57 +155,19 @@ class OverpassEssentialsProvider implements EssentialsProvider {
 
     const query = buildQuery(center, categories, Math.round(radiusKm * 1000));
 
-    for (const endpoint of OVERPASS_ENDPOINTS) {
-      try {
-        const res = await fetch(endpoint, {
-          method: "POST",
-          body: `data=${encodeURIComponent(query)}`,
-          // Confirmed via a real request during development: Overpass
-          // returns 406 with an HTML error body (not JSON) unless Accept
-          // is set explicitly — this isn't optional boilerplate.
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Accept: "application/json",
-            "User-Agent": "YatraAI-Prototype/1.0 (SIH 2026 Level 1, non-commercial)",
-          },
-          signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
-        });
-        if (!res.ok) continue; // try the next mirror
-
-        const body: unknown = await res.json();
-        const elements = Array.isArray((body as { elements?: unknown }).elements)
-          ? ((body as { elements: OverpassElement[] }).elements)
-          : [];
-
-        const results: EssentialPOI[] = elements
-          .map((el): EssentialPOI | null => {
-            const lat = el.lat ?? el.center?.lat;
-            const lon = el.lon ?? el.center?.lon;
-            const category = categoryForTags(el.tags);
-            if (lat === undefined || lon === undefined || !category) return null;
-            const coordinates: Coordinates = { lat, lng: lon };
-            return {
-              id: `osm-${el.id}`,
-              name: el.tags?.name ?? categoryFallbackName(category),
-              category,
-              coordinates,
-              distanceKm: haversineDistanceKm(center, coordinates),
-              address:
-                el.tags?.["addr:full"] ??
-                (el.tags?.["addr:street"]
-                  ? [el.tags["addr:housenumber"], el.tags["addr:street"]].filter(Boolean).join(" ")
-                  : undefined),
-            };
-          })
-          .filter((poi): poi is EssentialPOI => poi !== null)
-          .sort((a, b) => a.distanceKm - b.distanceKm);
-
-        return { status: "ok", results };
-      } catch {
-        // Network failure, timeout, or malformed response — try the
-        // next mirror before giving up.
-      }
-    }
+    // Race both mirrors rather than trying them one after another — a
+    // free, best-effort public server can take up to REQUEST_TIMEOUT_MS
+    // to fail, and trying mirrors sequentially meant a slow/erroring
+    // primary could keep a user waiting up to twice as long before the
+    // fallback even got a chance. Racing bounds the worst case to a
+    // single timeout and uses whichever mirror answers first.
+    const attempts = await Promise.allSettled(
+      OVERPASS_ENDPOINTS.map((endpoint) => queryEndpoint(endpoint, query, center)),
+    );
+    const success = attempts.find(
+      (a): a is PromiseFulfilledResult<EssentialPOI[]> => a.status === "fulfilled",
+    );
+    if (success) return { status: "ok", results: success.value };
 
     // Every mirror failed — an honest "couldn't reach live data"
     // outcome, never fabricated results.

@@ -30,6 +30,7 @@ export function EssentialsExplorer() {
   const [activeCategories, setActiveCategories] = useState<EssentialCategory[]>(ALL_CATEGORIES);
   const [results, setResults] = useState<EssentialPOI[]>([]);
   const [status, setStatus] = useState<QueryStatus>("idle");
+  const [retryToken, setRetryToken] = useState(0);
 
   const anchor: Coordinates | null =
     referencePoint?.coordinates ?? trip?.accommodationLocation?.coordinates ?? null;
@@ -72,7 +73,7 @@ export function EssentialsExplorer() {
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [anchor, activeCategories]);
+  }, [anchor, activeCategories, retryToken]);
 
   const mapCenter = anchor ?? getMapProvider().getDefaultCenter("lucknow");
 
@@ -125,7 +126,16 @@ export function EssentialsExplorer() {
           {activeCategories.length > 0 && status === "unreachable" && (
             <EmptyState
               title="Couldn't reach live data"
-              description="Nearby Essentials needs a live connection to OpenStreetMap's data service, and that request didn't go through. Try again in a moment."
+              description="Nearby Essentials needs a live connection to OpenStreetMap's data service, and that request didn't go through. This is a free, best-effort public service with no uptime guarantee — try again in a moment."
+              action={
+                <button
+                  type="button"
+                  onClick={() => setRetryToken((n) => n + 1)}
+                  className="rounded-full bg-navy-900 px-5 py-2 text-sm font-medium text-ivory transition-colors hover:bg-navy-800"
+                >
+                  Try again
+                </button>
+              }
             />
           )}
           {activeCategories.length > 0 && status === "ok" && results.length === 0 && (
