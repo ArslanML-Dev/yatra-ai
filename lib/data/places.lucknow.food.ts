@@ -57,7 +57,15 @@ export const foodPlaces: Place[] = [
     area: "old-lucknow",
     coordinates: { lat: 26.86224, lng: 80.9073211 },
     address: "Akbari Gate, Shahganj, Lucknow 226003",
-    images: [],
+    images: [
+      {
+        url: "https://upload.wikimedia.org/wikipedia/commons/b/bf/Nihari_and_roti.jpg",
+        alt: "Nihari stew served with bread, the same style of dish Raheem's is known for",
+        source: "Wikimedia Commons",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Nihari_and_roti.jpg",
+        license: "CC BY-SA 4.0",
+      },
+    ],
     priceRange: "unknown",
     knownFor: ["Nihari-kulcha — regarded by several food writers as the city's benchmark nihari"],
     tags: ["food"],
@@ -84,7 +92,15 @@ export const foodPlaces: Place[] = [
     suitableTimesOfDay: ["evening"],
     area: "hazratganj-central",
     coordinates: { lat: 26.8482227, lng: 80.9437546 },
-    images: [],
+    images: [
+      {
+        url: "https://upload.wikimedia.org/wikipedia/commons/9/99/Basket_chaat.png",
+        alt: "Basket chaat, the dish Royal Café is best known for popularising",
+        source: "Wikimedia Commons",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Basket_chaat.png",
+        license: "CC BY-SA 4.0",
+      },
+    ],
     priceRange: "unknown",
     knownFor: ["Basket chaat — widely credited as the dish's Lucknow origin point"],
     tags: ["food"],
@@ -113,7 +129,15 @@ export const foodPlaces: Place[] = [
     mealSlot: "dinner",
     area: "old-lucknow",
     coordinates: { lat: 26.8621638, lng: 80.9072922 },
-    images: [],
+    images: [
+      {
+        url: "https://upload.wikimedia.org/wikipedia/commons/b/b7/Welcome_to_a_typical_chaat_stall_in_Delhi-6.jpg",
+        alt: "A typical North Indian street-food chaat stall, representative of Chowk Food Street's stalls",
+        source: "Wikimedia Commons",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Welcome_to_a_typical_chaat_stall_in_Delhi-6.jpg",
+        license: "CC BY-SA 4.0",
+      },
+    ],
     priceRange: "unknown",
     knownFor: [
       "Galouti kebabs, nihari, kakori kebabs, basket chaat and milk-based sweets in one walkable lane",

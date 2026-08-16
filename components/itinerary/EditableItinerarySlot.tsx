@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import type { ItinerarySlot } from "@/types/itinerary";
 import type { Place } from "@/types/place";
 import { useTrip } from "@/lib/trip/use-trip";
 import { buildGoogleMapsDirectionsUrl } from "@/lib/geo/directions-url";
+import { PlaceImage } from "@/components/place/PlaceImage";
 
 const TIME_LABELS: Record<ItinerarySlot["timeOfDay"], string> = {
   morning: "Morning",
@@ -38,7 +38,6 @@ export function EditableItinerarySlot({
   const prefersReducedMotion = useReducedMotion();
 
   if (!place) return null;
-  const image = place.images[0];
 
   // Honest default origin: the previous stop that day, or the user's
   // chosen reference point for the first stop, or nothing.
@@ -74,11 +73,9 @@ export function EditableItinerarySlot({
             </p>
           </div>
 
-          {image && (
-            <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-sandstone-100">
-              <Image src={image.url} alt={image.alt} fill className="object-cover" sizes="64px" />
-            </div>
-          )}
+          <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-sandstone-100">
+            <PlaceImage place={place} sizes="64px" iconSize="sm" className="object-cover" />
+          </div>
 
           <div className="min-w-0 flex-1">
             <Link href={`/place/${place.id}`} className="font-display text-base text-navy-900 hover:underline">

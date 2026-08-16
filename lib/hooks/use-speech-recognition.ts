@@ -71,11 +71,25 @@ export interface UseSpeechRecognitionResult {
  * Web Speech API error is classified into `status` and a human message
  * — never silently swallowed into an unlabeled "not listening" state.
  */
+/** If the browser's recognizer never fires onresult/onerror/onend at all
+ * (confirmed via real testing: this happens, leaving the mic stuck on
+ * "listening" indefinitely with no feedback), this is the longest a user
+ * should ever be left waiting before we force an honest failure state. */
+const LISTENING_TIMEOUT_MS = 8000;
+
 export function useSpeechRecognition(): UseSpeechRecognitionResult {
   const [status, setStatus] = useState<SpeechRecognitionStatus>("idle");
   const [transcript, setTranscript] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearListeningTimeout = useCallback(() => {
+    if (timeoutRef.current !== null) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+  }, []);
 
   useEffect(() => {
     // One-time client-only capability detection after mount — required to
@@ -97,6 +111,7 @@ export function useSpeechRecognition(): UseSpeechRecognitionResult {
     recognition.interimResults = false;
 
     recognition.onresult = (event) => {
+      clearListeningTimeout();
       const result = event.results[0]?.[0];
       if (result) {
         setTranscript(result.transcript);
@@ -104,11 +119,13 @@ export function useSpeechRecognition(): UseSpeechRecognitionResult {
       }
     };
     recognition.onerror = (event) => {
+      clearListeningTimeout();
       const code = event.error;
       setErrorMessage(ERROR_MESSAGES[code] ?? "Couldn't hear that — try again.");
       setStatus(code === "not-allowed" || code === "service-not-allowed" ? "denied" : "error");
     };
     recognition.onend = () => {
+      clearListeningTimeout();
       // onresult/onerror already moved status away from "listening" on
       // a real outcome; only downgrade to idle if the session ended
       // with neither (e.g. the browser gave up with no result at all).
@@ -120,17 +137,29 @@ export function useSpeechRecognition(): UseSpeechRecognitionResult {
     setErrorMessage(null);
     setStatus("listening");
     recognition.start();
-  }, []);
+
+    // Belt-and-braces: some browsers/environments never fire onresult,
+    // onerror, or onend at all (confirmed via real testing — the mic
+    // just stays "listening" forever with no recourse but the manual
+    // stop button). Force an honest timeout instead of an silent hang.
+    timeoutRef.current = setTimeout(() => {
+      recognitionRef.current?.stop();
+      setErrorMessage("Didn't catch that — try again.");
+      setStatus("error");
+    }, LISTENING_TIMEOUT_MS);
+  }, [clearListeningTimeout]);
 
   const stop = useCallback(() => {
+    clearListeningTimeout();
     recognitionRef.current?.stop();
-  }, []);
+  }, [clearListeningTimeout]);
 
   const reset = useCallback(() => {
+    clearListeningTimeout();
     setTranscript("");
     setErrorMessage(null);
     setStatus("idle");
-  }, []);
+  }, [clearListeningTimeout]);
 
   return { status, transcript, errorMessage, start, stop, reset };
 }

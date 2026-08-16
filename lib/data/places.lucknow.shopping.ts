@@ -88,7 +88,15 @@ export const shoppingPlaces: Place[] = [
     suitableTimesOfDay: ["evening"],
     area: "hazratganj-central",
     coordinates: { lat: 26.855551, lng: 80.94298 },
-    images: [],
+    images: [
+      {
+        url: "https://upload.wikimedia.org/wikipedia/commons/5/51/Harzratganj_Market%2C_Lucknow.jpg",
+        alt: "Hazratganj Market, Lucknow's central shopping and leisure street",
+        source: "Wikimedia Commons",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Harzratganj_Market,_Lucknow.jpg",
+        license: "CC BY-SA 4.0",
+      },
+    ],
     priceRange: "unknown",
     knownFor: ["Chikan-embroidered garments, historic cinemas, and long-running cafés"],
     tags: ["shopping"],

@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
 import type { Place } from "@/types/place";
 import { formatCategoryLabel, formatMinutes } from "@/lib/utils/format";
 import { getSource } from "@/lib/data/sources";
@@ -11,17 +9,15 @@ import { SourceBadge } from "./SourceBadge";
 import { DistanceBadge } from "./DistanceBadge";
 import { ReferencePointPicker } from "./ReferencePointPicker";
 import { SavedToggle } from "./SavedToggle";
+import { PlaceImage } from "./PlaceImage";
 import { LiveNavigationPanel } from "@/components/navigation/LiveNavigationPanel";
 import { Badge } from "@/components/ui/Badge";
 
 export function PlaceDetail({ place, allPlaces }: { place: Place; allPlaces: Place[] }) {
   const { referencePoint } = useTrip();
-  // A hotlinked Wikimedia source can rate-limit or fail transiently —
-  // confirmed via real browser testing on this exact page. Falls back
-  // to the same honest no-image layout used for places that never had
-  // one, rather than leaving a broken/invisible hero.
-  const [imageFailed, setImageFailed] = useState(false);
-  const image = imageFailed ? undefined : place.images[0];
+  // Attribution only — independent of whether PlaceImage is currently able
+  // to render this photo; the source credit stays valid either way.
+  const image = place.images[0];
   const directionsUrl = buildGoogleMapsDirectionsUrl(
     place.coordinates,
     referencePoint?.coordinates,
@@ -30,39 +26,19 @@ export function PlaceDetail({ place, allPlaces }: { place: Place; allPlaces: Pla
 
   return (
     <article>
-      {image ? (
-        <div className="relative flex h-[52vh] min-h-[320px] w-full items-end overflow-hidden bg-navy-950">
-          <Image
-            src={image.url}
-            alt={image.alt}
-            fill
-            priority
-            className="object-cover"
-            sizes="100vw"
-            onError={() => setImageFailed(true)}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/50 to-navy-950/10" />
-          <div className="relative z-10 mx-auto w-full max-w-4xl px-6 pb-10">
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge tone="translucent">{formatCategoryLabel(place.category)}</Badge>
-              <SourceBadge status={place.verificationStatus} />
-              <DistanceBadge coordinates={place.coordinates} tone="light" />
-            </div>
-            <h1 className="mt-4 text-h1 font-display text-ivory">{place.name}</h1>
-            <p className="mt-3 max-w-2xl text-body-lg text-ivory/80">{place.description}</p>
-          </div>
-        </div>
-      ) : (
-        <div className="mx-auto max-w-4xl px-6 pt-16">
+      <div className="relative flex h-[52vh] min-h-80 w-full items-end overflow-hidden bg-navy-950">
+        <PlaceImage place={place} sizes="100vw" priority tone="dark" className="object-cover" />
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-navy-950 via-navy-950/50 to-navy-950/10" />
+        <div className="relative z-10 mx-auto w-full max-w-4xl px-6 pb-10">
           <div className="flex flex-wrap items-center gap-2">
-            <Badge tone="navy">{formatCategoryLabel(place.category)}</Badge>
+            <Badge tone="translucent">{formatCategoryLabel(place.category)}</Badge>
             <SourceBadge status={place.verificationStatus} />
-            <DistanceBadge coordinates={place.coordinates} />
+            <DistanceBadge coordinates={place.coordinates} tone="light" />
           </div>
-          <h1 className="mt-4 text-h1 font-display text-navy-900">{place.name}</h1>
-          <p className="mt-3 max-w-2xl text-body-lg text-ink-soft">{place.description}</p>
+          <h1 className="mt-4 text-h1 font-display text-ivory">{place.name}</h1>
+          <p className="mt-3 max-w-2xl text-body-lg text-ivory/80">{place.description}</p>
         </div>
-      )}
+      </div>
 
       <div className="mx-auto max-w-4xl px-6 py-8">
         <div className="flex flex-wrap items-center justify-between gap-4">
