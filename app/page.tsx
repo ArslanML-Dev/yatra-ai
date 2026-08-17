@@ -1,5 +1,5 @@
 import { getPlaceProvider } from "@/lib/providers/provider-registry";
-import { selectHighlights } from "@/lib/data/select-homepage-highlights";
+import { selectMonumentHighlights } from "@/lib/data/select-homepage-highlights";
 import { selectRepresentativePlace } from "@/lib/data/select-representative-place";
 import { HeroCarousel } from "@/components/home/HeroCarousel";
 import { HeroHeadline } from "@/components/home/HeroHeadline";
@@ -17,7 +17,7 @@ export default async function Home() {
     provider.getAllPlaces("lucknow"),
   ]);
 
-  const highlights = selectHighlights(places, 8);
+  const highlights = selectMonumentHighlights(places, 8);
 
   return (
     <div>

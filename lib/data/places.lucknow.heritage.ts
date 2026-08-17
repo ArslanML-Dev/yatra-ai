@@ -213,4 +213,77 @@ export const heritagePlaces: Place[] = [
     verificationStatus: "CURATED",
     dataType: "CURATED",
   },
+  {
+    id: "husainabad-clock-tower",
+    destinationId: "lucknow",
+    name: "Husainabad Clock Tower",
+    category: "heritage",
+    subcategory: "clock-tower",
+    description:
+      "A 67-metre Victorian-Gothic clock tower in the Husainabad heritage cluster, reported as the tallest clock tower in India, standing beside the Satkhanda tank next to Bara Imambara.",
+    whyVisit:
+      "Climb-worthy scale and a striking silhouette against the sky, a short walk from Bara Imambara and Rumi Darwaza.",
+    historicalContext:
+      "Built in 1881 under Nawab Nasir-ud-Din Haidar Shah's successors to mark the arrival of Sir George Couper, then lieutenant governor of the North-Western Provinces. Designed by architect Richard Roskell Bayne in a Victorian-Gothic style with Mughal touches, with a 14-foot pendulum and a twelve-petalled clock face.",
+    bestTime: "Late afternoon into evening, when the tower catches the light and the adjoining tank reflects it",
+    estimatedVisitMinutes: 30,
+    suitableTimesOfDay: ["afternoon", "evening"],
+    area: "old-lucknow",
+    coordinates: { lat: 26.8744, lng: 80.9067 },
+    images: [
+      {
+        url: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Husainabad_Clock_Tower_on_a_clear_evening_%28May_2017%29.jpg",
+        alt: "Husainabad Clock Tower in Lucknow, seen across the Satkhanda tank on a clear evening",
+        source: "Wikimedia Commons",
+        sourceUrl:
+          "https://commons.wikimedia.org/wiki/File:Husainabad_Clock_Tower_on_a_clear_evening_(May_2017).jpg",
+        license: "CC BY-SA 4.0",
+      },
+    ],
+    priceRange: "free",
+    knownFor: ["Reported as the tallest clock tower in India, at roughly 67 metres"],
+    tags: ["heritage"],
+    nearbyIds: ["bara-imambara", "rumi-darwaza"],
+    source: "wikipedia",
+    sourceUrl: "https://en.wikipedia.org/wiki/Husainabad_Clock_Tower",
+    retrievedAt: "2026-08-18",
+    verificationStatus: "VERIFIED_STATIC",
+    dataType: "VERIFIED_STATIC",
+  },
+  {
+    id: "chattar-manzil",
+    destinationId: "lucknow",
+    name: "Chattar Manzil",
+    category: "heritage",
+    subcategory: "palace-complex",
+    description:
+      "An Indo-European Nawabi palace on the Gomti riverbank, recognisable by its umbrella-shaped gilt dome, built as a residence for the rulers of Awadh and their begums.",
+    whyVisit:
+      "Distinctive domed riverside architecture with a layered history, from Nawabi palace to a post-1857 British club to a decades-long research institute.",
+    historicalContext:
+      "Construction began in the 1780s under Nawab Ghazi-ud-Din Haider and was completed under Nasir-ud-Din Haider. After 1857 it served as the United Services Club for the British; from 1950 it housed the Central Drug Research Institute, which has since vacated the site, and it is now slated for restoration as a museum and library by the state archaeology department.",
+    bestTime: "Daytime, for the riverside view and the dome's silhouette",
+    estimatedVisitMinutes: 30,
+    suitableTimesOfDay: ["morning", "afternoon"],
+    area: "old-lucknow",
+    coordinates: { lat: 26.85869, lng: 80.93239 },
+    images: [
+      {
+        url: "https://upload.wikimedia.org/wikipedia/commons/e/eb/Chatar_manzil_Lucknow.jpg",
+        alt: "Chattar Manzil's domed riverside facade on the Gomti in Lucknow",
+        source: "Wikimedia Commons",
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Chatar_manzil_Lucknow.jpg",
+        license: "CC BY-SA 4.0",
+      },
+    ],
+    priceRange: "unknown",
+    knownFor: ["Its umbrella-shaped gilt dome over a Gomti-riverside Nawabi palace"],
+    tags: ["heritage", "history"],
+    nearbyIds: ["british-residency", "qaiserbagh"],
+    source: "wikipedia",
+    sourceUrl: "https://en.wikipedia.org/wiki/Chattar_Manzil",
+    retrievedAt: "2026-08-18",
+    verificationStatus: "CURATED",
+    dataType: "CURATED",
+  },
 ];
