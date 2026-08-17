@@ -182,6 +182,7 @@ export function assignSlots(
     slots.push({
       id: createSlotId(),
       timeOfDay: PHASE_TO_TIME_OF_DAY[phase],
+      phase,
       placeId: best.id,
       note: best.bestTime ?? "Approximate timing — allow extra time to enjoy each stop",
       locked: lockedPlaceIds.includes(best.id),
