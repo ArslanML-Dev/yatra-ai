@@ -9,7 +9,7 @@ import { SavedToggle } from "./SavedToggle";
 
 export function PlaceCard({ place }: { place: Place }) {
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-sandstone-200/70 bg-white transition-shadow hover:shadow-lg hover:shadow-navy-900/5">
+    <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-sandstone-200/70 bg-white transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-1 hover:border-saffron-400/60 hover:shadow-lift focus-within:-translate-y-1 focus-within:border-saffron-400/60 focus-within:shadow-lift">
       <div className="absolute right-3 top-3 z-10 rounded-full bg-white/90 backdrop-blur">
         <SavedToggle placeId={place.id} placeName={place.name} />
       </div>
@@ -18,7 +18,7 @@ export function PlaceCard({ place }: { place: Place }) {
           <PlaceImage
             place={place}
             sizes="(min-width: 768px) 33vw, 100vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="object-cover transition-transform duration-500 group-hover:scale-105 group-focus-within:scale-105"
           />
         </div>
         <div className="flex flex-1 flex-col gap-2 p-5">

@@ -98,6 +98,23 @@ h4 {
   font-family: var(--font-display), Georgia, serif;
 }
 
+/*
+ * Tailwind's preflight resets heading font-weight to `inherit`, which
+ * left every heading — and every other element styled with the
+ * `font-display` utility, including non-heading tags like the footer
+ * brand mark and card titles — at the body's normal weight, regardless
+ * of the three Fraunces weights actually loaded (500/600/700). They
+ * were relying on the typeface's character alone rather than any real
+ * weight contrast. This rule is intentionally unlayered (outside any
+ * @layer) so it reliably wins over Tailwind's own utilities layer;
+ * the one existing explicit pairing (NavBar's `font-display
+ * font-semibold`) already used the same 600 value, so this changes
+ * nothing there and only adds weight everywhere else.
+ */
+.font-display {
+  font-weight: 600;
+}
+
 :focus-visible {
   outline: 2px solid var(--color-saffron-600);
   outline-offset: 2px;
