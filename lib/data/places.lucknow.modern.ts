@@ -52,15 +52,13 @@ export const modernPlaces: Place[] = [
     area: "gomti-nagar-modern",
     coordinates: { lat: 26.8087716, lng: 81.0127929 },
     address: "Amar Shaheed Path, Sector 7, Gomti Nagar Extension, Lucknow 226010",
-    images: [
-      {
-        url: "https://upload.wikimedia.org/wikipedia/commons/4/48/Shopping_Mall_Atrium.jpeg",
-        alt: "A domed mall atrium interior, representative of large-format Indian shopping malls like Phoenix Palassio",
-        source: "Wikimedia Commons",
-        sourceUrl: "https://commons.wikimedia.org/wiki/File:Shopping_Mall_Atrium.jpeg",
-        license: "CC0 1.0 (public domain)",
-      },
-    ],
+    // No free, redistribution-safe photo of Phoenix Palassio itself was
+    // found (no Wikimedia Commons category, Wikipedia article, or
+    // Wikidata entry — checked directly). Rather than keep a generic
+    // "representative, not this mall" stock photo, this is left empty so
+    // PlaceImage's category-tinted fallback icon renders honestly until
+    // a real, properly-licensed photo is available.
+    images: [],
     priceRange: "unknown",
     knownFor: [
       "Marketed by its operator as Lucknow's biggest mall (a self-published claim, not independently verified)",
