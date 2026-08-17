@@ -3,7 +3,6 @@ import { selectMonumentHighlights } from "@/lib/data/select-homepage-highlights"
 import { selectRepresentativePlace } from "@/lib/data/select-representative-place";
 import { HeroCarousel } from "@/components/home/HeroCarousel";
 import { HeroHeadline } from "@/components/home/HeroHeadline";
-import { HeroModeSelect } from "@/components/home/HeroModeSelect";
 import { ExplainerSection } from "@/components/home/ExplainerSection";
 import { HighlightsGrid } from "@/components/home/HighlightsGrid";
 import { TwoSidesSection } from "@/components/home/TwoSidesSection";
@@ -21,19 +20,18 @@ export default async function Home() {
 
   return (
     <div>
-      <section className="relative flex min-h-[92vh] items-end overflow-hidden">
+      <section className="relative flex min-h-[80vh] items-end overflow-hidden">
         <HeroCarousel images={destination?.heroImages ?? []} />
-        <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-24">
-          <p className="text-caption font-medium uppercase text-saffron-400 [text-shadow:0_1px_12px_rgba(0,0,0,0.6)]">
-            AI-powered tourism platform · Now showcasing Lucknow
-          </p>
-          <HeroHeadline />
-          <p className="mt-5 max-w-xl text-body-lg text-ivory/90 [text-shadow:0_1px_12px_rgba(0,0,0,0.5)]">
-            Yatra AI turns how you actually want to travel into a real day-wise plan —
-            heritage, food, shopping and parks, organized around you, not a generic
-            checklist.
-          </p>
-          <HeroModeSelect />
+        <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-14">
+          <div className="max-w-xs sm:max-w-sm">
+            <p className="text-caption font-medium uppercase text-saffron-400 [text-shadow:0_1px_10px_rgba(0,0,0,0.65)]">
+              AI-powered tourism platform
+            </p>
+            <HeroHeadline />
+            <p className="mt-3 text-body-sm text-ivory/85 [text-shadow:0_1px_10px_rgba(0,0,0,0.6)]">
+              A real day-wise Lucknow plan, organized around how you actually want to travel.
+            </p>
+          </div>
         </div>
         <div className="absolute right-0 bottom-0 left-0 z-10">
           <SectionDivider tone="ivory" />

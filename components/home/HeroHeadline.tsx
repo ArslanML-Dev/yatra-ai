@@ -2,29 +2,22 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
-const LINES = ["Smile,", "you're in", "Lucknow."];
-
 /**
- * The commanding hero moment — three staggered lines instead of one
- * flat headline. Each line is its own motion.span so the entrance
- * choreography reads deliberately, not as one block fading in.
+ * A small, corner-anchored accent rather than a dominant block — the
+ * rotating carousel photography is the hero's main visual, not the text
+ * sitting over it.
  */
 export function HeroHeadline() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <h1 className="text-display font-display text-ivory [text-shadow:0_2px_24px_rgba(0,0,0,0.45)]">
-      {LINES.map((line, i) => (
-        <motion.span
-          key={line}
-          className="block"
-          initial={prefersReducedMotion ? undefined : { opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-        >
-          {line}
-        </motion.span>
-      ))}
-    </h1>
+    <motion.h1
+      className="text-h2 font-display text-ivory [text-shadow:0_2px_20px_rgba(0,0,0,0.55)]"
+      initial={prefersReducedMotion ? undefined : { opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+    >
+      Smile, you&rsquo;re in Lucknow.
+    </motion.h1>
   );
 }
