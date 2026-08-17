@@ -9,7 +9,7 @@ export const modernPlaces: Place[] = [
     subcategory: "mall",
     description:
       "A large shopping mall developed by LuLu Group International, opened in July 2022 within the Sushant Golf City development.",
-    whyVisit: "Large-format retail, entertainment and a hypermarket — a modern contrast to Old Lucknow's markets.",
+    whyVisit: "Large-format retail, entertainment and a hypermarket: a modern contrast to Old Lucknow's markets.",
     historicalContext: "Opened 11 July 2022, on a 45.9-acre site with roughly 19 lakh sq ft of built-up area.",
     bestTime: "Evening for dining and entertainment",
     estimatedVisitMinutes: 135,
@@ -63,7 +63,7 @@ export const modernPlaces: Place[] = [
     ],
     priceRange: "unknown",
     knownFor: [
-      "Marketed by its operator as Lucknow's biggest mall — a self-published claim, not independently verified",
+      "Marketed by its operator as Lucknow's biggest mall (a self-published claim, not independently verified)",
     ],
     tags: ["modern", "shopping", "family-friendly"],
     nearbyIds: ["lulu-mall-lucknow", "ekana-stadium"],
@@ -80,8 +80,8 @@ export const modernPlaces: Place[] = [
     category: "modern",
     subcategory: "stadium",
     description:
-      "Officially the Bharat Ratna Shri Atal Bihari Vajpayee Ekana Cricket Stadium — a cricket stadium at Ekana Sportz City, Gomti Nagar Extension, opened in 2017.",
-    whyVisit: "A modern architectural and sporting landmark — home venue for IPL's Lucknow Super Giants.",
+      "Officially the Bharat Ratna Shri Atal Bihari Vajpayee Ekana Cricket Stadium, a cricket stadium at Ekana Sportz City, Gomti Nagar Extension, opened in 2017.",
+    whyVisit: "A modern architectural and sporting landmark: home venue for IPL's Lucknow Super Giants.",
     historicalContext:
       "Built as a public-private partnership between Ekana Sportz City and the Lucknow Development Authority on a 71-acre site; renamed in 2018 in honour of former PM Atal Bihari Vajpayee.",
     bestTime: "Exterior/landmark viewing any time; match-day visits depend on the fixture schedule, which this listing does not track",

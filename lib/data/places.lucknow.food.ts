@@ -8,10 +8,10 @@ export const foodPlaces: Place[] = [
     category: "food",
     subcategory: "kebab-house",
     description:
-      "The original Chowk shop credited with popularising the galouti kebab — a soft minced-meat kebab designed to be easy to chew.",
+      "The original Chowk shop credited with popularising the galouti kebab, a soft minced-meat kebab designed to be easy to chew.",
     whyVisit: "Try the galouti kebab at the shop most closely tied to its origin story.",
     historicalContext:
-      "Founded in 1905 by Haji Murad Ali, nicknamed 'Tunday' (one-armed). Some sources trace an older, less-documented origin story to a 17th-century Nawabi court chef — the two accounts aren't fully reconciled, so treat the deeper history as loosely established.",
+      "Founded in 1905 by Haji Murad Ali, nicknamed 'Tunday' (one-armed). Some sources trace an older, less-documented origin story to a 17th-century Nawabi court chef; the two accounts aren't fully reconciled, so treat the deeper history as loosely established.",
     bestTime: "Lunch or dinner hours",
     estimatedVisitMinutes: 40,
     suitableTimesOfDay: ["afternoon", "evening"],
@@ -30,7 +30,7 @@ export const foodPlaces: Place[] = [
       },
     ],
     priceRange: "unknown",
-    knownFor: ["Galouti kebab — reportedly made with around 100 spices"],
+    knownFor: ["Galouti kebab, reportedly made with around 100 spices"],
     tags: ["food", "anchor"],
     nearbyIds: ["bara-imambara", "raheems-nihari", "chowk-food-street", "chowk-chikankari-market"],
     source: "openstreetmap",
@@ -49,8 +49,8 @@ export const foodPlaces: Place[] = [
       "A long-running Old Lucknow eatery near Akbari Gate, known for nihari (slow-cooked mutton stew) served with kulcha bread.",
     whyVisit: "Old Lucknow's benchmark nihari-kulcha, a short walk from Bara Imambara.",
     historicalContext:
-      "Widely reported as dating to around 1890 (some current listings say roughly 135 years, which points to a similar era), though this figure comes from food/travel write-ups rather than a primary historical record — treat the founding year as approximate.",
-    bestTime: "Morning through late night — reported to stay open past midnight",
+      "Widely reported as dating to around 1890 (some current listings say roughly 135 years, which points to a similar era), though this figure comes from food/travel write-ups rather than a primary historical record. Treat the founding year as approximate.",
+    bestTime: "Morning through late night; reported to stay open past midnight",
     estimatedVisitMinutes: 40,
     suitableTimesOfDay: ["morning", "afternoon", "evening"],
     mealSlot: "breakfast",
@@ -67,7 +67,7 @@ export const foodPlaces: Place[] = [
       },
     ],
     priceRange: "unknown",
-    knownFor: ["Nihari-kulcha — regarded by several food writers as the city's benchmark nihari"],
+    knownFor: ["Nihari-kulcha, regarded by several food writers as the city's benchmark nihari"],
     tags: ["food"],
     nearbyIds: ["bara-imambara", "tunday-kababi", "chowk-food-street", "chowk-chikankari-market"],
     source: "openstreetmap",
@@ -83,7 +83,7 @@ export const foodPlaces: Place[] = [
     category: "food",
     subcategory: "chaat",
     description:
-      "A near-century-old Hazratganj café associated with popularising basket chaat — a fried-dough basket filled with chaat ingredients.",
+      "A near-century-old Hazratganj café associated with popularising basket chaat, a fried-dough basket filled with chaat ingredients.",
     whyVisit: "The Hazratganj café most associated with popularising basket chaat.",
     historicalContext:
       "Founded in 1930 by three Ahuja brothers. Several outlets carry the Royal Café name in Hazratganj today; this listing points to the long-standing MG Road location, but confirm the exact outlet before visiting.",
@@ -102,7 +102,7 @@ export const foodPlaces: Place[] = [
       },
     ],
     priceRange: "unknown",
-    knownFor: ["Basket chaat — widely credited as the dish's Lucknow origin point"],
+    knownFor: ["Basket chaat: widely credited as the dish's Lucknow origin point"],
     tags: ["food"],
     nearbyIds: ["hazratganj-market", "aminabad-market"],
     source: "team-research",
@@ -122,7 +122,7 @@ export const foodPlaces: Place[] = [
       "The lane of shops and street-food stalls around Akbari Gate in Old Lucknow, clustered near Bara Imambara, Chhota Imambara and Rumi Darwaza.",
     whyVisit: "Cover several Awadhi street-food specialities in one walkable lane near Akbari Gate.",
     historicalContext:
-      "Chowk is one of Old Lucknow's oldest market areas, with a street-food tradition tourism sources describe as over 200 years old — individual shop-founding dates within it are not independently verified here.",
+      "Chowk is one of Old Lucknow's oldest market areas, with a street-food tradition tourism sources describe as over 200 years old. Individual shop-founding dates within it are not independently verified here.",
     bestTime: "Evening, when the stalls are most active",
     estimatedVisitMinutes: 120,
     suitableTimesOfDay: ["evening"],

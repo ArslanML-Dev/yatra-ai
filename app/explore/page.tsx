@@ -32,7 +32,7 @@ export default async function ExplorePage() {
       </h1>
       <p className="mt-4 max-w-xl text-ink-soft">
         Instead of one long list, Lucknow is grouped the way you&rsquo;d actually plan around
-        it — old city and modern, food and shopping, heritage and green space.
+        it: old city and modern, food and shopping, heritage and green space.
       </p>
       <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {CATEGORIES.map((category) => (

@@ -11,7 +11,7 @@ export const riverfrontEveningPlaces: Place[] = [
       "A roughly 2 km riverfront promenade and park along the Gomti River, inaugurated in October 2016 as part of the Gomti riverfront redevelopment.",
     whyVisit: "An evening riverside walk, away from the density of the old city.",
     historicalContext: "Opened October 2016; commonly mentioned features include cycling/jogging tracks and an amphitheatre.",
-    bestTime: "Evening — a musical fountain show is commonly mentioned around 7:30–9pm, though exact timing varies by source and should be confirmed locally",
+    bestTime: "Evening; a musical fountain show is commonly mentioned around 7:30–9pm, though exact timing varies by source and should be confirmed locally",
     estimatedVisitMinutes: 60,
     suitableTimesOfDay: ["evening", "night"],
     area: "riverfront",

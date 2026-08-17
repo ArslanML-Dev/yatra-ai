@@ -47,7 +47,7 @@ export const destinations: Destination[] = [
       },
     ],
     shortOverview:
-      "Lucknow pairs Nawabi-era heritage — imambaras, gateways, and the tehzeeb that grew up around them — with a fast-growing modern city along the Gomti river. Awadhi cuisine, chikankari embroidery, and a genuinely walkable old quarter make it a rare mix of history and everyday life.",
+      "Lucknow pairs Nawabi-era heritage (imambaras, gateways, and the tehzeeb that grew up around them) with a fast-growing modern city along the Gomti river. Awadhi cuisine, chikankari embroidery, and a genuinely walkable old quarter make it a rare mix of history and everyday life.",
     themes: ["heritage", "awadhi-cuisine", "chikankari", "gomti-riverfront", "modern-lucknow"],
   },
 ];

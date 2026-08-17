@@ -56,6 +56,10 @@ const nextConfig: NextConfig = {
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
+          // geolocation: Nearby Essentials / "Use my location". microphone:
+          // voice input (Web Speech API). Both are real, used features —
+          // everything else stays denied.
+          { key: "Permissions-Policy", value: "geolocation=(self), microphone=(self), camera=()" },
         ],
       },
     ];

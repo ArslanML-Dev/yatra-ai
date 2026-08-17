@@ -9,7 +9,7 @@ export const transportPlaces: Place[] = [
     subcategory: "airport",
     description:
       "Lucknow's international airport (IATA: LKO), located in Amausi, about 14 km from the city centre.",
-    whyVisit: "The city's main air gateway — Terminal 3's frosted-glass façade incorporates Chikankari-inspired patterns.",
+    whyVisit: "The city's main air gateway: Terminal 3's frosted-glass façade incorporates Chikankari-inspired patterns.",
     historicalContext:
       "Named after former Prime Minister Chaudhary Charan Singh. Terminal 3 opened 10 March 2024, rated for over 13 million passengers a year; it is cited as the 11th-busiest airport in India by passenger traffic.",
     estimatedVisitMinutes: 0,
@@ -27,7 +27,7 @@ export const transportPlaces: Place[] = [
     knownFor: ["Terminal 3's Chikankari-inspired façade"],
     tags: ["transport"],
     nearbyIds: [],
-    transportNote: "About 14 km from the city centre — plan for a 30–45 minute cab ride depending on traffic.",
+    transportNote: "About 14 km from the city centre; plan for a 30–45 minute cab ride depending on traffic.",
     source: "wikipedia",
     sourceUrl: "https://en.wikipedia.org/wiki/Chaudhary_Charan_Singh_International_Airport",
     retrievedAt: "2026-08-14",
@@ -61,7 +61,7 @@ export const transportPlaces: Place[] = [
     knownFor: ["Indo-Saracenic architecture echoing Lucknow's Nawabi-era monuments"],
     tags: ["transport"],
     nearbyIds: ["chowk-chikankari-market", "aminabad-market"],
-    transportNote: "Central and well-connected — a short auto or cab ride from both Old Lucknow and Hazratganj.",
+    transportNote: "Central and well-connected: a short auto or cab ride from both Old Lucknow and Hazratganj.",
     source: "wikipedia",
     sourceUrl: "https://en.wikipedia.org/wiki/Lucknow_Charbagh_railway_station",
     retrievedAt: "2026-08-14",

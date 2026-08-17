@@ -78,7 +78,7 @@ export function EditableItineraryDayCard({
         <div className="mt-4">
           <EmptyState
             title="A lighter day"
-            description="No fresh recommendations left for this day yet — use it to revisit a favourite spot at your own pace."
+            description="No fresh recommendations left for this day yet. Use it to revisit a favourite spot at your own pace."
           />
         </div>
       ) : (

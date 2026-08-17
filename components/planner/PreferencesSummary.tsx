@@ -19,8 +19,8 @@ const PACE_LABELS: Record<UserPreferences["pace"], string> = {
 export function PreferencesSummary({ preferences }: { preferences: UserPreferences }) {
   const confidenceCopy =
     preferences.confidence === "high"
-      ? "Here's what we understood — looks right?"
-      : "Here's our best guess — adjust anything below.";
+      ? "Here's what we understood. Looks right?"
+      : "Here's our best guess. Adjust anything below.";
 
   return (
     <div className="rounded-2xl bg-sandstone-100 p-6">

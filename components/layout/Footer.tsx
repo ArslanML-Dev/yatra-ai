@@ -30,7 +30,7 @@ export function Footer() {
           </p>
         </div>
 
-        <div>
+        <nav aria-label="Explore">
           <p className="text-caption font-medium uppercase text-ivory/40">Explore</p>
           <ul className="mt-4 flex flex-col gap-2.5">
             {exploreLinks.map((link) => (
@@ -41,9 +41,9 @@ export function Footer() {
               </li>
             ))}
           </ul>
-        </div>
+        </nav>
 
-        <div>
+        <nav aria-label="Plan">
           <p className="text-caption font-medium uppercase text-ivory/40">Plan</p>
           <ul className="mt-4 flex flex-col gap-2.5">
             <li>
@@ -66,13 +66,13 @@ export function Footer() {
               </Link>
             </li>
           </ul>
-        </div>
+        </nav>
       </div>
 
       <div className="border-t border-ivory/10">
         <p className="mx-auto max-w-6xl px-6 py-6 text-caption text-ivory/40">
-          Prototype build for SIH 2026, Level 1 screening. Not affiliated with any
-          government tourism body.
+          © 2026 Yatra AI. Prototype build for SIH 2026, Level 1 screening. Not affiliated
+          with any government tourism body.
         </p>
       </div>
     </footer>

@@ -71,7 +71,7 @@ export function MapExplorer({ places, center, highlightPlaceId }: MapExplorerPro
               description={
                 showTripOnly
                   ? "Your trip doesn't have any stops in this category."
-                  : "Try another category — we're still curating this one."
+                  : "Try another category. We're still curating this one."
               }
             />
           </div>

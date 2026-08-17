@@ -12,7 +12,7 @@ const GUIDANCE = [
   {
     area: "Old Lucknow (Chowk, Aminabad, Akbari Gate)",
     advice:
-      "Lanes here are narrow and busy, especially around Chowk. Consider being dropped near your destination and walking the final stretch — an e-rickshaw or auto is usually the most practical way to cover short distances between stops.",
+      "Lanes here are narrow and busy, especially around Chowk. Consider being dropped near your destination and walking the final stretch. An e-rickshaw or auto is usually the most practical way to cover short distances between stops.",
   },
   {
     area: "Modern Lucknow (Gomti Nagar, Hazratganj)",
@@ -70,7 +70,7 @@ export default async function TransportPage() {
           ))}
         </div>
         <p className="mt-4 text-xs text-ink-soft/60">
-          General guidance based on the city&rsquo;s layout — not live traffic or parking data.
+          General guidance based on the city&rsquo;s layout, not live traffic or parking data.
         </p>
       </section>
     </div>

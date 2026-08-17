@@ -1,7 +1,7 @@
 const steps = [
   {
     title: "Tell us how you want to travel",
-    body: "Duration, who's coming, what you care about — heritage, food, shopping, a slower pace.",
+    body: "Duration, who's coming, what you care about: heritage, food, shopping, a slower pace.",
   },
   {
     title: "See Lucknow organized, not listed",
@@ -9,7 +9,7 @@ const steps = [
   },
   {
     title: "Get a day-wise plan that fits",
-    body: "A geographically sensible itinerary for exactly as many days as you're staying — one or ten.",
+    body: "A geographically sensible itinerary for exactly as many days as you're staying, whether that's one or ten.",
   },
 ];
 

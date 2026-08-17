@@ -13,7 +13,7 @@ export default function EssentialsPage() {
       <h1 className="mt-3 font-display text-4xl text-navy-900">Nearby essentials</h1>
       <p className="mt-4 max-w-xl text-ink-soft">
         Hospitals, pharmacies, ATMs, police stations, grocery stores and malls near your current
-        location or where you&rsquo;re staying — live data from OpenStreetMap, not curated like the
+        location or where you&rsquo;re staying. Live data from OpenStreetMap, not curated like the
         rest of Yatra AI.
       </p>
       <div className="mt-10">

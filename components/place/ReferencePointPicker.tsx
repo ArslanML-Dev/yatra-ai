@@ -81,7 +81,7 @@ export function ReferencePointPicker({ places }: ReferencePointPickerProps) {
         </button>
         {status === "denied" && (
           <span className="text-xs text-ink-soft/70">
-            {error ?? "Location permission denied"} — choose a starting point instead.
+            {error ?? "Location permission denied"}. Choose a starting point instead.
           </span>
         )}
         {status === "unsupported" && (

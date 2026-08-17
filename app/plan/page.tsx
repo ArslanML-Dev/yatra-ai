@@ -4,7 +4,7 @@ import { PlannerForm } from "@/components/planner/PlannerForm";
 
 export const metadata: Metadata = {
   title: "Plan My Lucknow Trip — Yatra AI",
-  description: "Tell us how you want to travel — we'll build a day-wise Lucknow itinerary.",
+  description: "Tell us how you want to travel, and we'll build a day-wise Lucknow itinerary.",
 };
 
 export default async function PlanPage() {
@@ -20,7 +20,7 @@ export default async function PlanPage() {
         Tell us how you want to travel
       </h1>
       <p className="mt-4 text-ink-soft">
-        Write it in your own words, or use the form below — either way, you can adjust
+        Write it in your own words, or use the form below. Either way, you can adjust
         everything before we generate your plan.
       </p>
       <div className="mt-10">

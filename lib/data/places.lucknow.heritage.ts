@@ -12,12 +12,12 @@ export const heritagePlaces: Place[] = [
     whyVisit:
       "Walk through one of Lucknow's grandest Nawabi-era halls and get genuinely lost in the Bhulbhulaiya labyrinth above it.",
     historicalContext:
-      "Commissioned by Nawab Asaf-ud-Daula of Awadh and built between 1780 and 1784. The central hall spans roughly 50 by 16 metres with no supporting beams — the Bhulbhulaiya labyrinth of interconnecting passages above it developed partly as a structural solution to distribute the roof's weight.",
+      "Commissioned by Nawab Asaf-ud-Daula of Awadh and built between 1780 and 1784. The central hall spans roughly 50 by 16 metres with no supporting beams. The Bhulbhulaiya labyrinth of interconnecting passages above it developed partly as a structural solution to distribute the roof's weight.",
     bestTime: "Early morning or late afternoon, especially in the cooler months (Oct–Feb)",
     openingHours: {
       weekdayText: ["Mon–Sun: approximately 6:00 AM – 5:00 PM"],
       note:
-        "Reported consistently across several tourism sources; a few separately mention a Monday closure that others don't corroborate — confirm locally, especially around Muharram and other religious observances when access can change.",
+        "Reported consistently across several tourism sources; a few separately mention a Monday closure that others don't corroborate. Confirm locally, especially around Muharram and other religious observances when access can change.",
       opensHour: 6,
       closesHour: 17,
     },
@@ -36,7 +36,7 @@ export const heritagePlaces: Place[] = [
     ],
     priceRange: "unknown",
     knownFor: [
-      "The Bhulbhulaiya labyrinth — widely described as one of the few genuine maze structures of its kind in India",
+      "The Bhulbhulaiya labyrinth, widely described as one of the few genuine maze structures of its kind in India",
       "Widely described as one of the largest arched halls of its kind, built without external support",
     ],
     tags: ["heritage", "anchor", "family-friendly"],
@@ -66,7 +66,7 @@ export const heritagePlaces: Place[] = [
       "See the gateway that has come to symbolize Lucknow, especially striking when lit in the evening.",
     historicalContext:
       "Built in 1784 under Nawab Asaf-ud-Daula, in the same building programme as Bara Imambara, and modeled after the Sublime Porte gateway in Istanbul.",
-    bestTime: "Evening, when the gateway is lit — often paired with a Bara/Chhota Imambara visit",
+    bestTime: "Evening, when the gateway is lit; often paired with a Bara/Chhota Imambara visit",
     estimatedVisitMinutes: 20,
     suitableTimesOfDay: ["morning", "afternoon", "evening"],
     area: "old-lucknow",
@@ -98,14 +98,14 @@ export const heritagePlaces: Place[] = [
     description:
       "A gilded-domed congregation hall and mausoleum known for its Belgian chandeliers and mirror-work interior, built as a smaller counterpart to Bara Imambara.",
     whyVisit:
-      "Step into the 'Palace of Lights' — chandeliers, mirror-work and a gilded dome in one compact complex, plus a Taj Mahal replica on the grounds.",
+      "Step into the 'Palace of Lights': chandeliers, mirror-work and a gilded dome in one compact complex, plus a Taj Mahal replica on the grounds.",
     historicalContext:
       "Commissioned in 1838 by Muhammad Ali Shah, Nawab of Awadh, as a congregation hall and mausoleum for himself and his mother; the full complex took around 54 years to complete.",
     bestTime: "Late afternoon into early evening, when the chandelier-lit interior is most striking",
     openingHours: {
       weekdayText: ["Mon–Sun: approximately 6:00 AM – 6:00 PM"],
       note:
-        "Sources report slightly different closing times (as early as 5 PM in some, as late as 6 PM in others) — treat as approximate and confirm locally.",
+        "Sources report slightly different closing times (as early as 5 PM in some, as late as 6 PM in others). Treat as approximate and confirm locally.",
       opensHour: 6,
       closesHour: 18,
     },
@@ -142,11 +142,11 @@ export const heritagePlaces: Place[] = [
     whyVisit: "Walk through cannon-scarred ruins that tell the story of the 1857 siege first-hand.",
     historicalContext:
       "Built between 1780 and 1800 as the residence of the British Resident to the Nawab's court. Besieged from July to November 1857 during the uprising against East India Company rule; the ruins, including a cemetery of roughly 2,000 graves, have been preserved largely as they were left.",
-    bestTime: "Cooler months (Oct–Feb); some sources report an evening sound-and-light show — confirm timing locally",
+    bestTime: "Cooler months (Oct–Feb); some sources report an evening sound-and-light show, so confirm timing locally",
     openingHours: {
       weekdayText: ["Mon–Sun: approximately 6:00 AM – 6:00 PM"],
       note:
-        "ASI-maintained site, reported open daily with no weekly closure — confirm locally for festival/holiday exceptions.",
+        "ASI-maintained site, reported open daily with no weekly closure. Confirm locally for festival/holiday exceptions.",
       opensHour: 6,
       closesHour: 18,
     },
@@ -182,10 +182,10 @@ export const heritagePlaces: Place[] = [
     description:
       "The remains of a once-vast pleasure-palace complex built by Wajid Ali Shah, the last Nawab of Awadh. Most of it was destroyed by British forces after 1857; the surviving Safed Baradari (White Pavilion) is its most recognisable standing structure today.",
     whyVisit:
-      "See the White Pavilion — the clearest surviving fragment of Wajid Ali Shah's 'heaven on earth' palace gardens, and the historic ground Begum Hazrat Mahal held during the 1857 uprising.",
+      "See the White Pavilion: the clearest surviving fragment of Wajid Ali Shah's 'heaven on earth' palace gardens, and the historic ground Begum Hazrat Mahal held during the 1857 uprising.",
     historicalContext:
-      "Built by Wajid Ali Shah between roughly 1848 and 1850 as a walled garden-palace complex meant to evoke paradise. After the 1857 uprising — during which Begum Hazrat Mahal used it as a stronghold — British forces demolished large sections they considered a rebel base. The Safed Baradari (1854), originally an Imambara named Qasr-ul-Aza, survived and passed to the British India Association of Oudh around 1923; it functions today mainly as a heritage building and event venue rather than a museum.",
-    bestTime: "Daytime; the Safed Baradari is reported to keep roughly 10 AM–5 PM hours, but as a privately-managed heritage venue this can vary — confirm locally before visiting",
+      "Built by Wajid Ali Shah between roughly 1848 and 1850 as a walled garden-palace complex meant to evoke paradise. After the 1857 uprising (during which Begum Hazrat Mahal used it as a stronghold), British forces demolished large sections they considered a rebel base. The Safed Baradari (1854), originally an Imambara named Qasr-ul-Aza, survived and passed to the British India Association of Oudh around 1923; it functions today mainly as a heritage building and event venue rather than a museum.",
+    bestTime: "Daytime; the Safed Baradari is reported to keep roughly 10 AM–5 PM hours, but as a privately-managed heritage venue this can vary, so confirm locally before visiting",
     estimatedVisitMinutes: 45,
     suitableTimesOfDay: ["morning", "afternoon"],
     area: "old-lucknow",
@@ -202,7 +202,7 @@ export const heritagePlaces: Place[] = [
     ],
     priceRange: "unknown",
     knownFor: [
-      "The Safed Baradari (White Pavilion) — white-marble hall, the complex's best-preserved structure",
+      "The Safed Baradari (White Pavilion): a white-marble hall, the complex's best-preserved structure",
       "Begum Hazrat Mahal's base of operations during the 1857 uprising",
     ],
     tags: ["heritage", "history"],

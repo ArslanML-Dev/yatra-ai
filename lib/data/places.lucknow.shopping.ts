@@ -28,7 +28,7 @@ export const shoppingPlaces: Place[] = [
     ],
     priceRange: "unknown",
     knownFor: [
-      "Chikankari embroidery — look for slight hand-stitch irregularity and visible shadow-work on the reverse to distinguish it from machine embroidery",
+      "Chikankari embroidery: look for slight hand-stitch irregularity and visible shadow-work on the reverse to distinguish it from machine embroidery",
     ],
     tags: ["shopping"],
     nearbyIds: ["bara-imambara", "tunday-kababi", "chowk-food-street", "raheems-nihari"],
@@ -63,7 +63,7 @@ export const shoppingPlaces: Place[] = [
       },
     ],
     priceRange: "unknown",
-    knownFor: ["Everyday bargain shopping — clothes, Chikan embroidery, spices and hosiery"],
+    knownFor: ["Everyday bargain shopping: clothes, Chikan embroidery, spices and hosiery"],
     tags: ["shopping"],
     nearbyIds: ["hazratganj-market", "royal-cafe-hazratganj"],
     source: "wikipedia",

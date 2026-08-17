@@ -10,9 +10,9 @@ export const parkPlaces: Place[] = [
     description:
       "A large landscaped park in Gomti Nagar with three artificial lakes, boating, and cycling and jogging tracks, developed by the Lucknow Development Authority.",
     whyVisit:
-      "A wide-open green space for walking, cycling or boating — a change of pace from the old city.",
+      "A wide-open green space for walking, cycling or boating, a change of pace from the old city.",
     historicalContext:
-      "Not a heritage site — a modern park opened on 5 August 2014, named after Samajwadi Party politician Janeshwar Mishra, spanning 376 acres.",
+      "Not a heritage site: a modern park opened on 5 August 2014, named after Samajwadi Party politician Janeshwar Mishra, spanning 376 acres.",
     bestTime: "Early morning (cooler, joggers and yoga groups) or evening (families, sunset)",
     estimatedVisitMinutes: 90,
     suitableTimesOfDay: ["morning", "evening"],
@@ -85,7 +85,7 @@ export const parkPlaces: Place[] = [
     category: "parks",
     subcategory: "memorial-park",
     description:
-      "A central Qaiserbagh park and memorial to Begum Hazrat Mahal, who led resistance from this area during the 1857 uprising — originally laid out under British rule as Victoria Park.",
+      "A central Qaiserbagh park and memorial to Begum Hazrat Mahal, who led resistance from this area during the 1857 uprising. Originally laid out under British rule as Victoria Park.",
     whyVisit: "A green, walkable central-Lucknow memorial space right next to the Qaiserbagh/Residency heritage cluster.",
     historicalContext:
       "Laid out in 1867 as Victoria Park to commemorate Queen Victoria, and renamed Begum Hazrat Mahal Park on Independence Day, 15 August 1962, honouring the Begum's role in the 1857 uprising against East India Company rule from this Qaiserbagh locality.",
