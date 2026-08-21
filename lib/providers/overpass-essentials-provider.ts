@@ -3,23 +3,38 @@ import type { EssentialCategory, EssentialPOI } from "@/types/essentials";
 import { haversineDistanceKm } from "@/lib/geo/distance";
 import type { EssentialsProvider, EssentialsQueryResult } from "./essentials-provider";
 
-// Three independent public mirrors, raced in parallel — confirmed via
-// real testing (direct curl with an Origin header, not just a status
-// check) that any given free mirror can be down at any moment: at one
-// point overpass-api.de was 504ing and overpass.kumi.systems was 502ing
-// simultaneously, while z.overpass-api.de (a separate physical mirror of
-// the same project, not just a DNS alias) served real, current data.
-// overpass.osm.ch was also tried and rejected — it answers 200 with
-// correct CORS headers but its dataset is stale/uninitialized (a
-// non-date "timestamp_osm_base" and empty results for a real query), so
-// adding it would trade an honest "unreachable" for a silently-wrong
-// "nothing nearby". Three genuinely-independent, currently-verified
-// mirrors materially improves the odds at least one is up.
-const OVERPASS_ENDPOINTS = [
-  "https://overpass-api.de/api/interpreter",
-  "https://overpass.kumi.systems/api/interpreter",
-  "https://z.overpass-api.de/api/interpreter",
-];
+/**
+ * overpass-api.de (and its DNS-aliased siblings z.overpass-api.de,
+ * lz4.overpass-api.de — same underlying infrastructure) reliably answers
+ * 406 Not Acceptable with NO Access-Control-Allow-Origin header whenever
+ * the request carries a real browser User-Agent — confirmed by directly
+ * bisecting headers against the live server: identical request, only the
+ * User-Agent changed, 3/3 real-Chrome-UA attempts got 406, 3/3 attempts
+ * with a plain custom UA string did not. This is an anti-scraper filter
+ * on their end (independently corroborated: this exact 406 pattern is a
+ * documented, common complaint for this specific host), not a load or
+ * app-code issue — and it can never be worked around from a browser,
+ * because `fetch()` cannot actually override User-Agent: captured
+ * network requests from this app's own live traffic show the browser's
+ * real Chrome UA going out on the wire regardless of what the fetch()
+ * call's headers object requests. A previous fix mistakenly kept
+ * overpass-api.de/z.overpass-api.de in the mirror list because
+ * curl-only testing (which doesn't send a browser UA unless told to)
+ * never reproduced the block — every mirror looked healthy from curl,
+ * while the real app, in a real browser, kept failing on exactly these
+ * two. lz4.overpass-api.de and a couple of other public mirrors
+ * (maps.mail.ru, private.coffee) were checked too and show the same
+ * 406 body under a real browser UA, so they're excluded for the same
+ * reason. overpass.kumi.systems is the one mirror that never produced
+ * this pattern under a real Chrome UA in repeated testing — its
+ * failures are ordinary transient overload (502/timeout), which the
+ * retry-with-narrower-radius logic below is specifically built to
+ * absorb. overpass.osm.ch was also tried and rejected separately — it
+ * answers fine but its dataset is stale/uninitialized (a non-date
+ * "timestamp_osm_base" and empty results for a real query), which would
+ * trade an honest "unreachable" for a silently-wrong "nothing nearby".
+ */
+const OVERPASS_ENDPOINTS = ["https://overpass.kumi.systems/api/interpreter"];
 // Confirmed via real testing against the public server: a wide radius
 // (3km) combined with `way` queries across all 6 categories reliably
 // 504s. 1.5km with a 15s internal budget resolved in ~2s consistently;

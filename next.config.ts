@@ -25,10 +25,11 @@ const CSP = [
   scriptSrc,
   "style-src 'self' 'unsafe-inline'",
   "font-src 'self' data:",
-  // overpass-api.de + kumi.systems + z.overpass-api.de: the three raced
-  // live query endpoints for Nearby Essentials (see overpass-essentials-
-  // provider.ts for why three, not two).
-  "connect-src 'self' https://*.tile.openstreetmap.org https://overpass-api.de https://overpass.kumi.systems https://z.overpass-api.de",
+  // overpass.kumi.systems: the live query endpoint for Nearby Essentials.
+  // overpass-api.de and its DNS-aliased siblings are deliberately not
+  // listed here — see overpass-essentials-provider.ts for the evidence
+  // that they 406 every real browser request regardless of app code.
+  "connect-src 'self' https://*.tile.openstreetmap.org https://overpass.kumi.systems",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",
