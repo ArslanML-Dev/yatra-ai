@@ -24,9 +24,28 @@ export type LucknowArea = "old-lucknow" | "hazratganj-central" | "gomti-nagar-mo
 
 export type PriceRange = "free" | "₹" | "₹₹" | "₹₹₹" | "unknown";
 
+/** Real dietary classification for a food place, populated only where
+ * genuinely verifiable — never guessed. Drives the itinerary engine's
+ * dietary filter. */
+export type DietaryClassification = "vegetarian" | "non-veg" | "both";
+
 export interface Coordinates {
   lat: number;
   lng: number;
+}
+
+/** One real, independently-verified branch of a multi-location place
+ * (e.g. Tunday Kababi — Aminabad vs Kapoorthala). Coordinates/address are
+ * specific to that branch, never inherited from the parent or another
+ * branch. The parent Place carries the shared brand-level content
+ * (history, verification tier, dietary tags, card image); branches carry
+ * only what's genuinely branch-specific. */
+export interface PlaceBranch {
+  id: string;
+  label: string;
+  coordinates: Coordinates;
+  address?: string;
+  note?: string;
 }
 
 export interface ImageRef {
@@ -75,6 +94,21 @@ export interface Place {
   tags: string[];
   nearbyIds: string[];
   transportNote?: string;
+  /** Real dietary classification — food places only, populated where
+   * genuinely verifiable. */
+  dietary?: DietaryClassification;
+  /** For an active place of worship (temple/mosque/dargah/gurudwara):
+   * real, sourced visiting norms — dress code, non-adherent access,
+   * footwear, photography rules, prayer-time closures. Not optional for
+   * that group; omitted everywhere else. */
+  visitingNorms?: string[];
+  /** Real, independently-verified branches for a place that genuinely
+   * operates multiple locations (e.g. Tunday Kababi, Dastarkhwan). When
+   * present, this entry is the parent/brand card — the browsing UI shows
+   * a branch selector instead of a single set of coordinates, and the
+   * itinerary engine picks whichever branch is nearest that day's
+   * cluster. Absent for every place with just one real location. */
+  branches?: PlaceBranch[];
   source: string;
   sourceUrl?: string;
   retrievedAt: string;

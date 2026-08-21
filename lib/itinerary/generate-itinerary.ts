@@ -212,10 +212,16 @@ function guaranteeMealCoverage(
     .filter((day) => day.slots.length > 0)
     .map((day) => {
       const missing = computeMissingMealPhases(day, placesById, preferences.pace);
-      const victimIndices: number[] = [];
-      for (let i = day.slots.length - 1; i >= 0 && victimIndices.length < missing.length; i--) {
-        if (!day.slots[i].locked) victimIndices.push(i);
-      }
+      // Each missing phase's victim is the slot already labeled with that
+      // exact phase (it's occupying the meal's rightful position with a
+      // non-food place) — never a different, already-correct phase's slot
+      // grabbed just because it's near the end of the array. When the day
+      // has no slot for that phase at all (e.g. a short day with no
+      // dinner slot), push a new one instead of stealing another phase's.
+      const victimIndices: (number | undefined)[] = missing.map((phase) => {
+        const idx = day.slots.findIndex((s) => s.phase === phase && !s.locked);
+        return idx >= 0 ? idx : undefined;
+      });
       return { day, missing, victimIndices };
     })
     .filter((task) => task.missing.length > 0);
