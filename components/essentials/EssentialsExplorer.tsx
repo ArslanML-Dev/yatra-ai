@@ -32,6 +32,7 @@ export function EssentialsExplorer() {
   const [status, setStatus] = useState<QueryStatus>("idle");
   const [retryToken, setRetryToken] = useState(0);
   const [slowLoad, setSlowLoad] = useState(false);
+  const [radiusUsedKm, setRadiusUsedKm] = useState<number | undefined>(undefined);
 
   const anchor: Coordinates | null =
     referencePoint?.coordinates ?? trip?.accommodationLocation?.coordinates ?? null;
@@ -66,10 +67,12 @@ export function EssentialsExplorer() {
       if (cancelled) return;
       setStatus("loading");
       setSlowLoad(false);
+      setRadiusUsedKm(undefined);
       const result = await getEssentialsProvider().findNearby(anchor, activeCategories, SEARCH_RADIUS_KM);
       if (cancelled) return;
       setResults(result.results);
       setStatus(result.status);
+      setRadiusUsedKm(result.radiusUsedKm);
     }, 400);
     return () => {
       cancelled = true;
@@ -160,8 +163,14 @@ export function EssentialsExplorer() {
           {activeCategories.length > 0 && status === "ok" && results.length === 0 && (
             <EmptyState
               title="Nothing found nearby"
-              description="No matches within 1.5km for the selected categories. Try a different category, or a different starting point."
+              description={`No matches within ${radiusUsedKm ?? SEARCH_RADIUS_KM}km for the selected categories. Try a different category, or a different starting point.`}
             />
+          )}
+          {activeCategories.length > 0 && status === "ok" && results.length > 0 && radiusUsedKm && (
+            <p className="text-xs text-ink-soft/70">
+              High demand on the live data service right now, so this search was narrowed to {radiusUsedKm}km
+              instead of the usual {SEARCH_RADIUS_KM}km.
+            </p>
           )}
           {activeCategories.length > 0 &&
             status === "ok" &&

@@ -4,6 +4,12 @@ import type { EssentialCategory, EssentialPOI } from "@/types/essentials";
 export interface EssentialsQueryResult {
   status: "ok" | "unreachable";
   results: EssentialPOI[];
+  /** The radius actually searched, in km. Only set (and only ever
+   * smaller than what was requested) when a provider had to narrow the
+   * search to get a real answer under load — callers use this to keep
+   * "within Xkm" copy honest rather than silently overstating the
+   * search area. Absent when the requested radius was used as-is. */
+  radiusUsedKm?: number;
 }
 
 /**
