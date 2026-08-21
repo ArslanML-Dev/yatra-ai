@@ -1,6 +1,6 @@
 "use client";
 
-import type { GroupType, Pace, UserPreferences } from "@/types/user-preferences";
+import { MAX_TRIP_DAYS, type GroupType, type Pace, type UserPreferences } from "@/types/user-preferences";
 import type { PlaceCategory } from "@/types/place";
 import { cn } from "@/lib/utils/cn";
 import { formatCategoryLabel } from "@/lib/utils/format";
@@ -53,9 +53,12 @@ export function StructuredFallbackForm({ preferences, onChange }: StructuredFall
           <input
             type="number"
             min={1}
-            max={14}
+            max={MAX_TRIP_DAYS}
             value={preferences.days}
-            onChange={(e) => onChange({ ...preferences, days: Number(e.target.value) || 1 })}
+            onChange={(e) => {
+              const raw = Number(e.target.value) || 1;
+              onChange({ ...preferences, days: Math.min(MAX_TRIP_DAYS, Math.max(1, raw)) });
+            }}
             className="h-10 w-16 rounded-full border border-sandstone-200 px-3 text-center text-sm"
             aria-label="Custom number of days"
           />

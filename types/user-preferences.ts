@@ -1,5 +1,10 @@
 import type { PlaceCategory } from "./place";
 
+/** Hard ceiling on trip length, enforced everywhere `days` can enter the
+ * system (the day-selector UI and the itinerary-page query parser) so
+ * the two can't silently drift apart. */
+export const MAX_TRIP_DAYS = 15;
+
 export type GroupType = "solo" | "couple" | "family" | "friends" | "business";
 export type Pace = "relaxed" | "moderate" | "packed";
 export type ParseConfidence = "high" | "medium" | "low";

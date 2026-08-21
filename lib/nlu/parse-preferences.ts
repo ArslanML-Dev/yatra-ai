@@ -1,15 +1,16 @@
 import type { PlaceCategory } from "@/types/place";
-import type {
-  Budget,
-  GroupType,
-  Pace,
-  UserPreferences,
+import {
+  MAX_TRIP_DAYS,
+  type Budget,
+  type GroupType,
+  type Pace,
+  type UserPreferences,
 } from "@/types/user-preferences";
 import { GROUP_KEYWORDS, INTEREST_KEYWORDS, PACE_KEYWORDS, WORD_NUMBERS } from "./patterns";
 
 const DEFAULT_DAYS = 3;
 const MIN_DAYS = 1;
-const MAX_DAYS = 14;
+const MAX_DAYS = MAX_TRIP_DAYS;
 
 function clampDays(value: number): number {
   return Math.min(MAX_DAYS, Math.max(MIN_DAYS, Math.round(value)));

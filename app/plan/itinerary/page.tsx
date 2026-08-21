@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import type { GroupType, Pace, UserPreferences } from "@/types/user-preferences";
+import { MAX_TRIP_DAYS, type GroupType, type Pace, type UserPreferences } from "@/types/user-preferences";
 import type { PlaceCategory } from "@/types/place";
 import { getPlaceProvider } from "@/lib/providers/provider-registry";
 import { generateItinerary } from "@/lib/itinerary/generate-itinerary";
@@ -31,7 +31,7 @@ function readPreferencesFromParams(
   const first = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
 
   const daysRaw = Number(first(params.days));
-  const days = Number.isFinite(daysRaw) ? Math.min(14, Math.max(1, Math.round(daysRaw))) : 3;
+  const days = Number.isFinite(daysRaw) ? Math.min(MAX_TRIP_DAYS, Math.max(1, Math.round(daysRaw))) : 3;
 
   const groupRaw = first(params.group);
   const group: GroupType = VALID_GROUPS.includes(groupRaw as GroupType)
