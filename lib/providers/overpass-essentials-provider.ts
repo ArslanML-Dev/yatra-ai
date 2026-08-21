@@ -3,14 +3,22 @@ import type { EssentialCategory, EssentialPOI } from "@/types/essentials";
 import { haversineDistanceKm } from "@/lib/geo/distance";
 import type { EssentialsProvider, EssentialsQueryResult } from "./essentials-provider";
 
-// Two independent public mirrors, tried in order — confirmed via real
-// testing that the primary can be slow/unavailable under load (it's a
-// free, best-effort shared service with no uptime guarantee), and a
-// second mirror genuinely improves real-world reliability rather than
-// just working around this session's own heavy test traffic.
+// Three independent public mirrors, raced in parallel — confirmed via
+// real testing (direct curl with an Origin header, not just a status
+// check) that any given free mirror can be down at any moment: at one
+// point overpass-api.de was 504ing and overpass.kumi.systems was 502ing
+// simultaneously, while z.overpass-api.de (a separate physical mirror of
+// the same project, not just a DNS alias) served real, current data.
+// overpass.osm.ch was also tried and rejected — it answers 200 with
+// correct CORS headers but its dataset is stale/uninitialized (a
+// non-date "timestamp_osm_base" and empty results for a real query), so
+// adding it would trade an honest "unreachable" for a silently-wrong
+// "nothing nearby". Three genuinely-independent, currently-verified
+// mirrors materially improves the odds at least one is up.
 const OVERPASS_ENDPOINTS = [
   "https://overpass-api.de/api/interpreter",
   "https://overpass.kumi.systems/api/interpreter",
+  "https://z.overpass-api.de/api/interpreter",
 ];
 // Confirmed via real testing against the public server: a wide radius
 // (3km) combined with `way` queries across all 6 categories reliably
@@ -155,23 +163,20 @@ class OverpassEssentialsProvider implements EssentialsProvider {
 
     const query = buildQuery(center, categories, Math.round(radiusKm * 1000));
 
-    // Race both mirrors rather than trying them one after another — a
-    // free, best-effort public server can take up to REQUEST_TIMEOUT_MS
-    // to fail, and trying mirrors sequentially meant a slow/erroring
-    // primary could keep a user waiting up to twice as long before the
-    // fallback even got a chance. Racing bounds the worst case to a
-    // single timeout and uses whichever mirror answers first.
-    const attempts = await Promise.allSettled(
-      OVERPASS_ENDPOINTS.map((endpoint) => queryEndpoint(endpoint, query, center)),
-    );
-    const success = attempts.find(
-      (a): a is PromiseFulfilledResult<EssentialPOI[]> => a.status === "fulfilled",
-    );
-    if (success) return { status: "ok", results: success.value };
-
-    // Every mirror failed — an honest "couldn't reach live data"
-    // outcome, never fabricated results.
-    return { status: "unreachable", results: [] };
+    // Race all mirrors and take whichever answers first — Promise.any
+    // (not allSettled) is what makes this a real race: allSettled waits
+    // for every mirror to finish before resolving, so one hung/slow
+    // mirror would stall the whole query for up to REQUEST_TIMEOUT_MS
+    // even after a faster mirror had already succeeded. Promise.any
+    // resolves the instant the first one fulfills, and only rejects
+    // (AggregateError) once every mirror has failed.
+    try {
+      return { status: "ok", results: await Promise.any(OVERPASS_ENDPOINTS.map((endpoint) => queryEndpoint(endpoint, query, center))) };
+    } catch {
+      // Every mirror failed — an honest "couldn't reach live data"
+      // outcome, never fabricated results.
+      return { status: "unreachable", results: [] };
+    }
   }
 }
 

@@ -31,6 +31,7 @@ export function EssentialsExplorer() {
   const [results, setResults] = useState<EssentialPOI[]>([]);
   const [status, setStatus] = useState<QueryStatus>("idle");
   const [retryToken, setRetryToken] = useState(0);
+  const [slowLoad, setSlowLoad] = useState(false);
 
   const anchor: Coordinates | null =
     referencePoint?.coordinates ?? trip?.accommodationLocation?.coordinates ?? null;
@@ -64,6 +65,7 @@ export function EssentialsExplorer() {
     const timer = setTimeout(async () => {
       if (cancelled) return;
       setStatus("loading");
+      setSlowLoad(false);
       const result = await getEssentialsProvider().findNearby(anchor, activeCategories, SEARCH_RADIUS_KM);
       if (cancelled) return;
       setResults(result.results);
@@ -74,6 +76,18 @@ export function EssentialsExplorer() {
       clearTimeout(timer);
     };
   }, [anchor, activeCategories, retryToken]);
+
+  // Free public Overpass mirrors have highly variable latency under real
+  // load — a genuinely-working query can still take 20-30s. Without this,
+  // a long-but-working wait looks identical to a hang. The reset back to
+  // false happens where a new query actually starts (below), not here —
+  // setState directly in an effect body just to reset on every non-loading
+  // render would trigger needless cascading renders.
+  useEffect(() => {
+    if (status !== "loading") return;
+    const timer = setTimeout(() => setSlowLoad(true), 5000);
+    return () => clearTimeout(timer);
+  }, [status]);
 
   const mapCenter = anchor ?? getMapProvider().getDefaultCenter("lucknow");
 
@@ -118,6 +132,11 @@ export function EssentialsExplorer() {
           )}
           {activeCategories.length > 0 && status === "loading" && (
             <>
+              {slowLoad && (
+                <p className="text-xs text-ink-soft/70">
+                  Still searching — free public map data can take up to 20-30 seconds under load.
+                </p>
+              )}
               <Skeleton className="h-20 w-full rounded-xl" />
               <Skeleton className="h-20 w-full rounded-xl" />
               <Skeleton className="h-20 w-full rounded-xl" />
