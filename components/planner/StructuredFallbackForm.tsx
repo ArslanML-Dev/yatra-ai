@@ -12,9 +12,12 @@ const INTERESTS: PlaceCategory[] = ["heritage", "food", "shopping", "parks", "mo
 interface StructuredFallbackFormProps {
   preferences: UserPreferences;
   onChange: (preferences: UserPreferences) => void;
+  /** Shown inline under the interests group — e.g. "Please select at
+   * least one interest" — rather than failing silently on submit. */
+  interestsError?: string;
 }
 
-export function StructuredFallbackForm({ preferences, onChange }: StructuredFallbackFormProps) {
+export function StructuredFallbackForm({ preferences, onChange, interestsError }: StructuredFallbackFormProps) {
   function toggleInterest(interest: PlaceCategory) {
     const has = preferences.interests.includes(interest);
     onChange({
@@ -93,7 +96,12 @@ export function StructuredFallbackForm({ preferences, onChange }: StructuredFall
         <label id="interests-label" className="text-sm font-medium text-ink-soft">
           What are you interested in?
         </label>
-        <div role="group" aria-labelledby="interests-label" className="mt-2 flex flex-wrap gap-2">
+        <div
+          role="group"
+          aria-labelledby="interests-label"
+          aria-describedby={interestsError ? "interests-error" : undefined}
+          className="mt-2 flex flex-wrap gap-2"
+        >
           {INTERESTS.map((interest) => (
             <button
               key={interest}
@@ -111,6 +119,11 @@ export function StructuredFallbackForm({ preferences, onChange }: StructuredFall
             </button>
           ))}
         </div>
+        {interestsError && (
+          <p id="interests-error" role="alert" className="mt-2 text-sm text-red-600">
+            {interestsError}
+          </p>
+        )}
       </div>
 
       <div className="mt-5">

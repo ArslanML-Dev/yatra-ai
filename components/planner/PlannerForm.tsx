@@ -31,6 +31,7 @@ export function PlannerForm({ places }: { places: Place[] }) {
   const [preferences, setPreferences] = useState<UserPreferences>(DEFAULT_PREFERENCES);
   const [lockedPlaces, setLockedPlaces] = useState<Place[]>([]);
   const [appliedProfileDefaults, setAppliedProfileDefaults] = useState(false);
+  const [interestsError, setInterestsError] = useState<string | undefined>(undefined);
 
   // Pre-fills known preferences from a saved local profile, once, the
   // first render after the profile store finishes hydrating — never
@@ -55,11 +56,18 @@ export function PlannerForm({ places }: { places: Place[] }) {
 
   function handleParse() {
     if (!rawText.trim()) return;
-    setPreferences(ruleBasedAIProvider.parsePreferences(rawText));
+    const parsed = ruleBasedAIProvider.parsePreferences(rawText);
+    if (parsed.interests.length > 0) setInterestsError(undefined);
+    setPreferences(parsed);
     setLockedPlaces(matchNamedPlaces(rawText, places));
   }
 
   function handleGenerate() {
+    if (preferences.interests.length === 0) {
+      setInterestsError("Please select at least one interest so we know what to plan around.");
+      return;
+    }
+    setInterestsError(undefined);
     const lockedPlaceIds = lockedPlaces.map((p) => p.id);
     router.push(`/plan/itinerary?${buildItineraryQueryString(preferences, lockedPlaceIds)}`);
   }
@@ -74,7 +82,14 @@ export function PlannerForm({ places }: { places: Place[] }) {
           <p className="mt-1 text-ink-soft">{lockedPlaces.map((p) => p.name).join(", ")}</p>
         </div>
       )}
-      <StructuredFallbackForm preferences={preferences} onChange={setPreferences} />
+      <StructuredFallbackForm
+        preferences={preferences}
+        onChange={(next) => {
+          if (next.interests.length > 0) setInterestsError(undefined);
+          setPreferences(next);
+        }}
+        interestsError={interestsError}
+      />
       <Button onClick={handleGenerate} variant="primary" className="self-start">
         Generate my itinerary
       </Button>
