@@ -15,8 +15,8 @@ export function HighlightsGrid({ places }: { places: Place[] }) {
         </div>
       </div>
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {places.map((place) => (
-          <PlaceCard key={place.id} place={place} />
+        {places.map((place, i) => (
+          <PlaceCard key={place.id} place={place} priority={i === 0} />
         ))}
       </div>
     </section>
