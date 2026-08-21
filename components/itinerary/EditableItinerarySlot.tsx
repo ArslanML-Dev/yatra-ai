@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import type { ItinerarySlot } from "@/types/itinerary";
 import type { Place } from "@/types/place";
 import { useTrip } from "@/lib/trip/use-trip";
-import { buildGoogleMapsDirectionsUrl } from "@/lib/geo/directions-url";
+import { useDirectionsLink } from "@/lib/geo/use-directions-link";
 import { PlaceImage } from "@/components/place/PlaceImage";
 
 const TIME_LABELS: Record<ItinerarySlot["timeOfDay"], string> = {
@@ -36,13 +36,14 @@ export function EditableItinerarySlot({
 }: EditableItinerarySlotProps) {
   const { referencePoint, toggleLock, removeStop, reorderStop, moveStopToDay } = useTrip();
   const prefersReducedMotion = useReducedMotion();
-
-  if (!place) return null;
-
   // Honest default origin: the previous stop that day, or the user's
   // chosen reference point for the first stop, or nothing.
-  const directionsOrigin = previousPlace?.coordinates ?? referencePoint?.coordinates;
-  const directionsUrl = buildGoogleMapsDirectionsUrl(place.coordinates, directionsOrigin);
+  const directions = useDirectionsLink(
+    place?.coordinates,
+    previousPlace?.coordinates ?? referencePoint?.coordinates,
+  );
+
+  if (!place) return null;
 
   return (
     <motion.li
@@ -84,12 +85,13 @@ export function EditableItinerarySlot({
             {slot.note && <p className="mt-0.5 text-xs text-ink-soft">{slot.note}</p>}
             <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1">
               <a
-                href={directionsUrl}
+                href={directions?.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-saffron-600 underline"
               >
-                🧭 Open in Google Maps{previousPlace ? ` from ${previousPlace.name}` : ""}
+                🧭 Open in {directions?.label ?? "Google Maps"}
+                {previousPlace ? ` from ${previousPlace.name}` : ""}
               </a>
               <Link href={`/map?highlight=${place.id}`} className="text-xs text-saffron-600 underline">
                 View on map

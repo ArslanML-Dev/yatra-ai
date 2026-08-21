@@ -1,12 +1,14 @@
+"use client";
+
 import type { EssentialPOI } from "@/types/essentials";
 import type { Coordinates } from "@/types/place";
 import { formatEssentialCategoryLabel } from "@/lib/utils/format";
 import { formatDistanceKm } from "@/lib/geo/format-distance";
-import { buildGoogleMapsDirectionsUrl } from "@/lib/geo/directions-url";
+import { useDirectionsLink } from "@/lib/geo/use-directions-link";
 import { EssentialIcon } from "./EssentialIcon";
 
 export function EssentialCard({ poi, origin }: { poi: EssentialPOI; origin?: Coordinates }) {
-  const directionsUrl = buildGoogleMapsDirectionsUrl(poi.coordinates, origin);
+  const directions = useDirectionsLink(poi.coordinates, origin);
 
   return (
     <div className="flex items-start gap-3 rounded-xl border border-sandstone-200/70 bg-white p-4">
@@ -21,7 +23,7 @@ export function EssentialCard({ poi, origin }: { poi: EssentialPOI; origin?: Coo
         {poi.address && <p className="mt-0.5 truncate text-xs text-ink-soft">{poi.address}</p>}
         <div className="mt-2 flex items-center gap-3 text-xs">
           <span className="text-ink-soft/80">{formatDistanceKm(poi.distanceKm)} away</span>
-          <a href={directionsUrl} target="_blank" rel="noopener noreferrer" className="font-medium text-saffron-600 underline">
+          <a href={directions?.url} target="_blank" rel="noopener noreferrer" className="font-medium text-saffron-600 underline">
             🧭 Directions
           </a>
         </div>

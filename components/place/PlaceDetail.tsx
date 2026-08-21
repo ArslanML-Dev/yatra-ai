@@ -3,7 +3,7 @@
 import type { Place } from "@/types/place";
 import { formatCategoryLabel, formatMinutes } from "@/lib/utils/format";
 import { getSource } from "@/lib/data/sources";
-import { buildGoogleMapsDirectionsUrl } from "@/lib/geo/directions-url";
+import { useDirectionsLink } from "@/lib/geo/use-directions-link";
 import { useTrip } from "@/lib/trip/use-trip";
 import { SourceBadge } from "./SourceBadge";
 import { DistanceBadge } from "./DistanceBadge";
@@ -18,10 +18,7 @@ export function PlaceDetail({ place, allPlaces }: { place: Place; allPlaces: Pla
   // Attribution only — independent of whether PlaceImage is currently able
   // to render this photo; the source credit stays valid either way.
   const image = place.images[0];
-  const directionsUrl = buildGoogleMapsDirectionsUrl(
-    place.coordinates,
-    referencePoint?.coordinates,
-  );
+  const directions = useDirectionsLink(place.coordinates, referencePoint?.coordinates);
   const sourceLabel = getSource(place.source)?.label;
 
   return (
@@ -127,12 +124,12 @@ export function PlaceDetail({ place, allPlaces }: { place: Place; allPlaces: Pla
             </div>
           )}
           <a
-            href={directionsUrl}
+            href={directions?.url}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center rounded-full bg-navy-900 px-5 py-2.5 text-sm font-medium text-ivory transition-colors hover:bg-navy-800"
           >
-            🧭 Open in Google Maps
+            🧭 Open in {directions?.label ?? "Google Maps"}
           </a>
           <LiveNavigationPanel destinationName={place.name} destination={place.coordinates} />
           {place.sourceUrl && (

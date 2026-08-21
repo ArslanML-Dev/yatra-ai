@@ -4,16 +4,13 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import type { Place } from "@/types/place";
 import { formatCategoryLabel } from "@/lib/utils/format";
-import { buildGoogleMapsDirectionsUrl } from "@/lib/geo/directions-url";
+import { useDirectionsLink } from "@/lib/geo/use-directions-link";
 import { useTrip } from "@/lib/trip/use-trip";
 
 export function MarkerPopup({ place }: { place: Place }) {
   const { referencePoint } = useTrip();
   const prefersReducedMotion = useReducedMotion();
-  const directionsUrl = buildGoogleMapsDirectionsUrl(
-    place.coordinates,
-    referencePoint?.coordinates,
-  );
+  const directions = useDirectionsLink(place.coordinates, referencePoint?.coordinates);
 
   return (
     <motion.div
@@ -31,12 +28,12 @@ export function MarkerPopup({ place }: { place: Place }) {
           View details
         </Link>
         <a
-          href={directionsUrl}
+          href={directions?.url}
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm text-saffron-600 underline"
         >
-          🧭 Open in Google Maps
+          🧭 Open in {directions?.label ?? "Google Maps"}
         </a>
       </div>
     </motion.div>

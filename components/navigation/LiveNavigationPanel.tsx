@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import type { Coordinates } from "@/types/place";
 import { useLiveNavigation } from "@/lib/hooks/use-live-navigation";
-import { buildGoogleMapsDirectionsUrl } from "@/lib/geo/directions-url";
+import { useDirectionsLink } from "@/lib/geo/use-directions-link";
 
 interface LiveNavigationPanelProps {
   destinationName: string;
@@ -14,7 +14,7 @@ interface LiveNavigationPanelProps {
 export function LiveNavigationPanel({ destinationName, destination }: LiveNavigationPanelProps) {
   const [open, setOpen] = useState(false);
   const nav = useLiveNavigation(destinationName, destination);
-  const mapsUrl = buildGoogleMapsDirectionsUrl(destination);
+  const directions = useDirectionsLink(destination);
   const prefersReducedMotion = useReducedMotion();
 
   if (!open) {
@@ -117,8 +117,8 @@ export function LiveNavigationPanel({ destinationName, destination }: LiveNaviga
 
       <p className="mt-3 text-xs text-ivory/40">
         This shows straight-line distance and direction from GPS, not a road route.{" "}
-        <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="underline">
-          Open in Google Maps for full turn-by-turn
+        <a href={directions?.url} target="_blank" rel="noopener noreferrer" className="underline">
+          Open in {directions?.label ?? "Google Maps"} for full turn-by-turn
         </a>
         .
       </p>
